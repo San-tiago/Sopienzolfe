@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Socialite;
+use DB;
 use App\User;
 use Auth;
 
@@ -52,18 +53,35 @@ class LoginController extends Controller
      */
     public function handleProviderCallback()
     {   // add lang pala yung stateless chuchu inamyan
-        $user = Socialite::driver('google')->stateless()->user();
-        
-        $user = User::firstorCreate([
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'provider_id' => $user->getId()
-
+        $usergmail = Socialite::driver('google')->stateless()->user();
+        $name = $usergmail->getname();
+        $email = $usergmail->getemail();
+        $user = DB::table('users')->where('email',$email)->first();
+       
+       
+         $useracc = User::firstorNew([   
+            'name' => $usergmail->getname(),
+           'email' => $usergmail->getemail(),
+            'provider_id' => $usergmail->getid()
         ]);
+        
         // $user->token;
-
-        Auth::Login($user,true);
+       
+        
+        if(!$user){
+            $userdetails = [   
+           'name' => $name,
+            'email' => $email
+        ];
+            //user is not found 
+            return view('/info', $userdetails);
+     }
+     if($user){
+            // user found 
+        Auth::Login($useracc,true);
         return redirect('/home');
+     }
+        
     }
 
 }

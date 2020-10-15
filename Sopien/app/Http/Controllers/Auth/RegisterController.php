@@ -7,7 +7,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+//tsaka itooo
 use Illuminate\Auth\Events\Registered;
+//need din to sa baba
 use Illuminate\Http\Request;
 
 
@@ -74,6 +76,7 @@ class RegisterController extends Controller
         ]);
     }
 
+    // ito din dagdag para redirect sa login
     public function register(Request $request)
 {
     $this->validator($request->all())->validate();
