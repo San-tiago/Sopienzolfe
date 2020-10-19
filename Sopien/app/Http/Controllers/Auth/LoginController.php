@@ -56,15 +56,23 @@ class LoginController extends Controller
         $usergmail = Socialite::driver('google')->stateless()->user();
         $name = $usergmail->getname();
         $email = $usergmail->getemail();
+        //dd($usergmail);
+       // $address = null;
         $user = DB::table('users')->where('email',$email)->first();
+        //$user_address = DB::table('users')->where('address',$address)->first();
        
        
-         $useracc = User::firstorNew([   
+         $user_check = User::firstorNew([   
             'name' => $usergmail->getname(),
            'email' => $usergmail->getemail(),
             'provider_id' => $usergmail->getid()
         ]);
         
+      /*   $user_check = User::firstorCreate([   
+            'name' => $usergmail->getname(),
+           'email' => $usergmail->getemail(),
+            'provider_id' => $usergmail->getid()
+        ]); */
         // $user->token;
        
         
@@ -75,12 +83,13 @@ class LoginController extends Controller
         ];
             //user is not found 
             return view('/info', $userdetails);
-     }
-     if($user){
-            // user found 
-        Auth::Login($useracc,true);
+                }
+    else{ 
+        Auth::Login($user_check,true);
         return redirect('/home');
      }
+            // user found 
+       
         
     }
 
