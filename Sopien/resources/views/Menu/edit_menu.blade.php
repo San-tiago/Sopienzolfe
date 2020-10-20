@@ -2,12 +2,12 @@
 
 @section('dashboard')
 <div>
-<h1>Create Menu</h1>
+<h1>Edit Menu</h1>
 
 
-    <form action="{{url('/insert-fooditem')}}" method="post">
+    <form action="{{url('/menu/update/'.$menu->id)}}" method="post">
         @csrf
-        Food Name: <input type="text" name="food_name"><br>
+        Food Name: <input type="text" name="food_name" value="{{$menu->food_name}}"><br>
         <span style="color: red">@error('food_name'){{$message}}@enderror</span><br>
 
 
@@ -17,11 +17,11 @@
                 @endforeach
                 </select><br>
 
-        Description: <input type="textbox" name = "description"><br>
+        Description: <input type="textbox" name = "description" value= "{{$menu->description}}"><br>
         <span style="color: red">@error('description'){{$message}}@enderror</span><br>
-        Price: <input type="text" name="price"><br>
+        Price: <input type="text" name="price" value= "{{$menu->price}}"><br>
         <span style="color: red">@error('price'){{$message}}@enderror</span><br>
-        <input type="submit" name="" value="Submit"><br>
+        <input type="submit" value="Submit"><br>
     </form>
 </body>
 </html>

@@ -28,8 +28,19 @@ Route::get('/admin/orders', 'AdminController@orders');
 Route::get('/admin/sales', 'AdminController@sales');
 Route::get('/admin/users', 'AdminController@users');
 
+//Menu Controller
+Route::get('/admin/add-fooditem', 'MenuController@category');
+Route::post('/insert-fooditem', 'MenuController@store');
+Route::get('/menu/edit/{id}', 'MenuController@edit');
+Route::post('/menu/update/{id}', 'MenuController@update');
+
+
 //category controller
 Route::get('/admin/categories', 'CategoryController@index');
 Route::get('/admin/add-category', 'CategoryController@create');
 Route::post('/insert-category', 'CategoryController@store');
+Route::get('/category/edit/{id}', 'CategoryController@edit');
+Route::post('/category/update/{id}', 'CategoryController@update');
+Route::get('/category/delete/{id}', 'CategoryController@delete');
+
 

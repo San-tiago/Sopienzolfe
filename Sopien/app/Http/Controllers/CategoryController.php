@@ -8,7 +8,10 @@ class CategoryController extends Controller
 {
     //
     public function index(){
-        return view('Category.categories');
+        $categories = Category::orderBy('category')->get();
+        return view('Category.categories',[
+            'categories'=>$categories
+            ]);
     }
     public function create(){
         return view('Category.createcategory');
@@ -19,6 +22,24 @@ class CategoryController extends Controller
         ]);
         Category::create($request->all());
         return redirect('/admin/categories');
+    }
+    public function edit($id){
+        $category = Category::find($id);
+        return view('Category.editcategory', [
+            'category' => $category
+        ]);
+    }
+
+    public function update(Request $request, $id){
+        $category = Category::find($id);
+        $category->update($request->all());
+        return redirect('/admin/categories');
+    }
+
+    public function delete($id){
+        $category = Category::find($id);
+        $category -> delete();
+        return back();
     }
 
 }
