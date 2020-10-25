@@ -45,4 +45,10 @@ class MenuController extends Controller
     public function create(){
         return view('Menu.create_menu');
     }
+
+    public function delete($id){
+        $menu = Menu::find($id);
+        $menu -> delete();
+        return back();
+    }
 }

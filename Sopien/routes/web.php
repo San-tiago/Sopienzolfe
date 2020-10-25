@@ -33,6 +33,12 @@ Route::get('/admin/add-fooditem', 'MenuController@category');
 Route::post('/insert-fooditem', 'MenuController@store');
 Route::get('/menu/edit/{id}', 'MenuController@edit');
 Route::post('/menu/update/{id}', 'MenuController@update');
+Route::get('/menu/delete/{id}', 'MenuController@delete');
+
+//Order Controller
+Route::post('/order', 'OrdersController@store');
+Route::get('/customer-order', 'OrdersController@view');
+
 
 
 //category controller
