@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/menu/{category}', 'HomeController@menu_nav');
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
@@ -38,6 +39,9 @@ Route::get('/menu/delete/{id}', 'MenuController@delete');
 //Order Controller
 Route::post('/order', 'OrdersController@store');
 Route::get('/customer-order', 'OrdersController@view');
+Route::get('/order/delete/{id}', 'OrdersController@delete');
+Route::get('/placedorder', 'OrdersController@placeOrder');
+
 
 
 

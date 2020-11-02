@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Menu;
+use App\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,10 +23,16 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {     $menus = Menu::orderBy('food_name')->get();
-        return view('home',[
-            'menus'=>$menus
-            ]);
+    {   
+        $menus = Menu::orderBy('food_name')->get();
+        $categories = Category::orderBy('category')->get();
+        return view('home',compact('menus','categories'));
     
+    }
+
+    public function menu_nav($category){
+        $menus = Menu::where('menu_category',$category)->get();
+        $categories = Category::orderBy('category')->get();
+        return view('home',compact('menus','categories'));
     }
 }
