@@ -37,7 +37,8 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <a href="{{url('/customer-order')}}"><p>Order List</p></a>
+                    <a href="{{url('/customer-order')}}"><p>Food Cart</p></a> |
+                    <a href="{{url('/myorder')}}"><p>My Order </p></a>
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest

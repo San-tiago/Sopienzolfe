@@ -21,7 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('menu_description');
             $table->double('menu_price');
             $table->integer('quantity');
-            $table->integer('status')->default(0);
+            $table->string('status')->default(' ');
             $table->timestamps();
         });
     }

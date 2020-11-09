@@ -28,6 +28,14 @@ Route::get('/admin/menu', 'AdminController@menu');
 Route::get('/admin/orders', 'AdminController@orders');
 Route::get('/admin/sales', 'AdminController@sales');
 Route::get('/admin/users', 'AdminController@users');
+Route::get('admin/order/{email}', 'AdminController@view_customerorders');
+
+Route::get('/admin/approve-order/{id}', 'AdminController@approveorder');
+Route::get('/admin/received-order/{id}', 'AdminController@receivedorder');
+Route::get('/admin/pendingorders', 'AdminController@pendingorders');
+Route::get('/admin/ongoingorders', 'AdminController@ongoingorders');
+Route::get('/admin/receivedorders', 'AdminController@receivedorders');
+
 
 //Menu Controller
 Route::get('/admin/add-fooditem', 'MenuController@category');
@@ -40,7 +48,10 @@ Route::get('/menu/delete/{id}', 'MenuController@delete');
 Route::post('/order', 'OrdersController@store');
 Route::get('/customer-order', 'OrdersController@view');
 Route::get('/order/delete/{id}', 'OrdersController@delete');
-Route::get('/placedorder', 'OrdersController@placeOrder');
+Route::get('/placeorder', 'OrdersController@placeOrder');
+Route::post('/receiver', 'OrdersController@receiver');
+Route::get('/myorder', 'OrdersController@myorder');
+
 
 
 

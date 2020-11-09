@@ -10,6 +10,10 @@
 <div>
 <a href="/admin/menu"><button>Menu</button></a><br>
 <a href="/admin/orders"><button>Orders</button></a><br>
+    <a href="/admin/pendingorders">Pending Orders</a><br>
+    <a href="/admin/ongoingorders">On Going Orders</a><br>
+    <a href="/admin/receivedorders">Received Orders</a><br>
+    <a href="/admin/canceledorders">Canceled Orders</a><br>
 <a href="/admin/sales"><button>Sales</button></a><br>
 <a href="/admin/users"><button>Users</button></a><br>
 </div>

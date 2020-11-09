@@ -7,11 +7,10 @@
 </head>
 <body>
 <div>
-<h1>Order List</h1>
-
-<a href="/home"><button>Back</button></a>
-
-<table>
+<h1>MY ORDERS</h1>
+<div class="container">
+   
+    <table>
         <tr>
            <th>id</th>
             <th>Food Name</th>
@@ -19,6 +18,8 @@
             <th>Description</th>
             <th>Quantity</th>
             <th>Price</th>
+            <th>Status</th>
+
         </tr>
 
         @foreach($orders as $order)
@@ -29,19 +30,13 @@
             <td>{{$order->menu_description}}</td>
             <td>{{$order->quantity}}</td>
             <td>{{$order->menu_price}}</td>
-            <td><a href="{{url('order/delete/'.$order->id)}}">  Remove</a></td>
-            
+            <td>{{$order->status}}</td>
+
         </tr>
         @endforeach
 
 </table>
-<br>
-
-<h1 name="total">
-Total:{{$total}}
-</h1>
-<a href="{{url('/placeorder')}}"><button>Place Order</button></a>
-
+  
 </div>
 </body>
 </html>
