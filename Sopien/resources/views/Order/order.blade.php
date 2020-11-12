@@ -40,7 +40,7 @@
 <h1 name="total">
 Total:{{$total}}
 </h1>
-<a href="{{url('/placeorder')}}"><button>Place Order</button></a>
+<a href="{{url('/placeorder')}}"><button>Check Out</button></a>
 
 </div>
 </body>

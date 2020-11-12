@@ -6,11 +6,8 @@
 </head>
 <body>
 
-    <h1>View Order</h1>
-    <a href="{{url('/admin/view-pendingorders')}}"><button>Pending Orders</button></a>
-    <a href="{{url('/admin/view-ongoingorders')}}"><button>On Going Orders</button></a>
-    <a href="{{url('/admin/view-receivedorders')}}"><button>Received Orders</button></a>
-    <a href="{{url('/admin/view-receivedorders')}}"><button>Canceled Orders</button></a>
+    <h1>Order Summary</h1>
+
     <table>
         <tr>
            <th>id</th>
@@ -32,9 +29,7 @@
             <td>{{$order->quantity}}</td>
             <td>{{$order->menu_price}}</td>
             <td>{{$order->status}}</td>
-            <td>{{$order->created_at}}</td>
-            <td><a href="{{url('/admin/approve-order/'.$order->id)}}"><button>Approve</button></a></td>
-            
+            <td>{{$order->created_at}}</td>       
         </tr>
         @endforeach
 

@@ -28,13 +28,19 @@ Route::get('/admin/menu', 'AdminController@menu');
 Route::get('/admin/orders', 'AdminController@orders');
 Route::get('/admin/sales', 'AdminController@sales');
 Route::get('/admin/users', 'AdminController@users');
-Route::get('admin/order/{email}', 'AdminController@view_customerorders');
+Route::get('/admin/pending-order/{email}', 'AdminController@filtered_pendingorders');
+Route::get('/admin/approve-order/{email}', 'AdminController@filtered_approveorders');
+Route::get('/admin/process-order/{email}', 'AdminController@filtered_processorders');
+Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondeliveryorders');
 
-Route::get('/admin/approve-order/{id}', 'AdminController@approveorder');
-Route::get('/admin/received-order/{id}', 'AdminController@receivedorder');
+Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
+Route::get('/admin/processing-order/{email}', 'AdminController@processingorder');
+Route::get('/admin/delivering-order/{email}', 'AdminController@deliveringorder');
+
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');
-Route::get('/admin/ongoingorders', 'AdminController@ongoingorders');
-Route::get('/admin/receivedorders', 'AdminController@receivedorders');
+Route::get('/admin/approvedorders', 'AdminController@approvedorders');
+Route::get('/admin/processedorders', 'AdminController@processedorders');
+Route::get('/admin/ondeliveryorders', 'AdminController@ondeliveryorders');
 
 
 //Menu Controller

@@ -7,9 +7,25 @@
 </head>
 <body>
 <div>
-<h1>MY ORDERS</h1>
+
 <div class="container">
-   
+    <div><h1>Order Status</h1></div>
+
+    <div>
+            <p>Pending</p>
+    </div>
+    <div>
+        <p>Order Approve</p>
+    </div>
+    <div>
+        <p>Order Processed</p>
+   </div>
+   <div>
+        <p>On Delivery</p>
+   </div>
+   <br>
+   <br>
+   <h1>Order Summary</h1>
     <table>
         <tr>
            <th>id</th>

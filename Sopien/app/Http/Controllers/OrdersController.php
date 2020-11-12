@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use App\User;
 use App\PlacedOrder;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,7 @@ class OrdersController extends Controller
     }
     public function placeOrder(Request $request){
         $user = Auth::user()->email;
+        User::where('email', $user)->update(['Order_Status'=>'Pending']);
         Order::where('email', $user)->update(['status'=>'Pending']);
       
         return view('Receiver.receiver');
@@ -66,7 +68,6 @@ class OrdersController extends Controller
         $user = Auth::user()->email;
         $orders = Order::where([
             'email'=> $user,
-            'status'=> 'Pending',
             ])->get();
          return view('Order.myorder',[
              'orders' => $orders,
