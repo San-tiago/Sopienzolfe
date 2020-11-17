@@ -32,15 +32,19 @@ Route::get('/admin/pending-order/{email}', 'AdminController@filtered_pendingorde
 Route::get('/admin/approve-order/{email}', 'AdminController@filtered_approveorders');
 Route::get('/admin/process-order/{email}', 'AdminController@filtered_processorders');
 Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondeliveryorders');
+Route::get('/admin/received-order/{email}', 'AdminController@filtered_receivedorders');
 
 Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
 Route::get('/admin/processing-order/{email}', 'AdminController@processingorder');
 Route::get('/admin/delivering-order/{email}', 'AdminController@deliveringorder');
+Route::get('/admin/receiving-order/{email}', 'AdminController@receivingorder');
 
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');
 Route::get('/admin/approvedorders', 'AdminController@approvedorders');
 Route::get('/admin/processedorders', 'AdminController@processedorders');
 Route::get('/admin/ondeliveryorders', 'AdminController@ondeliveryorders');
+Route::get('/admin/receivedorders', 'AdminController@receivedorders');
+
 
 
 //Menu Controller

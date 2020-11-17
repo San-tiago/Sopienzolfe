@@ -19,6 +19,7 @@ class OrdersController extends Controller
         $total = $quantity * $price;
         $data = request([
             'user_name',
+            'user_id',
             'menu_name',
             'menu_category',
             'quantity',

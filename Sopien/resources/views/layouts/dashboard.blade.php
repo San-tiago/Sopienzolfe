@@ -14,6 +14,7 @@
     <a href="/admin/approvedorders">Approve Orders</a><br>
     <a href="/admin/processedorders">Processed Orders</a><br>
     <a href="/admin/ondeliveryorders">On Delivery Orders</a><br>
+    <a href="/admin/receivedorders">Received Orders</a><br>
     <a href="/admin/canceledorders">Canceled Orders</a><br>
 <a href="/admin/sales"><button>Sales</button></a><br>
 <a href="/admin/users"><button>Users</button></a><br>

@@ -28,8 +28,8 @@
             <td>{{$filtered_processorder->quantity}}</td>
             <td>{{$filtered_processorder->menu_price}}</td>  
         </tr>
-        <a href="{{url('/admin/delivering-order/'.$filtered_processorder->email)}}"><button>Deliver Order</button></a>
         @endforeach
+        <a href="{{url('/admin/delivering-order/'.$filtered_processorder->email)}}"><button>Deliver Order</button></a>
         
 
        

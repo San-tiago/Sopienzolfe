@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\Menu;
+use App\User;
 use App\Category;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,10 +25,11 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   
+    {   //
+        $users = User::all();
         $menus = Menu::orderBy('food_name')->get();
         $categories = Category::orderBy('category')->get();
-        return view('home',compact('menus','categories'));
+        return view('home',compact('menus','categories','users'));
     
     }
 

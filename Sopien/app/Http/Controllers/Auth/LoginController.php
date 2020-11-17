@@ -58,15 +58,16 @@ class LoginController extends Controller
         $email = $usergmail->getemail();
         //dd($usergmail);
        // $address = null;
-        $user = DB::table('users')->where('email',$email)->first();
+       /*  $user = DB::table('users')->where('email',$email)->first(); */
         //$user_address = DB::table('users')->where('address',$address)->first();
        
-       
-         $user_check = User::firstorNew([   
+        $check_user = User::where('email','=',$email)->first();
+
+         /* $user_check = User::firstorNew([   
             'name' => $usergmail->getname(),
            'email' => $usergmail->getemail(),
             'provider_id' => $usergmail->getid()
-        ]);
+        ]); */
         
       /*   $user_check = User::firstorCreate([   
             'name' => $usergmail->getname(),
@@ -76,16 +77,13 @@ class LoginController extends Controller
         // $user->token;
        
         
-        if(!$user){
-            $userdetails = [   
-           'name' => $name,
-            'email' => $email
-        ];
+        if($check_user === null){
+            
             //user is not found 
-            return view('/info', $userdetails);
+            echo "user not found";
                 }
     else{ 
-        Auth::Login($user_check,true);
+        Auth::Login($check_user,true);
         return redirect('/home');
      }
             // user found 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Menu;
 use App\User;
 use App\Order;
+use DB;
 class AdminController extends Controller
 {
     //
@@ -78,8 +79,22 @@ class AdminController extends Controller
        
     }
 
+    public function filtered_receivedorders($email){
+        $users = User::where([
+            'provider_id' => null,
+            'Order_Status' => 'Received',
+            ])->get();
+       $filtered_receivedorders = Order::where([
+           'email'=> $email,
+           'status'=> 'Received'
+           ])->get();
+        return view('admin.filtered_receivedorders',compact('filtered_receivedorders','users')); 
+       
+    }
+
     //P R O C E S S I N G  O R D E R S !
     public function approvingorder($email){
+     
         User::where('email', $email)->update(['Order_Status'=>'Approve']);
         Order::where('email', $email)->update(['status'=>'Approve']);
         return redirect('/admin/pendingorders');
@@ -93,6 +108,12 @@ class AdminController extends Controller
         User::where('email', $email)->update(['Order_Status'=>'On Delivery']);
         Order::where('email', $email)->update(['status'=>'On Delivery']);
         return redirect('/admin/processedorders');    
+    }
+    public function receivingorder($email){
+        DB::table('users')->increment('completed_orders_count');
+        User::where('email', $email)->update(['Order_Status'=>'None']);
+        Order::where('email', $email)->update(['status'=>'Received']);
+        return redirect('/admin/ondeliveryorders');    
     }
 
 
@@ -109,9 +130,13 @@ class AdminController extends Controller
         return view('admin.approve_orders',compact('approved_orders','users'));
     }
     public function pendingorders(){
+        //echo $orders = User::find(1)->orders;
+        //$user = Order::find(1)->users;
         
-        $users = User::where([
-            'provider_id' => null,
+      
+    
+         $users = User::where([
+            
             'Order_Status' => 'Pending',
             ])->get();
        $pending_orders = Order::where([
@@ -139,11 +164,26 @@ class AdminController extends Controller
             ])->get();
         return view('admin.ondelivery_orders',compact('ondelivery_orders','users'));
     }
+    public function receivedorders(){
+        
+        $users = User::where('completed_orders_count', '>',0)->get();
+       $received_orders = Order::where([
+            'status' => 'Received'
+            ])->orderBy('email')->get();
+        return view('admin.received_orders',compact('received_orders','users'));
+    }
 
     public function sales(){
-        return view ('admin.sale');
+        
+        $orders_today = Order::whereDate('created_at',today())->get(); // orders today
+        $totalsales_today = Order::whereDate('created_at',today())->sum('menu_price'); // sum
+        $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->get(); // orders in month
+        $totalsales_monthly = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->sum('menu_price'); // orders in month
+        return view ('admin.sale',compact('orders_today','orders_month','totalsales_today','totalsales_monthly'));
     }
     public function users(){
+     
+        
         return view ('admin.user');
     }
 

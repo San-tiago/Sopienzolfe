@@ -30,7 +30,7 @@
         </tr>
 
         @endforeach
-        <a href="{{url('/admin/processing-order/'.$filtered_ondeliveryorder->email)}}"><button>Mark as Receive</button></a>
+        <a href="{{url('/admin/receiving-order/'.$filtered_ondeliveryorder->email)}}"><button>Mark as Received</button></a>
         
        
 </table>
