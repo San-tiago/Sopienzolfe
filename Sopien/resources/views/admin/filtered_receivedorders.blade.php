@@ -7,21 +7,22 @@
 
 <h1>Received Orders</h1>
         <a href="/admin/receivedorders"><button>Back</button></a>
-    <table>
-        <tr>
-           <th>id</th>
-           <th>From</th>
-            <th>Food Name</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
 
-        @foreach($filtered_receivedorders as $filtered_receivedorder)
+<table class="table table-bordered">
+     <thead>
+         <tr>
+            <th scope="col">#</th>
+            <th scope="col">Food Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+     <tbody>
+     @foreach($filtered_receivedorders as $filtered_receivedorder)
         <tr>
             <td>{{$loop->index+1}}</td>
-            <td>{{$filtered_receivedorder->email}}</td>
             <td>{{$filtered_receivedorder->menu_name}}</td>
             <td>{{$filtered_receivedorder->menu_category}}</td>
             <td>{{$filtered_receivedorder->menu_description}}</td>
@@ -30,10 +31,7 @@
         </tr>
         @endforeach
         
-
-       
-</table>
-
+    </table>
 
 
     

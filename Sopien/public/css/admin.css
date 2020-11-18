@@ -1,0 +1,45 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.sidebar{
+    background-color: #2F323A;
+    margin-top: 0;
+    padding-top: 10px;
+    position: fixed;
+    left: 0;
+    width: 250px;
+    height: 100%;
+}
+.sidebar a {
+    color: #fff;
+    display: block;
+    line-height: 60px;
+    text-decoration: none;
+    padding-left: 40px;
+    box-sizing: border-box;
+  
+}
+.sidebar a:hover{
+    background: #19b3d3;
+}
+
+.content{
+    margin-left: 300px;
+    height: 100%;
+    
+}
+
+.pending-order-h1{
+    margin-bottom: 40px;
+}
+
+.main-section{
+    display: flex;
+    flex-direction: row;
+}
+
+.info-section{
+    margin-left: 20px;
+    width: 80%;
+}

@@ -2,43 +2,43 @@
 @extends('layouts.dashboard')
 
 @section('dashboard')
-<div>
 
-
-<h1>Pending Orders</h1>
-    
+<h1 class = "pending-order-h1">Pending Orders</h1>
+<div class="main-section">
+    <div class = "emails-nav-section">
+        <h4>From :</h4>
         <a href="/admin/pendingorders"><button>All</button></a><br>
         @foreach($users as $user)
         <a href="{{url('/admin/pending-order/'.$user->email)}}"><button>{{$user->email}}</button></a><br>
         @endforeach
- 
-    <table>
-        <tr>
-           <th>id</th>
-           <th>From</th>
-            <th>Food Name</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Price</th>
-        </tr>
+    
+    </div>
 
+    <div class="info-section">
+        <table class="table table-bordered">
+        <thead>
+         <tr>
+            <th scope="col">#</th>
+            <th scope="col">Food Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Description</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+        </tr>
+        </thead>
+        <tbody>
         @foreach($pending_orders as $pending_order)
-        <tr>
-            <td>{{$loop->index+1}}</td>
-            <td>{{$pending_order->email}}</td>
-            <td>{{$pending_order->menu_name}}</td>
-            <td>{{$pending_order->menu_category}}</td>
-            <td>{{$pending_order->menu_description}}</td>
-            <td>{{$pending_order->quantity}}</td>
-            <td>{{$pending_order->menu_price}}</td>  
+     <tr>
+        <td>{{$loop->index+1}}</td>
+        <td>{{$pending_order->menu_name}}</td>
+        <td>{{$pending_order->menu_category}}</td>
+        <td>{{$pending_order->menu_description}}</td>
+        <td>{{$pending_order->quantity}}</td>
+        <td>{{$pending_order->menu_price}}</td>  
         </tr>
         @endforeach
-
-</table>
-
-
-    
-
+        </tbody>
+        </table>
+    </div>
 </div>
 @endsection

@@ -34,8 +34,9 @@ class HomeController extends Controller
     }
 
     public function menu_nav($category){
+        $users = User::all();
         $menus = Menu::where('menu_category',$category)->get();
         $categories = Category::orderBy('category')->get();
-        return view('home',compact('menus','categories'));
+        return view('home',compact('menus','categories','users'));
     }
 }

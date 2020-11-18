@@ -1,0 +1,56 @@
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  align-content: flex-start;
+}
+.nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    padding-left: 40px;
+    width: 300px;
+    margin-top: 0%;
+    background-color: white;
+    height: 900px;
+   
+    
+}
+.btn-lg{
+    width: 100%;
+    margin-top: 8px;
+  
+    
+}
+
+.category{
+    display: flex;
+    flex-direction: column;
+    border-radius: 0px;
+}
+
+
+
+
+
+.menu{
+    margin-left: 60px;
+    display: flex;
+    width: 70%;
+    flex-wrap: wrap;
+    background-color: white;
+    align-items: flex-start;
+    
+}
+
+
+.menu-form{
+    box-shadow: 10px 10px 5px #aaaaaa;
+    border-radius: 5px;
+    border-left: solid 0.5px rgb(187, 187, 187,0.5);
+    border-top: solid 0.5px rgb(187, 187, 187,0.5);
+    margin: 40px;
+    background-color: white;
+    height: 300px;
+    align-items: center;
+}

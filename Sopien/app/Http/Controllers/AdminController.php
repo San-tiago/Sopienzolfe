@@ -146,7 +146,7 @@ class AdminController extends Controller
     }
     public function processedorders(){
         $users = User::where([
-            'provider_id' => null,
+            
             'Order_Status' => 'Processed',
             ])->get();
        $processed_orders = Order::where([
@@ -156,7 +156,7 @@ class AdminController extends Controller
     }
     public function ondeliveryorders(){
         $users = User::where([
-            'provider_id' => null,
+          
             'Order_Status' => 'On Delivery',
             ])->get();
        $ondelivery_orders = Order::where([
@@ -165,8 +165,8 @@ class AdminController extends Controller
         return view('admin.ondelivery_orders',compact('ondelivery_orders','users'));
     }
     public function receivedorders(){
-        
         $users = User::where('completed_orders_count', '>',0)->get();
+       
        $received_orders = Order::where([
             'status' => 'Received'
             ])->orderBy('email')->get();
