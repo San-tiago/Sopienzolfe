@@ -6,10 +6,9 @@
 
 <form action="{{url('/insert-category')}}" method="post">
         @csrf
-        Category Name: <input type="text" name="category" value="{{ old('category') }}"><br>
+        Category Name:<input type="text" class="form-control @error('address') is-invalid @enderror" name="category" value="{{ old('category') }}">
         <span style="color: red">@error('category'){{$message}}@enderror</span><br>
-
-        <input type="submit" name="" value="Submit"><br>
+     <input type="submit" name="" value="Submit"  class="btn btn-outline-primary">
     </form>
 
 

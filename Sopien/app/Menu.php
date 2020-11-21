@@ -10,4 +10,9 @@ class Menu extends Model
     protected $fillable = [
         'food_name','menu_category','description','price',
     ];
+
+    public function menu()
+    {
+        return $this->hasMany('App\Order');
+    }
 }

@@ -31,6 +31,7 @@ class AdminController extends Controller
 
     // F I L T E R E D  O R D E R S / U S E R
     public function filtered_pendingorders($email){
+        Order::where('email', $email)->get();
         $users = User::where([
             'provider_id' => null,
             'Order_Status' => 'Pending',
@@ -79,16 +80,18 @@ class AdminController extends Controller
        
     }
 
-    public function filtered_receivedorders($email){
-        $users = User::where([
+    public function filtered_receivedorders($id){
+        
+          $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
+        /* $users = User::where([
             'provider_id' => null,
             'Order_Status' => 'Received',
-            ])->get();
-       $filtered_receivedorders = Order::where([
+            ])->get(); */
+      /*  $filtered_receivedorders = Order::where([
            'email'=> $email,
            'status'=> 'Received'
-           ])->get();
-        return view('admin.filtered_receivedorders',compact('filtered_receivedorders','users')); 
+           ])->get(); */
+        return view('admin.filtered_receivedorders',compact('filtered_receivedorders')); 
        
     }
 
@@ -112,6 +115,7 @@ class AdminController extends Controller
     public function receivingorder($email){
         DB::table('users')->increment('completed_orders_count');
         User::where('email', $email)->update(['Order_Status'=>'None']);
+       
         Order::where('email', $email)->update(['status'=>'Received']);
         return redirect('/admin/ondeliveryorders');    
     }
@@ -134,14 +138,19 @@ class AdminController extends Controller
         //$user = Order::find(1)->users;
         
       
-    
+        
          $users = User::where([
             
             'Order_Status' => 'Pending',
             ])->get();
-       $pending_orders = Order::where([
+      $pending_orders = Order::where([
             'status' => 'Pending'
             ])->get();
+      /*  
+        foreach($pending_orders as $pending_order){
+            echo $pending_order->id;
+        }
+         */
         return view('admin.pending_orders',compact('pending_orders','users'));
     }
     public function processedorders(){
@@ -166,7 +175,6 @@ class AdminController extends Controller
     }
     public function receivedorders(){
         $users = User::where('completed_orders_count', '>',0)->get();
-       
        $received_orders = Order::where([
             'status' => 'Received'
             ])->orderBy('email')->get();
@@ -174,13 +182,37 @@ class AdminController extends Controller
     }
 
     public function sales(){
-        
+        //DAILY
         $orders_today = Order::whereDate('created_at',today())->get(); // orders today
-        $totalsales_today = Order::whereDate('created_at',today())->sum('menu_price'); // sum
+        $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
+        //MONTHLY
         $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->get(); // orders in month
-        $totalsales_monthly = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->sum('menu_price'); // orders in month
-        return view ('admin.sale',compact('orders_today','orders_month','totalsales_today','totalsales_monthly'));
+        $totalsales_monthly = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->sum('menu_price'); // total monthly sales
+
+        //MENU
+       $menus = Menu::orderBy('food_name')->get();
+       /*  foreach($menus as $menu){
+           $menu_id = $menu->id;
+            $menu = Menu::find($menu_id)->menu()->where('status','Received')->sum('menu_price');
+        } */
+       return view ('admin.sale',compact('orders_today',
+                                        'orders_month',
+                                        'totalsales_today',
+                                        'totalsales_monthly',
+                                        'menus',));
+
     }
+
+    public function filtered_menusales($id){
+    
+       $menusales_sum = Menu::find($id)->menu()->where('status','Received')->sum('menu_price');
+       //echo $menu_name = Menu::where('id',$id)->get('food_name');
+       $menu_details = Menu::find($id)->menu()->where('status','Received')->get();
+        $menu = Order::find($id);
+        $menu_name = $menu->menu_name;
+      return view('admin.filtered_menusales',compact('menusales_sum','menu_details','menu_name')); 
+    }
+
     public function users(){
      
         

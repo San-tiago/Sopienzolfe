@@ -3,27 +3,30 @@
 @section('dashboard')
 <div>
 <h1>Categories</h1>
-<a href="{{url('/admin/add-category')}}"><button>Add Category</button></a><br>
+<a href="{{url('/admin/add-category')}}"><button class="btn btn-outline-primary">Add Category</button></a><br>
 
 
-<table>
-        <tr>
-           <th>id</th>
-            <th>Category Name</th>
-            <th>Action</th>
+<table class="table table-bordered">
+     <thead>
+         <tr>
+            <th scope="col" class="text-center">#</th>
+            <th scope="col" class="text-center">Category Name</th>
+            <th scope="col" class="text-center" colspan="3">Action</th>
+            
         </tr>
-
-        @foreach($categories as $category)
+    </thead>
+     <tbody>
+     @foreach($categories as $category)
         <tr>
-            <td>{{$loop->index+1}}</td>
-            <td>{{$category->category}}</td>
-            <td> <a href="{{url('category/edit/'.$category->id)}}">  Edit</a> </td>
-            <td><a href="{{url('category/delete/'.$category->id)}}">  Delete</a></td>
+            <td class="text-center">{{$loop->index+1}}</td>
+            <td class="text-center">{{$category->category}}</td>
+            <td class="text-center"> <a href="{{url('category/edit/'.$category->id)}}"> <button class="btn btn-info btn-sm">Edit</button></a> </td>
+            <td class="text-center"><a href="{{url('category/delete/'.$category->id)}}">  <button class="btn btn-danger btn-sm">Delete</button></a></td>
             
         </tr>
         @endforeach
-
-</table>
+        
+    </table>
 
     
 

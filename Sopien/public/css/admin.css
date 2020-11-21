@@ -10,6 +10,7 @@ body{
     left: 0;
     width: 250px;
     height: 100%;
+    overflow: scroll;
 }
 .sidebar a {
     color: #fff;
@@ -24,8 +25,21 @@ body{
     background: #19b3d3;
 }
 
+.email-section{
+  
+    width:20%;
+    display: block;
+    overflow: auto;
+    height: 600px;
+}
+
+.email-section h4{
+    text-align: center;
+    margin-top: 10px;
+}
+
 .content{
-    margin-left: 300px;
+    margin-left: 273px;
     height: 100%;
     
 }
@@ -37,9 +51,33 @@ body{
 .main-section{
     display: flex;
     flex-direction: row;
+    margin-right: 30px;
 }
 
 .info-section{
     margin-left: 20px;
     width: 80%;
+}
+
+.orders-link{
+    margin-left:25px;
+    
+}
+
+.main-sales-container{
+    display: flex;
+    justify-content: center;
+
+    height: 100%;
+    padding-left: 40%;
+}
+.today-sales{
+    background-color: violet;
+    height: 100px;
+    width: 40%;
+}
+.monthly-sales{
+    background-color: violet;
+    height: 100px;
+    width: 40%;
 }

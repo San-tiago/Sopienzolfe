@@ -20,10 +20,11 @@
         <div class = "menu-form">
             <form action="{{url('/order')}}" method = "post">
             @csrf
+            <input type="hidden" value="{{$menu->id}}" name = "menu_id"><br>
             @foreach($users as $user)
                 @if($user->email === Auth::user()->email)
                 <input type="hidden" value="{{$user->id}}" name = "user_id"><br>
-                @endif
+            @endif
             @endforeach
             <input type="hidden" value ="{{ Auth::user()->email }}" name="email"><br>
             <label> Food Name: </label><input type="text" value = "{{$menu->food_name}}" name = "menu_name" readonly><br>

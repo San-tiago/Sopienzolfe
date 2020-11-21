@@ -16,9 +16,11 @@
     <a href="/admin/processedorders">Processed Orders</a><br>
     <a href="/admin/ondeliveryorders">On Delivery Orders</a><br>
     <a href="/admin/receivedorders">Received Orders</a><br>
-    <a href="/admin/canceledorders">Canceled Orders</a><br>
+    <a href="/admin/canceledorders">Cancelled Orders</a><br>
     <a href="/admin/sales">Sales</a><br>
     <a href="/admin/users">Users</a><br>
+    <a href="/admin/users">Tutorial</a><br>
+
 </div>
 <main class="content">
             @yield('dashboard')

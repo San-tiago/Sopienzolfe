@@ -1,11 +1,30 @@
 @extends('layouts.dashboard')
 
 @section('dashboard')
-<div>
-<h1>Sales</h1>
 
-<h1>Today</h1>
-<h3>{{$totalsales_today}}</h3>
+<div>
+    <h1>Sales</h1>
+    <div class="main-sales-container">
+        <div class="today-sales">
+        <h1>Today Sales</h1>
+        <h3>{{$totalsales_today}}</h3>
+    </div>
+    
+    <div class="monthly-sales">
+        <h1>Month Sales</h1>
+        <h3>{{$totalsales_monthly}}</h3>
+    </div>
+</div>
+    <div>
+        <h1>Menu</h1>
+        @foreach($menus as $menu)
+        <a href="{{url('/menu/sales/'.$menu->id)}}"><button>{{$menu->food_name}}</button></a> <br>
+        @endforeach
+    </div>
+</div>
+
+<div>
+<h1>Today Sales</h1>
 <table>
         <tr>
            <th>id</th>
@@ -28,11 +47,9 @@
         </tr>
         @endforeach
 
-</table><br>
+    </table><br>
 
-
-<h1>Month</h1>
-<h3>{{$totalsales_monthly}}</h3>
+<h1>Monthly Sales</h1>
 <table>
         <tr>
            <th>id</th>
@@ -56,7 +73,5 @@
         @endforeach
 
 </table>
-    
-
 </div>
 @endsection

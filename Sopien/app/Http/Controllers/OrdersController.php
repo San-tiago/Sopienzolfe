@@ -20,6 +20,7 @@ class OrdersController extends Controller
         $data = request([
             'user_name',
             'user_id',
+            'menu_id',
             'menu_name',
             'menu_category',
             'quantity',
