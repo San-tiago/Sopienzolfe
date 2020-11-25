@@ -68,12 +68,35 @@ class OrdersController extends Controller
     }
     public function myorder(){
         $user = Auth::user()->email;
-        $orders = Order::where([
-            'email'=> $user,
-            ])->get();
-         return view('Order.myorder',[
-             'orders' => $orders,
-         ]); 
+       /* echo $orders = DB::table('orders')->where([
+            'email' => $user,
+            ])->whereNotIn('status', ['Cancelled',])
+            ->get(); */
+            /* ->whereIn('id', [1, 2, 3])
+            ->get(); */
+            
+           $orders = DB::table('orders')
+            ->where(function ($query) {
+                $user = Auth::user()->email;
+                $query->where([
+                    'email' => $user,
+                    ])->whereNotIn('status',['Received'])->get();
+                            })
+                            ->get();
+                            
+                             return view('Order.myorder',[
+                                 'orders' => $orders,
+                             ]); 
+        }
         
-     }
+     public function cancelOrder($email){
+        Order::where('email', $email)->update(['status'=>'Cancelled']);
+    }
+
+
+
+
+
+
+
 }

@@ -46,11 +46,11 @@ class AdminController extends Controller
     public function filtered_approveorders($email){
         $users = User::where([
             'provider_id' => null,
-            'Order_Status' => 'Approve',
+            'Order_Status' => 'Approved',
             ])->get();
        $filtered_approveorders = Order::where([
            'email'=> $email,
-           'status'=> 'Approve'
+           'status'=> 'Approved'
            ])->get();
         return view('admin.filtered_approveorders',compact('filtered_approveorders','users')); 
        
@@ -99,7 +99,7 @@ class AdminController extends Controller
     public function approvingorder($email){
      
         User::where('email', $email)->update(['Order_Status'=>'Approve']);
-        Order::where('email', $email)->update(['status'=>'Approve']);
+        Order::where('email', $email)->update(['status'=>'Approved']);
         return redirect('/admin/pendingorders');
     }
     public function processingorder($email){
@@ -129,7 +129,7 @@ class AdminController extends Controller
             'Order_Status' => 'Approve',
             ])->get();
        $approved_orders = Order::where([
-            'status' => 'Approve'
+            'status' => 'Approved'
             ])->get();
         return view('admin.approve_orders',compact('approved_orders','users'));
     }
@@ -213,10 +213,21 @@ class AdminController extends Controller
       return view('admin.filtered_menusales',compact('menusales_sum','menu_details','menu_name')); 
     }
 
+    // USER MANAGEMENT! 
+
     public function users(){
-     
-        
-        return view ('admin.user');
+        $users = User::all();
+
+        return view ('admin.user',compact('users'));
+    }
+
+    public function deactivate_account($id){
+        User::where('id', $id)->update(['Account_Status'=>'Deactivated']);
+        return back();
+    }
+    public function activate_account($id){
+        User::where('id', $id)->update(['Account_Status'=>'Active']);   
+        return back();
     }
 
 }

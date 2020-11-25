@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use Cache;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -40,5 +40,9 @@ class User extends Authenticatable implements MustVerifyEmail
     public function orders()
     {
         return $this->hasMany('App\Order'); 
+    }
+
+    public function isOnline(){
+        return Cache::has('user-is-online-'.$this->id);
     }
 }

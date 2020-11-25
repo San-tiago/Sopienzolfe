@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('Order_Status')->default('None');
             $table->integer('completed_orders_count')->default(0);
             $table->integer('cancelled_orders_count')->default(0);
+            $table->string('Account_Status')->default('Active');
             $table->string('password')->nullable();
             $table->string('provider_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();

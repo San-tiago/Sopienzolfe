@@ -62,6 +62,8 @@ Route::get('/order/delete/{id}', 'OrdersController@delete');
 Route::get('/placeorder', 'OrdersController@placeOrder');
 Route::post('/receiver', 'OrdersController@receiver');
 Route::get('/myorder', 'OrdersController@myorder');
+Route::get('/cancel-order/{email}', 'OrdersController@cancelOrder');
+
 
 
 
@@ -75,4 +77,6 @@ Route::get('/category/edit/{id}', 'CategoryController@edit');
 Route::post('/category/update/{id}', 'CategoryController@update');
 Route::get('/category/delete/{id}', 'CategoryController@delete');
 
-
+//User Controller
+Route::get('/admin/deactivate_account/{id}', 'AdminController@deactivate_account');
+Route::get('/admin/activate_account/{id}', 'AdminController@activate_account');

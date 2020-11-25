@@ -7,19 +7,20 @@
     <link href="/css/admin.css" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://kit.fontawesome.com/114bfafc96.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="sidebar">
-    <a href="/admin/menu">Menu</a><br>
-    <a href="/admin/pendingorders">Pending Orders</a><br>
-    <a href="/admin/approvedorders">Approve Orders</a><br>
-    <a href="/admin/processedorders">Processed Orders</a><br>
-    <a href="/admin/ondeliveryorders">On Delivery Orders</a><br>
-    <a href="/admin/receivedorders">Received Orders</a><br>
-    <a href="/admin/canceledorders">Cancelled Orders</a><br>
-    <a href="/admin/sales">Sales</a><br>
-    <a href="/admin/users">Users</a><br>
-    <a href="/admin/users">Tutorial</a><br>
+    <a href="/admin/menu"><i class="fas fa-calendar-minus fa-lg icon"></i>Menu</a><br>
+    <a href="/admin/pendingorders"><i class="fas fa-clock fa-lg icon"></i>Pending Orders</a><br>
+    <a href="/admin/approvedorders"><i class="fas fa-calendar-check fa-lg icon"></i>Approve Orders</a><br>
+    <a href="/admin/processedorders"><i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
+    <a href="/admin/ondeliveryorders"><i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
+    <a href="/admin/receivedorders"><i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
+    <a href="/admin/canceledorders"><i class="far fa-window-close fa-lg icon"></i>Cancelled Orders</a><br>
+    <a href="/admin/sales"><i class="fas fa-file-invoice-dollar fa-lg icon"></i>Sales</a><br>
+    <a href="/admin/users"><i class="fas fa-users fa-lg icon"></i>Users</a><br>
+    <a href="/admin/users"><i class="fas fa-book fa-lg icon"></i>Tutorial</a><br>
 
 </div>
 <main class="content">
