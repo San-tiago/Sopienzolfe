@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.menu')
 
 @section('content')
 <div class = "flex-container">
@@ -25,7 +25,7 @@
                 @if($user->email === Auth::user()->email)
                 <input type="hidden" value="{{$user->id}}" name = "user_id"><br>
             @endif
-            @endforeach
+            @endforeach 
             <input type="hidden" value ="{{ Auth::user()->email }}" name="email"><br>
             <label> Food Name: </label><input type="text" value = "{{$menu->food_name}}" name = "menu_name" readonly><br>
             <label> Category: </label><input type="text" value = "{{$menu->menu_category}}" name = "menu_category" readonly><br>

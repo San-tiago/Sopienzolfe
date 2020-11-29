@@ -19,6 +19,8 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/menu/{category}', 'HomeController@menu_nav');
+Route::get('/order-history/{id}', 'HomeController@orderHistory');
+
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
@@ -32,6 +34,7 @@ Route::get('/admin/pending-order/{email}', 'AdminController@filtered_pendingorde
 Route::get('/admin/approve-order/{email}', 'AdminController@filtered_approveorders');
 Route::get('/admin/process-order/{email}', 'AdminController@filtered_processorders');
 Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondeliveryorders');
+Route::get('/admin/customer-cancelled-order/{id}', 'AdminController@filtered_cancelledorders');
 Route::get('/admin/received-order/{id}', 'AdminController@filtered_receivedorders');
 
 Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
@@ -39,11 +42,13 @@ Route::get('/admin/processing-order/{email}', 'AdminController@processingorder')
 Route::get('/admin/delivering-order/{email}', 'AdminController@deliveringorder');
 Route::get('/admin/receiving-order/{email}', 'AdminController@receivingorder');
 
+
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');
 Route::get('/admin/approvedorders', 'AdminController@approvedorders');
 Route::get('/admin/processedorders', 'AdminController@processedorders');
 Route::get('/admin/ondeliveryorders', 'AdminController@ondeliveryorders');
 Route::get('/admin/receivedorders', 'AdminController@receivedorders');
+Route::get('/admin/cancelledorders', 'AdminController@cancelledorders');
 
 //Menu Sales
 Route::get('/menu/sales/{id}', 'AdminController@filtered_menusales');
@@ -63,6 +68,7 @@ Route::get('/placeorder', 'OrdersController@placeOrder');
 Route::post('/receiver', 'OrdersController@receiver');
 Route::get('/myorder', 'OrdersController@myorder');
 Route::get('/cancel-order/{email}', 'OrdersController@cancelOrder');
+Route::get('/my-cancelled-orders/{email}', 'OrdersController@mycancelledOrders');
 
 
 

@@ -33,7 +33,6 @@ class AdminController extends Controller
     public function filtered_pendingorders($email){
         Order::where('email', $email)->get();
         $users = User::where([
-            'provider_id' => null,
             'Order_Status' => 'Pending',
             ])->get();
        $filtered_pendingorders = Order::where([
@@ -45,7 +44,6 @@ class AdminController extends Controller
     }
     public function filtered_approveorders($email){
         $users = User::where([
-            'provider_id' => null,
             'Order_Status' => 'Approved',
             ])->get();
        $filtered_approveorders = Order::where([
@@ -57,7 +55,7 @@ class AdminController extends Controller
     }
     public function filtered_processorders($email){
         $users = User::where([
-            'provider_id' => null,
+         
             'Order_Status' => 'Processed',
             ])->get();
        $filtered_processorders = Order::where([
@@ -79,44 +77,62 @@ class AdminController extends Controller
         return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','users')); 
        
     }
+    public function filtered_cancelledorders($id){
+        $filtered_cancelledorders = User::find($id)->orders()->where('status','Cancelled')->get();
+        return view('admin.filtered_cancelledorders',compact('filtered_cancelledorders')); 
+       
+    }
 
     public function filtered_receivedorders($id){
         
           $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
-        /* $users = User::where([
-            'provider_id' => null,
-            'Order_Status' => 'Received',
-            ])->get(); */
-      /*  $filtered_receivedorders = Order::where([
-           'email'=> $email,
-           'status'=> 'Received'
-           ])->get(); */
+     
         return view('admin.filtered_receivedorders',compact('filtered_receivedorders')); 
        
     }
 
     //P R O C E S S I N G  O R D E R S !
     public function approvingorder($email){
-     
+       
         User::where('email', $email)->update(['Order_Status'=>'Approve']);
-        Order::where('email', $email)->update(['status'=>'Approved']);
+        Order::where('email', $email)->when($email,function ($query,$email) {
+
+            $query->where([
+                'email' => $email,
+                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                        })->update(['status'=>'Approved']);
         return redirect('/admin/pendingorders');
     }
     public function processingorder($email){
         User::where('email', $email)->update(['Order_Status'=>'Processed']);
-        Order::where('email', $email)->update(['status'=>'Processed']);
+        Order::where('email', $email)->when($email,function ($query,$email) {
+
+            $query->where([
+                'email' => $email,
+                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                        })->update(['status'=>'Processed']);
         return redirect('/admin/approvedorders');
     }
     public function deliveringorder($email){
         User::where('email', $email)->update(['Order_Status'=>'On Delivery']);
-        Order::where('email', $email)->update(['status'=>'On Delivery']);
+        Order::where('email', $email)->when($email,function ($query,$email) {
+
+            $query->where([
+                'email' => $email,
+                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                        })->update(['status'=>'On Delivery']);
         return redirect('/admin/processedorders');    
     }
     public function receivingorder($email){
-        DB::table('users')->increment('completed_orders_count');
+        DB::table('users')->where('email',$email)->increment('completed_orders_count');
         User::where('email', $email)->update(['Order_Status'=>'None']);
        
-        Order::where('email', $email)->update(['status'=>'Received']);
+        Order::where('email', $email)->when($email,function ($query,$email) {
+
+            $query->where([
+                'email' => $email,
+                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                        })->update(['status'=>'Received']);
         return redirect('/admin/ondeliveryorders');    
     }
 
@@ -180,14 +196,22 @@ class AdminController extends Controller
             ])->orderBy('email')->get();
         return view('admin.received_orders',compact('received_orders','users'));
     }
+    public function cancelledorders(){
+       $users = User::where('cancelled_orders_count', '>',0)->get();
+       $cancelled_orders = Order::where([
+            'status' => 'Cancelled'
+            ])->orderBy('menu_name')->get();
+        
+        return view('admin.cancelled_orders',compact('cancelled_orders','users'));
+    }
 
     public function sales(){
         //DAILY
-        $orders_today = Order::whereDate('created_at',today())->get(); // orders today
-        $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
+        $orders_today = Order::whereDate('created_at',today())->where('status','Received')->get(); // orders today
+       $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
         //MONTHLY
-        $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->get(); // orders in month
-        $totalsales_monthly = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->sum('menu_price'); // total monthly sales
+        $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->where('status','Received')->get(); // orders in month
+        $totalsales_monthly = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->where('status','Received')->sum('menu_price'); // total monthly sales
 
         //MENU
        $menus = Menu::orderBy('food_name')->get();
@@ -195,7 +219,8 @@ class AdminController extends Controller
            $menu_id = $menu->id;
             $menu = Menu::find($menu_id)->menu()->where('status','Received')->sum('menu_price');
         } */
-       return view ('admin.sale',compact('orders_today',
+       return view ('admin.sale',compact(
+                                        'orders_today',
                                         'orders_month',
                                         'totalsales_today',
                                         'totalsales_monthly',

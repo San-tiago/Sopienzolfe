@@ -2,76 +2,95 @@
 
 @section('dashboard')
 
-<div>
-    <h1>Sales</h1>
-    <div class="main-sales-container">
-        <div class="today-sales">
-        <h1>Today Sales</h1>
-        <h3>{{$totalsales_today}}</h3>
+
+<div >
+    <!-- Sales -->
+    <div class="d-flex justify-content-center"><h1>Sales</h1></div>
+        <div class="d-flex justify-content-center">
+            <div class="mr-3 p-2 card text-white bg-info mb-3 max-width: 18rem;"> 
+                <h1>Today Sales</h1>
+                <h3 class="text-center">{{$totalsales_today}}</h3>
+            </div>
+            
+            <div class="mr-3 p-2 card text-white bg-info mb-3 max-width: 18rem;">
+                <h1>Month Sales</h1>
+                <h3 class="text-center">{{$totalsales_monthly}}</h3>
+            </div>
+        </div>
     </div>
-    
-    <div class="monthly-sales">
-        <h1>Month Sales</h1>
-        <h3>{{$totalsales_monthly}}</h3>
+
+
+<div class="d-flex flex-row justify-content-start ">
+    <!-- Menu Nav -->
+        <div class="mr-5">
+            <h1 class="ml-5">Menu</h1>
+            @foreach($menus as $menu)
+            <ul >
+            <a href="{{url('/menu/sales/'.$menu->id)}}"><button type="button" class="btn btn-outline-secondary">{{$menu->food_name}}</button></a> <br>
+            </ul>
+            @endforeach
+            
+        </div>
+
+        <div class = "ml-5 p-2" >
+            <h1>Today Sales</h1>
+            <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center" scope="col">id</th>
+                        <th class="text-center" scope="col">Food Item</th>
+                        <th class="text-center" scope="col">Category</th>
+                        <th class="text-center" scope="col">Quantity</th>
+                        <th class="text-center" scope="col">Total Price</th>
+                        <th class="text-center" scope="col">Date</th>
+                    </tr>
+                    @if(!$orders_today->isEmpty())
+                        @foreach($orders_today as $order_today)
+                        <tr>
+
+                            <td  class="text-center">{{$loop->index+1}}</td>      
+                            <td  class="text-center">{{$order_today->menu_name}}</td>       
+                            <td  class="text-center">{{$order_today->menu_category}}</td>       
+                            <td  class="text-center">{{$order_today->quantity}}</td>       
+                            <td  class="text-center">{{$order_today->menu_price}}</td>   
+                            <td  class="text-center">{{$order_today->created_at}}</td>    
+                        </tr>
+                        @endforeach
+                    @else
+                        <td  class="text-center" colspan = "6"><h2>No Orders Today</h2></td>  
+
+                    @endif
+                </table><br>
+
+            <h1>Monthly Sales</h1>
+            <table class="table table-bordered">
+                    <tr>
+                        <th class="text-center" scope="col">id</th>
+                        <th class="text-center" scope="col">Food Item</th>
+                        <th class="text-center" scope="col">Category</th>
+                        <th class="text-center" scope="col">Quantity</th>
+                        <th class="text-center" scope="col">Total Price</th>
+                        <th class="text-center" scope="col">Date</th>
+                    </tr>
+                    @if(!$orders_month->isEmpty())
+                        @foreach($orders_month as $order_month)
+                        <tr>
+
+                            <td  class="text-center">{{$loop->index+1}}</td>      
+                            <td  class="text-center">{{$order_month->menu_name}}</td>       
+                            <td  class="text-center">{{$order_month->menu_category}}</td>       
+                            <td  class="text-center">{{$order_month->quantity}}</td>       
+                            <td  class="text-center">{{$order_month->menu_price}}</td>   
+                            <td  class="text-center">{{$order_today->created_at}}</td>    
+                        </tr>
+                        @endforeach
+                    @else
+                        <td  class="text-center" colspan = "6"><h2>No Orders This Month</h2></td>  
+                    @endif
+                    </table>
+            </div>
+
     </div>
 </div>
-    <div>
-        <h1>Menu</h1>
-        @foreach($menus as $menu)
-        <a href="{{url('/menu/sales/'.$menu->id)}}"><button>{{$menu->food_name}}</button></a> <br>
-        @endforeach
-    </div>
-</div>
 
-<div>
-<h1>Today Sales</h1>
-<table>
-        <tr>
-           <th>id</th>
-            <th>Email</th>
-            <th>Food Item</th>
-            <th>Category</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-        </tr>
-        
-        @foreach($orders_today as $order_today)
-        <tr>
 
-            <td>{{$loop->index+1}}</td>
-            <td>{{$order_today->email}}</td>       
-            <td>{{$order_today->menu_name}}</td>       
-            <td>{{$order_today->menu_category}}</td>       
-            <td>{{$order_today->quantity}}</td>       
-            <td>{{$order_today->menu_price}}</td>      
-        </tr>
-        @endforeach
-
-    </table><br>
-
-<h1>Monthly Sales</h1>
-<table>
-        <tr>
-           <th>id</th>
-            <th>Email</th>
-            <th>Food Item</th>
-            <th>Category</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-        </tr>
-        
-        @foreach($orders_month as $order_month)
-        <tr>
-
-            <td>{{$loop->index+1}}</td>
-            <td>{{$order_month->email}}</td>       
-            <td>{{$order_month->menu_name}}</td>       
-            <td>{{$order_month->menu_category}}</td>       
-            <td>{{$order_month->quantity}}</td>       
-            <td>{{$order_month->menu_price}}</td>      
-        </tr>
-        @endforeach
-
-</table>
-</div>
 @endsection

@@ -40,7 +40,24 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-         
+                    <div class="dropdown show mr-5">
+                            <a class="btn btn-secondary dropdown-toggle btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                               Order
+                            </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
+                            <a class="dropdown-item" href="{{url('/my-cancelled-orders/'. Auth::user()->email)}}">Cancelled Orders</a>
+                            <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->id)}}">Order History</a>
+                           
+                        </div>
+                    </div>
+                    
+                    <a class="btn btn-light btn-sm" href="{{url('/customer-order')}}">
+                        <i class="fas fa-shopping-cart"></i>
+                            Food Cart
+                    </a>
+            
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest

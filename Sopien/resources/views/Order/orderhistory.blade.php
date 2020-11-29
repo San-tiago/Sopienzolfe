@@ -1,0 +1,50 @@
+@extends('layouts.menu')
+
+@section('content')
+<div >
+<a href="/home"><button button type="button" class="btn btn-primary">Back</button></a>
+
+<div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1>Order History</h1></div>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="text-center">Food Name</th>
+                <th scope="col" class="text-center">Category</th>
+                <th scope="col" class="text-center">Description</th>
+                <th scope="col" class="text-center">Quantity</th>
+                <th scope="col" class="text-center">Price</th>
+                <th scope="col" class="text-center">Date</th>
+                </tr>
+                </thead>
+             <tbody>
+
+      
+        @foreach($received_orders as $received_order)
+                    <tr>
+                        <td class="text-center">{{$loop->index+1}}</td>
+                        <td class="text-center">{{$received_order->menu_name}}</td>
+                        <td class="text-center">{{$received_order->menu_category}}</td>
+                        <td class="text-center">{{$received_order->menu_description}}</td>
+                        <td class="text-center">{{$received_order->quantity}}</td>
+                        <td class="text-center">{{$received_order->menu_price}}</td>  
+                        <td class="text-center">{{$received_order->created_at}}</td>  
+
+                    </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+
+</table>
+
+   
+</div>
+
+
+
+
+
+</div>
+@endsection

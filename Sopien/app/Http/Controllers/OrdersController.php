@@ -51,8 +51,13 @@ class OrdersController extends Controller
     }
     public function placeOrder(Request $request){
         $user = Auth::user()->email;
-        User::where('email', $user)->update(['Order_Status'=>'Pending']);
-        Order::where('email', $user)->update(['status'=>'Pending']);
+        User::where('email', $user)->update(['Order_Status'=>'Pending']); //ditooooooooooooooo
+        Order::where('email', $user)->where(function ($query) {
+            $user = Auth::user()->email;
+            $query->where([
+                'email' => $user,
+                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                        })->update(['status'=>'Pending']);
       
         return view('Receiver.receiver');
     }
@@ -80,7 +85,7 @@ class OrdersController extends Controller
                 $user = Auth::user()->email;
                 $query->where([
                     'email' => $user,
-                    ])->whereNotIn('status',['Received'])->get();
+                    ])->whereNotIn('status',['Received','Cancelled'])->get();
                             })
                             ->get();
                             
@@ -90,7 +95,19 @@ class OrdersController extends Controller
         }
         
      public function cancelOrder($email){
+         User::where('email',$email)->update(['Order_Status' => 'None']);
         Order::where('email', $email)->update(['status'=>'Cancelled']);
+        DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
+        return redirect('/home');
+    }
+
+    public function mycancelledOrders($email){
+
+        $cancelled_orders = Order::where([
+            'email' => $email,
+            'status' => 'Cancelled',
+            ])->get();
+        return view('Order.mycancelledorders',compact('cancelled_orders')); 
     }
 
 

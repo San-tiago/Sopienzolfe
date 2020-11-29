@@ -17,7 +17,7 @@
     <a href="/admin/processedorders"><i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
     <a href="/admin/ondeliveryorders"><i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
     <a href="/admin/receivedorders"><i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
-    <a href="/admin/canceledorders"><i class="far fa-window-close fa-lg icon"></i>Cancelled Orders</a><br>
+    <a href="/admin/cancelledorders"><i class="far fa-window-close fa-lg icon"></i>Cancelled Orders</a><br>
     <a href="/admin/sales"><i class="fas fa-file-invoice-dollar fa-lg icon"></i>Sales</a><br>
     <a href="/admin/users"><i class="fas fa-users fa-lg icon"></i>Users</a><br>
     <a href="/admin/users"><i class="fas fa-book fa-lg icon"></i>Tutorial</a><br>
