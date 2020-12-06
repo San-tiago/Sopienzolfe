@@ -9,33 +9,32 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                <th scope="col" class="text-center">#</th>
-                <th scope="col" class="text-center">Food Name</th>
-                <th scope="col" class="text-center">Category</th>
-                <th scope="col" class="text-center">Description</th>
-                <th scope="col" class="text-center">Quantity</th>
-                <th scope="col" class="text-center">Price</th>
+               
+               
+                <th scope="col" class="text-center">Received by</th>
+                <th scope="col" class="text-center">Address</th>
                 <th scope="col" class="text-center">Date</th>
+                <th scope="col" class="text-center">Order Summary</th>
                 </tr>
                 </thead>
              <tbody>
 
       
-        @foreach($received_orders as $received_order)
-                    <tr>
-                        <td class="text-center">{{$loop->index+1}}</td>
-                        <td class="text-center">{{$received_order->menu_name}}</td>
-                        <td class="text-center">{{$received_order->menu_category}}</td>
-                        <td class="text-center">{{$received_order->menu_description}}</td>
-                        <td class="text-center">{{$received_order->quantity}}</td>
-                        <td class="text-center">{{$received_order->menu_price}}</td>  
-                        <td class="text-center">{{$received_order->created_at}}</td>  
+        @foreach($order_history as $orderhistory)
+            <tr>
+                <td class="text-center">{{$orderhistory->receivername}}</td>
+                <td class="text-center">{{$orderhistory->receiveraddress}}</td>
+                <td class="text-center">{{date('d-m-Y', strtotime($orderhistory->created_at))}}</td>
+                <td class="text-center">
+                    <a href="{{url('/view/history-orders/'.$orderhistory->id)}}">
+                        <button type="button" class="btn btn-primary">View</button>
+                    </a>
+                </td>
+            </tr>
+         @endforeach
 
-                    </tr>
-                    @endforeach
-
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
 </table>
 

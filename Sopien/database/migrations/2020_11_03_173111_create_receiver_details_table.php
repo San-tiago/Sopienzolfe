@@ -19,6 +19,7 @@ class CreateReceiverDetailsTable extends Migration
             $table->string('receivername');
             $table->string('receiveraddress');
             $table->string('receivercontactnumber');
+            $table->string('transac_status')->default('0');
             $table->timestamps();
         });
     }

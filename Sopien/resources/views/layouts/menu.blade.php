@@ -41,6 +41,7 @@
 
                     <!-- Right Side Of Navbar -->
                     <div class="dropdown show mr-5">
+                            <a href="/receiver_page"><i class="fas fa-plus-circle"></i></a>
                             <a class="btn btn-secondary dropdown-toggle btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                Order
                             </a>
@@ -48,12 +49,15 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
                             <a class="dropdown-item" href="{{url('/my-cancelled-orders/'. Auth::user()->email)}}">Cancelled Orders</a>
-                            <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->id)}}">Order History</a>
+                            <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->email)}}">Order History</a>
                            
                         </div>
                     </div>
                     
                     <a class="btn btn-light btn-sm" href="{{url('/customer-order')}}">
+                        <span class="badge badge-danger ">
+                            {{auth()->user()->unreadNotifications->count()}}
+                        </span>
                         <i class="fas fa-shopping-cart"></i>
                             Food Cart
                     </a>

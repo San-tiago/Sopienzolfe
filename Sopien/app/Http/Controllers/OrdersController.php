@@ -9,12 +9,14 @@ use App\PlacedOrder;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\UserNotification;
 class OrdersController extends Controller
 {
     //
     public function store(Request $request){
 
         $quantity = $request->input('quantity');
+        $user_id = $request->input('user_id');
         $price = $request->input('menu_price');
         $total = $quantity * $price;
         $data = request([
@@ -26,12 +28,14 @@ class OrdersController extends Controller
             'quantity',
             'menu_description',
         ]);
+        User::find($user_id)->notify(new UserNotification);
         $request->request->add(['menu_price'=>$total]);
         Order::create($request->all());
         return back();
     }
 
     public function view(){
+        auth()->user()->unreadNotifications->markAsRead();
         $user = Auth::user()->email;
         $orders = Order::where([
             'email'=>$user,
@@ -59,6 +63,9 @@ class OrdersController extends Controller
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'Pending']);
       
+        return redirect('/myorder');
+    }
+    public function receiver_page(){
         return view('Receiver.receiver');
     }
     public function receiver(Request $request){

@@ -43,6 +43,7 @@
                         <th class="text-center" scope="col">Total Price</th>
                         <th class="text-center" scope="col">Date</th>
                     </tr>
+                    
                     @if(!$orders_today->isEmpty())
                         @foreach($orders_today as $order_today)
                         <tr>

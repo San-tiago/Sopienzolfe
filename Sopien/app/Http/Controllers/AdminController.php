@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Menu;
 use App\User;
 use App\Order;
+use App\ReceiverDetails;
 use DB;
 class AdminController extends Controller
 {
@@ -126,7 +127,7 @@ class AdminController extends Controller
     public function receivingorder($email){
         DB::table('users')->where('email',$email)->increment('completed_orders_count');
         User::where('email', $email)->update(['Order_Status'=>'None']);
-       
+        ReceiverDetails::where('fromemail',$email)->update(['transac_status' => 1]);
         Order::where('email', $email)->when($email,function ($query,$email) {
 
             $query->where([
@@ -161,7 +162,7 @@ class AdminController extends Controller
             ])->get();
       $pending_orders = Order::where([
             'status' => 'Pending'
-            ])->get();
+            ])->get(); 
       /*  
         foreach($pending_orders as $pending_order){
             echo $pending_order->id;
@@ -208,6 +209,7 @@ class AdminController extends Controller
     public function sales(){
         //DAILY
         $orders_today = Order::whereDate('created_at',today())->where('status','Received')->get(); // orders today
+        
        $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
         //MONTHLY
         $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->where('status','Received')->get(); // orders in month

@@ -5,6 +5,9 @@ use App\Menu;
 use App\User;
 use App\Order;
 use App\Category;
+use App\ReceiverDetails;
+use Auth;
+use DB;
 
 use Illuminate\Http\Request;
 
@@ -27,10 +30,18 @@ class HomeController extends Controller
      */
     public function index()
     {   //
+
         $users = User::all();
         $menus = Menu::orderBy('food_name')->get();
         $categories = Category::orderBy('category')->get();
-        return view('home',compact('menus','categories','users'));
+        echo $check = DB::table('receiver_details')
+                ->where([
+                    'fromemail' => Auth::user()->email,
+                    'transac_status' => 0
+                    ])
+                ->latest()
+                ->get();
+        return view('home',compact('menus','categories','users','check'));
     
     }
 
@@ -41,8 +52,22 @@ class HomeController extends Controller
         return view('home',compact('menus','categories','users'));
     }
 
-    public function orderHistory($id){
-       $received_orders = User::find($id)->orders()->where('status','Received')->get();
-        return view('Order.orderhistory',compact('received_orders'));
+    public function orderHistory($email){
+        $order_history = ReceiverDetails::where([
+            'fromemail' => $email,
+            'transac_status' => 1
+            ])->get();
+        return view('Order.orderhistory',compact('order_history'));
+    }
+    public function view_orderHistory($id){
+        $orders= Order::where([
+            'order_id' => $id,
+            'status' => 'Received'
+            ])->get();
+        $total= Order::where([
+            'order_id' => $id,
+            'status' => 'Received'
+            ])->sum('menu_price');
+        return view('Order.view_historyorder',compact('orders','total'));
     }
 }
