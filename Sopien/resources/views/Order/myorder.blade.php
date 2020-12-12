@@ -50,7 +50,18 @@
 
                     </tbody>
                 </table>
-                <a href="{{url('/cancel-order/'.Auth::user()->email)}}"> <button type="button" class="btn btn-outline-danger">Cancel Orders</button></a>
+                <div class="d-flex p-2 d-flex justify-content-center">
+                    <h1 name="total">Total:{{$orders_sum}}</h1>
+                </div>
+            @if(Auth::user()->Order_Status == 'Pending')    
+                <a href="{{url('/cancel-order/'.Auth::user()->email)}}"> 
+                    <button type="button" class="btn btn-outline-danger">Cancel Orders</button>
+                </a>
+            @else 
+            <div class="d-flex p-2 d-flex justify-content-center table-bordered border border-success">
+                    <h5>Your order has been approved, orders cannot be cancel thank you!</h5>
+                </div>
+            @endif
 @else
 <div class="card text-center mt-md-3">
 

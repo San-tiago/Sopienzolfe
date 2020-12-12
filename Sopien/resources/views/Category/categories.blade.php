@@ -5,7 +5,15 @@
 <h1>Categories</h1>
 <a href="{{url('/admin/add-category')}}"><button class="btn btn-outline-primary">Add Category</button></a><br>
 
-
+@if(session('category_added'))
+    <div class="d-flex justify-content-center alert alert-success" role="alert">
+        <h5>{{Session::get('category_added')}}</h5>
+    </div>
+@elseif(session('delete'))
+<div class="d-flex justify-content-center alert alert-danger" role="alert">
+        <h5>{{Session::get('delete')}}</h5>
+    </div>
+@endif
 <table class="table table-bordered">
      <thead>
          <tr>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Http;
 use App\Menu;
 use App\User;
 use App\Order;
@@ -34,14 +35,19 @@ class HomeController extends Controller
         $users = User::all();
         $menus = Menu::orderBy('food_name')->get();
         $categories = Category::orderBy('category')->get();
-        echo $check = DB::table('receiver_details')
+        /* $check = DB::table('receiver_details')
                 ->where([
                     'fromemail' => Auth::user()->email,
-                    'transac_status' => 0
                     ])
                 ->latest()
-                ->get();
-        return view('home',compact('menus','categories','users','check'));
+                ->get(); */
+        $new_transac = ReceiverDetails::where('fromemail',Auth::user()->email)->max('id');
+          /*  $new_transac = DB::table('receiver_details')->where(
+                            'id' => \DB::raw("(select max(`id`) from receiver_details)"),
+                            'fromemail' => Auth::user()->email
+                            )->get(); */
+                
+        return view('home',compact('menus','categories','users','new_transac'));
     
     }
 
@@ -49,7 +55,14 @@ class HomeController extends Controller
         $users = User::all();
         $menus = Menu::where('menu_category',$category)->get();
         $categories = Category::orderBy('category')->get();
-        return view('home',compact('menus','categories','users'));
+        $check = DB::table('receiver_details')
+        ->where([
+            'fromemail' => Auth::user()->email,
+            'transac_status' => 0
+            ])
+        ->latest()
+        ->get();
+        return view('home',compact('menus','categories','users','check'));
     }
 
     public function orderHistory($email){

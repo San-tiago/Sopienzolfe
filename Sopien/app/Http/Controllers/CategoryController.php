@@ -21,6 +21,7 @@ class CategoryController extends Controller
             'category' => 'required',
         ]);
         Category::create($request->all());
+        $request->session()->flash('category_added','Category Added Successfully!');
         return redirect('/admin/categories');
     }
     public function edit($id){
@@ -39,7 +40,7 @@ class CategoryController extends Controller
     public function delete($id){
         $category = Category::find($id);
         $category -> delete();
-        return back();
+        return back()->with('delete','Deleted Successfuly!');;
     }
 
 }

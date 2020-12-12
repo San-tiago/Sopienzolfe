@@ -32,7 +32,8 @@
         <a href="{{url('/admin/delivering-order/'.$filtered_processorder->email)}}"><button class="btn btn-outline-primary">Deliver Order</button></a>
     </table>
 
-
+    <div class="d-flex p-2 d-flex justify-content-center"><h1 name="total">Total: P {{$total_filtered_processorders}}</h1>
+    </div>
 
     
 

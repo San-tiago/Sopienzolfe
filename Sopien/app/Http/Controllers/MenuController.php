@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Menu;
 use Illuminate\Http\Request;
-
+use DB;
 class MenuController extends Controller
 {
     //
@@ -28,6 +28,7 @@ class MenuController extends Controller
             'description' => 'required',
             'price' => 'required',
         ]);
+        $request->session()->flash('menu','Menu was created successfully!');
         Menu::create($request->all());
         return redirect('/admin/menu');
     }
@@ -39,16 +40,17 @@ class MenuController extends Controller
     public function update(Request $request, $id){
         $menu = Menu::find($id);
         $menu->update($request->all());
+        $request->session()->flash('edit','Edit successfully!');
         return redirect('/admin/menu');
     }
 
     public function create(){
+
         return view('Menu.create_menu');
     }
 
     public function delete($id){
-        $menu = Menu::find($id);
-        $menu -> delete();
-        return back();
+        DB::table('menus')->where('id',$id)->delete();
+        return back()->with('delete','Deleted Successfuly!');
     }
 }

@@ -33,10 +33,11 @@
         <a href="{{url('/admin/processing-order/'.$filtered_approveorder->email)}}">
         <button class="btn btn-outline-primary">Process Order</button>
         </a>    
-    </tbody>
+    </tbody> 
     </table>
 
-
+    <div class="d-flex p-2 d-flex justify-content-center"><h1 name="total">Total: P {{$total_filtered_approveorders}}</h1>
+    </div>
 
     
 

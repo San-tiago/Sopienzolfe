@@ -3,7 +3,19 @@
 @section('dashboard')
 <div>
 <h1>Menu</h1>
-    
+@if(session('menu'))
+    <div class="d-flex justify-content-center alert alert-success" role="alert">
+        <h5>{{Session::get('menu')}}</h5>
+    </div>
+@elseif(session('delete'))
+    <div class="d-flex justify-content-center alert alert-danger" role="alert">
+        <h5>{{Session::get('delete')}}</h5>
+    </div>
+@elseif(session('edit'))
+    <div class="d-flex justify-content-center alert alert-info" role="alert">
+        <h5>{{Session::get('edit')}}</h5>
+    </div>
+@endif
 <table class="table table-bordered">
      <thead>
          <tr>
@@ -32,7 +44,10 @@
     </table>
 
     <a href="{{url('/admin/categories')}}"><button  class="btn btn-outline-primary">Categories</button></a>
+    @if(count($category) != 0)
     <a href="{{url('/admin/add-fooditem')}}"><button  class="btn btn-outline-primary">Add Food Item</button></a>
+    @endif
+
 
     
 

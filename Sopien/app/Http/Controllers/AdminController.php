@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Menu;
 use App\User;
 use App\Order;
+use App\Category;
 use App\ReceiverDetails;
 use DB;
 class AdminController extends Controller
@@ -16,9 +17,11 @@ class AdminController extends Controller
     }
 
     public function menu(){
+        $category = Category::all();
         $menus = Menu::orderBy('food_name')->get();
         return view('admin.menu',[
-            'menus'=>$menus
+            'menus'=>$menus,
+            'category'=>$category
             ]);
 
         
@@ -40,7 +43,11 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Pending'
            ])->get();
-        return view('admin.filtered_pendingorders',compact('filtered_pendingorders','users')); 
+       $total_filtered_pendingorders = Order::where([
+           'email'=> $email,
+           'status'=> 'Pending'
+           ])->sum('menu_price');
+        return view('admin.filtered_pendingorders',compact('filtered_pendingorders','users','total_filtered_pendingorders')); 
        
     }
     public function filtered_approveorders($email){
@@ -51,7 +58,11 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Approved'
            ])->get();
-        return view('admin.filtered_approveorders',compact('filtered_approveorders','users')); 
+       $total_filtered_approveorders = Order::where([
+           'email'=> $email,
+           'status'=> 'Approved'
+           ])->sum('menu_price');
+        return view('admin.filtered_approveorders',compact('filtered_approveorders','users','total_filtered_approveorders')); 
        
     }
     public function filtered_processorders($email){
@@ -63,7 +74,11 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Processed'
            ])->get();
-        return view('admin.filtered_processorders',compact('filtered_processorders','users')); 
+       $total_filtered_processorders = Order::where([
+           'email'=> $email,
+           'status'=> 'Processed'
+           ])->sum('menu_price');
+        return view('admin.filtered_processorders',compact('filtered_processorders','users','total_filtered_processorders')); 
        
     }
     public function filtered_ondeliveryorders($email){
@@ -75,7 +90,11 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'On Delivery'
            ])->get();
-        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','users')); 
+       $total_filtered_ondeliveryorders = Order::where([
+           'email'=> $email,
+           'status'=> 'On Delivery'
+           ])->sum('menu_price');
+        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','users','total_filtered_ondeliveryorders')); 
        
     }
     public function filtered_cancelledorders($id){
@@ -87,8 +106,9 @@ class AdminController extends Controller
     public function filtered_receivedorders($id){
         
           $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
+          $total_filtered_receivedorders = User::find($id)->orders()->where('status','Received')->sum('menu_price');
      
-        return view('admin.filtered_receivedorders',compact('filtered_receivedorders')); 
+        return view('admin.filtered_receivedorders',compact('filtered_receivedorders','total_filtered_receivedorders')); 
        
     }
 
@@ -209,7 +229,9 @@ class AdminController extends Controller
     public function sales(){
         //DAILY
         $orders_today = Order::whereDate('created_at',today())->where('status','Received')->get(); // orders today
-        
+        if($orders_today == null){
+           $orders_today = 'No Orders Today';
+        }
        $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
         //MONTHLY
         $orders_month = Order::whereYear('created_at',now()->year)->whereMonth('created_at',now()->month)->where('status','Received')->get(); // orders in month

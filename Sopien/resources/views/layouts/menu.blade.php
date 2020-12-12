@@ -40,8 +40,9 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
+                    <a class="btn btn-light btn-sm mr-3" href="/home">Menu</a>
                     <div class="dropdown show mr-5">
-                            <a href="/receiver_page"><i class="fas fa-plus-circle"></i></a>
+                            
                             <a class="btn btn-secondary dropdown-toggle btn-sm btn-light" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                Order
                             </a>

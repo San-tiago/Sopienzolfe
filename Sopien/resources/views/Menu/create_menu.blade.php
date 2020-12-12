@@ -6,24 +6,41 @@
 
 
     <form action="{{url('/insert-fooditem')}}" method="post">
-        @csrf
-        Food Name: <input type="text" name="food_name"><br>
+        @csrf        
+    <div class="form-group">
+        <label for="exampleInputEmail1">Food Name</label>
+        <input name = "food_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Food Name">
         <span style="color: red">@error('food_name'){{$message}}@enderror</span><br>
+    </div>
 
+    
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Category</label>
+            <select class="form-control" id="exampleFormControlSelect1" name="menu_category">
+            @foreach($categories as $category)  
+                <option>{{$category->category}}</option>
+            @endforeach
+            </select>
+        </div>
 
-       Category: <select name="menu_category">
-                @foreach($categories as $category)
-                   <option>{{$category->category}}</option>
-                @endforeach
-                </select><br>
+    
 
-        Description: <input type="textbox" name = "description"><br>
-        <span style="color: red">@error('description'){{$message}}@enderror</span><br>
-        Price: <input type="text" name="price"><br>
-        <span style="color: red">@error('price'){{$message}}@enderror</span><br>
-        <input type="submit" name="" value="Submit"><br>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Description</label>
+            <input name = "description" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description">
+            <span style="color: red">@error('description'){{$message}}@enderror</span><br>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1">Price</label>
+            <input name = "price" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Price">
+            <span style="color: red">@error('price'){{$message}}@enderror</span><br>
+        </div>
+
+    
+        <input type="submit" name="" value="Submit"  class="btn btn-outline-primary">
+        
+
     </form>
-</body>
-</html>
 </div>
 @endsection

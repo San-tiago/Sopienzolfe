@@ -9,6 +9,7 @@ use App\PlacedOrder;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use App\Notifications\UserNotification;
 class OrdersController extends Controller
 {
@@ -66,6 +67,19 @@ class OrdersController extends Controller
         return redirect('/myorder');
     }
     public function receiver_page(){
+       /*  $ncr_cities = Http::get('https://psgc.gitlab.io/api/regions/130000000/cities/')->body(); //NCR CITIES
+        $calab_cities = Http::get('https://psgc.gitlab.io/api/regions/040000000/cities/')->body(); // CALABARZON CITIES
+           $calab_prov = Http::get('https://psgc.gitlab.io/api/regions/040000000/provinces/')->body(); // provinces sa CALABARZON
+          //$regions = Http::get('https://psgc.gitlab.io/api/regions/130000000/provinces/')->body(); // provinces sa NCR
+         $municip = Http::get('https://psgc.gitlab.io/api/regions/040000000/municipalities')->body(); */
+        
+       /*  $data_calab = json_decode($calab_prov,true);
+        $calab_cities = json_decode($calab_cities,true);
+        $ncr_cities = json_decode($ncr_cities,true);
+        $municip = json_decode($municip,true);
+
+        $municip = collect($municip);
+        $municip = $municip->sortBy('name'); */
         return view('Receiver.receiver');
     }
     public function receiver(Request $request){
@@ -73,9 +87,15 @@ class OrdersController extends Controller
             'fromemail',
             'receivername' => 'required',
             'receiveraddress' => 'required',
+            'province' => 'required',
+            'municipality/city' => 'required',
             'receivercontactnumber' => 'required',
         ]);
         ReceiverDetails::create($request->all());
+        $user = Auth::user()->email;
+        User::where('email',$user)->update(['Order_Status' => 'Ordering']);
+        
+
         return redirect('/home');
     }
     public function myorder(){
@@ -95,9 +115,19 @@ class OrdersController extends Controller
                     ])->whereNotIn('status',['Received','Cancelled'])->get();
                             })
                             ->get();
+
+            $orders_sum = DB::table('orders')
+                ->where(function ($query) {
+                     $user = Auth::user()->email;
+                        $query->where([
+                             'email' => $user,
+                                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                                    })
+                                    ->sum('menu_price');
                             
                              return view('Order.myorder',[
                                  'orders' => $orders,
+                                 'orders_sum' => $orders_sum
                              ]); 
         }
         
@@ -105,6 +135,13 @@ class OrdersController extends Controller
          User::where('email',$email)->update(['Order_Status' => 'None']);
         Order::where('email', $email)->update(['status'=>'Cancelled']);
         DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
+        DB::table('receiver_details')
+                ->where([
+                    'fromemail' => Auth::user()->email,
+                    'transac_status' => 0
+                    ])
+                ->latest()
+                ->update(['transac_status' => 'Cancelled']);
         return redirect('/home');
     }
 

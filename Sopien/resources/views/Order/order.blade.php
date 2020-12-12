@@ -37,11 +37,20 @@
                 </table>
 
 </table>
-
-    <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total}}</h1>
+@if($total > 0)
+    <div class="d-flex p-2 d-flex justify-content-center"><h1 name="total">Total:{{$total}}</h1>
     </div>
-    <div class="d-flex p-2 d-flex justify-content-center"><a href="{{url('/placeorder')}}"><button type="button" class="btn btn-success">Check Out</button></a>
-</div>
+    <div class="d-flex p-2 d-flex justify-content-center"><a href="{{url('/placeorder')}}">
+            <button type="button" class="btn btn-success">Check Out</button></a>
+    </div>
+@else
+    <div class="d-flex p-2 d-flex justify-content-center">
+        <a href="/receiver_page">
+            <button type="button" class="btn btn-primary">Click here to Create Order
+            </button>
+        </a>
+    </div>
+@endif
 
 
 

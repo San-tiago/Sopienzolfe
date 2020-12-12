@@ -20,6 +20,24 @@
     <input  name= "receiveraddress" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Address">
     <span style="color: red">@error('receiver_address'){{$message}}@enderror</span>
   </div>
+  
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">Province</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="province">
+      <option>CALABARZON</option>
+
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">City/Municipality</label>
+    <select class="form-control" id="exampleFormControlSelect1" name="municipality/city">
+      <option>CALABARZON</option>
+      
+    </select>
+  </div>
+
+  
   <div class="form-group">
     <label for="exampleInputEmail1">Contact Number</label>
     <input name="receivercontactnumber"  type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Contact Number">

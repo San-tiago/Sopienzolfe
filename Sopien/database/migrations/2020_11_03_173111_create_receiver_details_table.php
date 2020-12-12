@@ -18,6 +18,8 @@ class CreateReceiverDetailsTable extends Migration
             $table->string('fromemail');
             $table->string('receivername');
             $table->string('receiveraddress');
+            $table->string('province');
+            $table->string('municipality/city');
             $table->string('receivercontactnumber');
             $table->string('transac_status')->default('0');
             $table->timestamps();
