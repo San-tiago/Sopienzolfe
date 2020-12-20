@@ -6,7 +6,11 @@ use App\Menu;
 use Illuminate\Http\Request;
 use DB;
 class MenuController extends Controller
+{   
+    public function __construct()
 {
+    $this->middleware('auth');
+}
     //
    /*  function construct(){
          $categories = Category::orderBy('category')->get();

@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Http;
 use App\Notifications\UserNotification;
 class OrdersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     public function store(Request $request){
 
@@ -27,9 +31,10 @@ class OrdersController extends Controller
             'menu_name',
             'menu_category',
             'quantity',
-            'menu_description',
+            'menu_description', 
         ]);
         User::find($user_id)->notify(new UserNotification);
+        
         $request->request->add(['menu_price'=>$total]);
         Order::create($request->all());
         return back();
@@ -63,7 +68,9 @@ class OrdersController extends Controller
                 'email' => $user,
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'Pending']);
-      
+        
+        //User::find(['is_admin' => 1])->notify(new UserNotification);
+         User::find(1)->notify(new UserNotification);
         return redirect('/myorder');
     }
     public function receiver_page(){
@@ -131,27 +138,49 @@ class OrdersController extends Controller
                              ]); 
         }
         
-     public function cancelOrder($email){
+     public function cancelOrder($email,$id){
          User::where('email',$email)->update(['Order_Status' => 'None']);
-        Order::where('email', $email)->update(['status'=>'Cancelled']);
+        Order::where([
+            'email' => $email,
+            'order_id' => $id
+            ])->update(['status'=>'Cancelled']);
         DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
         DB::table('receiver_details')
                 ->where([
-                    'fromemail' => Auth::user()->email,
+                    'fromemail' => $email,
                     'transac_status' => 0
-                    ])
+                    ])  
                 ->latest()
                 ->update(['transac_status' => 'Cancelled']);
         return redirect('/home');
     }
 
     public function mycancelledOrders($email){
+        
+        $cancelled_order_history = ReceiverDetails::where([
+            'fromemail' => $email,
+            'transac_status' => 'Cancelled'
+            ])->get(); 
+        //return view('Order.orderhistory',compact('order_history'));
 
-        $cancelled_orders = Order::where([
+        /* $cancelled_orders = Order::where([
             'email' => $email,
             'status' => 'Cancelled',
+            ])->get(); */
+        return view('Order.mycancelledorders',compact('cancelled_order_history')); 
+    }
+    public function cancelled_orderHistory($id,$email){
+       $orders= Order::where([
+            'order_id' => $id,
+            'email' => $email,
+            'status' => 'Cancelled'
             ])->get();
-        return view('Order.mycancelledorders',compact('cancelled_orders')); 
+        $total= Order::where([
+            'email' => $email,
+            'order_id' => $id,
+            'status' => 'Cancelled'
+            ])->sum('menu_price');
+       return view('Order.view_cancelledorders',compact('orders','total'));
     }
 
 

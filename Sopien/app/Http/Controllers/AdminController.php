@@ -9,10 +9,16 @@ use App\Order;
 use App\Category;
 use App\ReceiverDetails;
 use DB;
+use Auth;
 class AdminController extends Controller
 {
     //
+    public function __construct()
+{
+    $this->middleware('auth');
+}
     public function index(){
+      
         return view ('layouts.dashboard');
     }
 
@@ -35,7 +41,9 @@ class AdminController extends Controller
 
     // F I L T E R E D  O R D E R S / U S E R
     public function filtered_pendingorders($email){
-        Order::where('email', $email)->get();
+        $details = ReceiverDetails::where('fromemail', $email)->latest('created_at')->first();
+        //Order::where('email', $email)->get();
+       
         $users = User::where([
             'Order_Status' => 'Pending',
             ])->get();
@@ -47,10 +55,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Pending'
            ])->sum('menu_price');
-        return view('admin.filtered_pendingorders',compact('filtered_pendingorders','users','total_filtered_pendingorders')); 
+        return view('admin.filtered_pendingorders',compact('filtered_pendingorders','users','total_filtered_pendingorders','details')); 
        
     }
     public function filtered_approveorders($email){
+        $details = ReceiverDetails::where('fromemail', $email)->latest('created_at')->first();
+
         $users = User::where([
             'Order_Status' => 'Approved',
             ])->get();
@@ -62,10 +72,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Approved'
            ])->sum('menu_price');
-        return view('admin.filtered_approveorders',compact('filtered_approveorders','users','total_filtered_approveorders')); 
+        return view('admin.filtered_approveorders',compact('filtered_approveorders','users','total_filtered_approveorders','details')); 
        
     }
     public function filtered_processorders($email){
+        $details = ReceiverDetails::where('fromemail', $email)->latest('created_at')->first();
+
         $users = User::where([
          
             'Order_Status' => 'Processed',
@@ -78,10 +90,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Processed'
            ])->sum('menu_price');
-        return view('admin.filtered_processorders',compact('filtered_processorders','users','total_filtered_processorders')); 
+        return view('admin.filtered_processorders',compact('filtered_processorders','users','total_filtered_processorders','details')); 
        
     }
     public function filtered_ondeliveryorders($email){
+        $details = ReceiverDetails::where('fromemail', $email)->latest('created_at')->first();
+
         $users = User::where([
             'provider_id' => null,
             'Order_Status' => 'On Delivery',
@@ -94,7 +108,7 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'On Delivery'
            ])->sum('menu_price');
-        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','users','total_filtered_ondeliveryorders')); 
+        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','users','total_filtered_ondeliveryorders','details')); 
        
     }
     public function filtered_cancelledorders($id){
@@ -144,10 +158,11 @@ class AdminController extends Controller
                         })->update(['status'=>'On Delivery']);
         return redirect('/admin/processedorders');    
     }
-    public function receivingorder($email){
+    public function receivingorder($email,$id){
         DB::table('users')->where('email',$email)->increment('completed_orders_count');
         User::where('email', $email)->update(['Order_Status'=>'None']);
-        ReceiverDetails::where('fromemail',$email)->update(['transac_status' => 1]);
+        // kailangan mo mapasa yung receiver details id sa baba
+        DB::table('receiver_details')->where('id',$id)->update(['transac_status' => 1]);
         Order::where('email', $email)->when($email,function ($query,$email) {
 
             $query->where([
@@ -173,8 +188,9 @@ class AdminController extends Controller
     public function pendingorders(){
         //echo $orders = User::find(1)->orders;
         //$user = Order::find(1)->users;
+        auth()->user()->unreadNotifications->markAsRead();
+
         
-      
         
          $users = User::where([
             

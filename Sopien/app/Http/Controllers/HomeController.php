@@ -34,6 +34,7 @@ class HomeController extends Controller
 
         $users = User::all();
         $menus = Menu::orderBy('food_name')->get();
+        $menus_count = count($menus);
         $categories = Category::orderBy('category')->get();
         /* $check = DB::table('receiver_details')
                 ->where([
@@ -47,13 +48,14 @@ class HomeController extends Controller
                             'fromemail' => Auth::user()->email
                             )->get(); */
                 
-        return view('home',compact('menus','categories','users','new_transac'));
+        return view('home',compact('menus','categories','users','new_transac','menus_count'));
     
     }
 
     public function menu_nav($category){
         $users = User::all();
         $menus = Menu::where('menu_category',$category)->get();
+        $menus_count = count($menus);
         $categories = Category::orderBy('category')->get();
         $check = DB::table('receiver_details')
         ->where([
@@ -62,7 +64,7 @@ class HomeController extends Controller
             ])
         ->latest()
         ->get();
-        return view('home',compact('menus','categories','users','check'));
+        return view('home',compact('menus','categories','users','check','menus_count'));
     }
 
     public function orderHistory($email){
@@ -72,8 +74,9 @@ class HomeController extends Controller
             ])->get();
         return view('Order.orderhistory',compact('order_history'));
     }
-    public function view_orderHistory($id){
-        $orders= Order::where([
+    public function view_orderHistory($id,$email){
+         $orders= Order::where([
+            'email' => $email,
             'order_id' => $id,
             'status' => 'Received'
             ])->get();

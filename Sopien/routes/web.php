@@ -20,7 +20,7 @@ Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/menu/{category}', 'HomeController@menu_nav');
 Route::get('/order-history/{email}', 'HomeController@orderHistory');
-Route::get('/view/history-orders/{email}', 'HomeController@view_orderHistory');
+Route::get('/view/history-orders/{id}/{email}', 'HomeController@view_orderHistory');
 
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
@@ -41,7 +41,7 @@ Route::get('/admin/received-order/{id}', 'AdminController@filtered_receivedorder
 Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
 Route::get('/admin/processing-order/{email}', 'AdminController@processingorder');
 Route::get('/admin/delivering-order/{email}', 'AdminController@deliveringorder');
-Route::get('/admin/receiving-order/{email}', 'AdminController@receivingorder');
+Route::get('/admin/receiving-order/{email}/{id}', 'AdminController@receivingorder');
 
 
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');
@@ -69,8 +69,9 @@ Route::get('/placeorder', 'OrdersController@placeOrder');
 Route::post('/receiver', 'OrdersController@receiver');
 Route::get('/receiver_page', 'OrdersController@receiver_page');
 Route::get('/myorder', 'OrdersController@myorder');
-Route::get('/cancel-order/{email}', 'OrdersController@cancelOrder');
+Route::get('/cancel-order/{email}/{id}', 'OrdersController@cancelOrder');
 Route::get('/my-cancelled-orders/{email}', 'OrdersController@mycancelledOrders');
+Route::get('/view/cancelled-orders/{id}/{email}', 'OrdersController@cancelled_orderHistory');
 
 
 

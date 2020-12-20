@@ -10,7 +10,7 @@
 </div>
 @else
     <div class = "flex-container">
-        
+    @if($menus_count > 0)   
         <div class="nav">
             <h1>Categories</h1>
             <div class = "category">
@@ -23,12 +23,12 @@
         
         
         </div> 
+    @endif
             
         <div class = "menu">
            
-             
-                    @if(Auth::user()->Order_Status == 'None')
-                    <a href="/receiver_page"><button type="button" class="btn btn-success">Create Order</button></a> 
+                    @if(Auth::user()->Order_Status == 'None' && $menus_count > 0)
+                        <a href="/receiver_page"><button type="button" class="btn btn-success">Create Order</button></a> 
                     @endif
             
             @foreach($menus as $menu)

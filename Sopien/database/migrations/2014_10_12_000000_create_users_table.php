@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email');
+            $table->boolean('is_admin')->default(false);
             $table->string('address')->nullable();
             $table->integer('contactnumber')->nullable();
             $table->string('Order_Status')->default('None');

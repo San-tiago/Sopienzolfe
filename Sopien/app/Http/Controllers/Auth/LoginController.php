@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 use Socialite;
 use DB;
 use App\User;
@@ -29,7 +30,12 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function authenticated(Request $request, $user ){
+        if($user->is_admin){
+            return redirect ('/admin');
+        }
+        return redirect ('/home');
+    }
 
     /**
      * Create a new controller instance.
@@ -82,10 +88,13 @@ class LoginController extends Controller
             //user is not found 
             echo "user not found";
                 }
-    else{ 
+        else{ 
         Auth::Login($check_user,true);
-        return redirect('/home');
-     }
+            if($check_user->is_admin){
+                return redirect('/admin');
+            }
+            return redirect('/home');
+            }
             // user found 
        
         

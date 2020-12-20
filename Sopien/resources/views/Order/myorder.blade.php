@@ -54,7 +54,7 @@
                     <h1 name="total">Total:{{$orders_sum}}</h1>
                 </div>
             @if(Auth::user()->Order_Status == 'Pending')    
-                <a href="{{url('/cancel-order/'.Auth::user()->email)}}"> 
+                <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"> 
                     <button type="button" class="btn btn-outline-danger">Cancel Orders</button>
                 </a>
             @else 

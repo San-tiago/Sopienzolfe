@@ -7,6 +7,30 @@
 
 <h1>On Delivery Orders</h1>
         <a href="/admin/ondeliveryorders"><button class="btn btn-outline-secondary">Back</button></a>
+        <table class="table table-bordered">
+     <thead>
+         <tr>
+            <th scope="col" class="text-center">Email</th>
+            <th scope="col" class="text-center">Receiver Name</th>
+            <th scope="col" class="text-center">Address</th>
+            <th scope="col" class="text-center">Municipality / City</th>
+            <th scope="col" class="text-center">Contact Number</th>
+        </tr>
+    </thead>
+     <tbody>
+     
+        <tr>
+            
+           
+            <td class="text-center">{{$details['fromemail']}}</td>
+            <td class="text-center">{{$details['receivername']}}</td>
+            <td class="text-center">{{$details['receiveraddress']}}</td>
+            <td class="text-center">{{$details['municipality/city']}}</td>
+            <td class="text-center">{{$details['receivercontactnumber']}}</td>  
+        </tr>
+   
+    </tbody>
+    </table>
 <table class="table table-bordered">
      <thead>
          <tr>
@@ -30,7 +54,7 @@
         </tr>
 
         @endforeach
-        <a href="{{url('/admin/receiving-order/'.$filtered_ondeliveryorder->email)}}">
+        <a href="{{url('/admin/receiving-order/'.$filtered_ondeliveryorder->email.'/'.$details['id'])}}">
          <button class="btn btn-outline-primary">Mark as Received</button>
         </a>
     </table>
