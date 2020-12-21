@@ -12,6 +12,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://kit.fontawesome.com/114bfafc96.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -81,5 +82,57 @@
             @yield('content')
         </main>
     </div>
+    
+    
 </body>
+<script>
+    $(function(){
+        var $name = $('#message')
+        $.ajax({
+            url: "https://psgc.gitlab.io/api/regions/040000000/cities/",
+            type: "GET",
+            dataType: "JSON",
+            data:JSON.stringify({ }),
+            success:function(data){
+                $.each(data,function(i, city){
+                    $name.append("<option>"+ city.name+"</option>");
+                })
+                //console.log('success',data)
+                   // $('.messages').append("<li>"+JSON.stringify(data)+"</li>");
+            }
+        });
+    })
+
+    $(function(){
+        var $province = $('#province')
+        $.ajax({
+            url: "https://psgc.gitlab.io/api/regions/040000000/provinces/",
+            type: "GET",
+            dataType: "JSON",
+            data:JSON.stringify({ }),
+            success:function(data){
+                console.log('success',data)
+                $.each(data,function(i, city){
+                    $province.append("<option>"+ city.name+"</option>");
+                })
+            }
+        });
+    })
+    $(function(){
+        var $ncr_cities = $('#message')
+        $.ajax({
+            url: "https://psgc.gitlab.io/api/regions/130000000/cities/",
+            type: "GET",
+            dataType: "JSON",
+            data:JSON.stringify({ }),
+            success:function(data){
+                console.log('success',data)
+                $.each(data,function(i, city){
+                    $ncr_cities.append("<option>"+ city.name+"</option>");
+                })
+            }
+        });
+    })
+
+</script>
 </html>

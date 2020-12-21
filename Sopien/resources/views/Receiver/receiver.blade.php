@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<ul class="messages">
+    </ul>
+
 <div class="d-flex justify-content-center">
 
 <form action="{{url('/receiver')}}" method="post">
@@ -22,17 +25,18 @@
   </div>
   
   <div class="form-group">
-    <label for="exampleFormControlSelect1">Province</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="province">
-      <option>CALABARZON</option>
+    <label for="exampleFormControlSelect1">Province / Region</label>
+    <select class="form-control" id="province" name="province">
+
+      <option>NCR</option>
 
     </select>
   </div>
 
   <div class="form-group">
     <label for="exampleFormControlSelect1">City/Municipality</label>
-    <select class="form-control" id="exampleFormControlSelect1" name="municipality/city">
-      <option>CALABARZON</option>
+    <select class="form-control" id="message" name="municipality/city">
+      
       
     </select>
   </div>
