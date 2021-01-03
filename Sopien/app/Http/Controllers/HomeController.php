@@ -57,14 +57,15 @@ class HomeController extends Controller
         $menus = Menu::where('menu_category',$category)->get();
         $menus_count = count($menus);
         $categories = Category::orderBy('category')->get();
+        $new_transac = ReceiverDetails::where('fromemail',Auth::user()->email)->max('id');
         $check = DB::table('receiver_details')
         ->where([
             'fromemail' => Auth::user()->email,
             'transac_status' => 0
             ])
         ->latest()
-        ->get();
-        return view('home',compact('menus','categories','users','check','menus_count'));
+        ->get(); 
+        return view('home',compact('menus','categories','users','check','menus_count','new_transac'));
     }
 
     public function orderHistory($email){

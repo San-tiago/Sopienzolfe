@@ -14,18 +14,18 @@
             <th scope="col" class="text-center">Receiver Name</th>
             <th scope="col" class="text-center">Address</th>
             <th scope="col" class="text-center">Municipality / City</th>
+            <th scope="col" class="text-center">Province / Region</th>
             <th scope="col" class="text-center">Contact Number</th>
         </tr>
     </thead>
      <tbody>
-     
+
         <tr>
-            
-           
             <td class="text-center">{{$details['fromemail']}}</td>
             <td class="text-center">{{$details['receivername']}}</td>
             <td class="text-center">{{$details['receiveraddress']}}</td>
             <td class="text-center">{{$details['municipality/city']}}</td>
+            <td class="text-center">{{$details['province']}}</td>
             <td class="text-center">{{$details['receivercontactnumber']}}</td>  
         </tr>
    
@@ -43,7 +43,8 @@
         </tr>
     </thead>
      <tbody>
-     @foreach($filtered_ondeliveryorders as $filtered_ondeliveryorder)
+    @foreach($filtered_ondeliveryorders as $filtered_ondeliveryorder)
+
         <tr>
             <td class="text-center">{{$loop->index+1}}</td>
             <td class="text-center">{{$filtered_ondeliveryorder->menu_name}}</td>
@@ -52,10 +53,9 @@
             <td class="text-center">{{$filtered_ondeliveryorder->quantity}}</td>
             <td class="text-center">{{$filtered_ondeliveryorder->menu_price}}</td>  
         </tr>
-
-        @endforeach
+    @endforeach
         <a href="{{url('/admin/receiving-order/'.$filtered_ondeliveryorder->email.'/'.$details['id'])}}">
-         <button class="btn btn-outline-primary">Mark as Received</button>
+         <button class="btn btn-outline-primary" onclick="received_order() ">Mark as Received</button>
         </a>
     </table>
 

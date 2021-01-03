@@ -81,12 +81,14 @@ class RegisterController extends Controller
     }
 
     // ito din dagdag para redirect sa login
-    /* public function register(Request $request)
+    public function register(Request $request)
 {
     $this->validator($request->all())->validate();
 
     event(new Registered($user = $this->create($request->all())));
+    $request->session()->flash('register','You may now log-in!');
+    return redirect($this->redirectPath('/login'));
+   
 
-    return redirect($this->redirectPath('/login'))->with('message', 'Your message');
-} */
+}
 }

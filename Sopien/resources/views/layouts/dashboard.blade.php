@@ -16,15 +16,15 @@
                       
     <a href="/admin/menu"><i class="fas fa-calendar-minus fa-lg icon"></i>Menu</a><br>
     <a href="/admin/pendingorders"><span class="badge badge-danger ">
-            {{auth()->user()->unreadNotifications->count()}}
+            {{$pending_count ?? ''}}
         </span><i class="fas fa-clock fa-lg icon"></i>Pending Orders</a><br>
     <a href="/admin/approvedorders"> 
-        
+    {{$approved_count ?? ''}}
         <i class="fas fa-calendar-check fa-lg icon"></i>Approve Orders
     </a><br>
-    <a href="/admin/processedorders"><i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
-    <a href="/admin/ondeliveryorders"><i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
-    <a href="/admin/receivedorders"><i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
+    <a href="/admin/processedorders">{{$inprocess_count ?? ''}}<i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
+    <a href="/admin/ondeliveryorders">{{$Ondelivery_count ?? ''}}<i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
+    <a href="/admin/receivedorders">{{$received_count ?? ''}}<i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
     <a href="/admin/cancelledorders"><i class="far fa-window-close fa-lg icon"></i>Cancelled Orders</a><br>
     <a href="/admin/sales"><i class="fas fa-file-invoice-dollar fa-lg icon"></i>Sales</a><br>
     <a href="/admin/users"><i class="fas fa-users fa-lg icon"></i>Users</a><br>
@@ -43,5 +43,32 @@
 <main class="content">
             @yield('dashboard')
 </main>
+
+<script>
+   function approve_order(){
+       const notification = new Notification("ORDER MARK AS APPROVED!",{
+           body:"Check approved orders button"
+       })
+   }
+        
+       
+   function process_order(){
+       const notification = new Notification("ORDER MARK AS PROCESSED!",{
+           body:"Check in-process order button"
+       })
+   }
+        
+   function deliver_order(){
+       const notification = new Notification("ORDER MARK AS ON-DELIVERY!",{
+           body:"Check on-deliver order button"
+       })
+   }
+   function received_order(){
+       const notification = new Notification("ORDER MARK AS RECEIVED!",{
+           body:"Check received order button"
+       })
+   }
+
+   </script>
 </body>
 </html>

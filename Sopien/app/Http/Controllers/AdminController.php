@@ -10,6 +10,8 @@ use App\Category;
 use App\ReceiverDetails;
 use DB;
 use Auth;
+use Carbon\Carbon;
+use App\Notifications\UserNotification;
 class AdminController extends Controller
 {
     //
@@ -18,8 +20,37 @@ class AdminController extends Controller
     $this->middleware('auth');
 }
     public function index(){
-      
-        return view ('layouts.dashboard');
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        return view ('layouts.dashboard',compact('pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
 
     public function menu(){
@@ -136,6 +167,8 @@ class AdminController extends Controller
                 'email' => $email,
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'Approved']);
+         $status = 'Order Approved';
+        User::find(1)->notify(new UserNotification($status));
         return redirect('/admin/pendingorders');
     }
     public function processingorder($email){
@@ -146,6 +179,8 @@ class AdminController extends Controller
                 'email' => $email,
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'Processed']);
+            $status = 'Order In-process';
+            User::find(1)->notify(new UserNotification($status));
         return redirect('/admin/approvedorders');
     }
     public function deliveringorder($email){
@@ -156,6 +191,8 @@ class AdminController extends Controller
                 'email' => $email,
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'On Delivery']);
+                        $status = 'Order On-delivery';
+                        User::find(1)->notify(new UserNotification($status));
         return redirect('/admin/processedorders');    
     }
     public function receivingorder($email,$id){
@@ -169,6 +206,8 @@ class AdminController extends Controller
                 'email' => $email,
                 ])->whereNotIn('status',['Received','Cancelled'])->get();
                         })->update(['status'=>'Received']);
+        $status = 'Order Received';
+        User::find(1)->notify(new UserNotification($status));
         return redirect('/admin/ondeliveryorders');    
     }
 
@@ -176,6 +215,42 @@ class AdminController extends Controller
     // F E T C H I N G  O R D E R S 
 
     public function approvedorders(){
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        
+        DB::table('notifications')->where(['data->data' => 'Order Approved',
+        'read_at' => null
+        ])->update(['read_at'=>Carbon::now()]);
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+
         $users = User::where([
             'provider_id' => null,
             'Order_Status' => 'Approve',
@@ -183,12 +258,45 @@ class AdminController extends Controller
        $approved_orders = Order::where([
             'status' => 'Approved'
             ])->get();
-        return view('admin.approve_orders',compact('approved_orders','users'));
+        return view('admin.approve_orders',compact('approved_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function pendingorders(){
         //echo $orders = User::find(1)->orders;
         //$user = Order::find(1)->users;
-        auth()->user()->unreadNotifications->markAsRead();
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        DB::table('notifications')->where(['data->data' => 'Pending Order',
+            'read_at' => null
+        ])->update(['read_at'=>Carbon::now()]);
+
 
         
         
@@ -204,9 +312,43 @@ class AdminController extends Controller
             echo $pending_order->id;
         }
          */
-        return view('admin.pending_orders',compact('pending_orders','users'));
+        return view('admin.pending_orders',compact('pending_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function processedorders(){
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        DB::table('notifications')->where(['data->data' => 'Order In-process',
+        'read_at' => null
+    ])->update(['read_at'=>Carbon::now()]);
         $users = User::where([
             
             'Order_Status' => 'Processed',
@@ -214,9 +356,43 @@ class AdminController extends Controller
        $processed_orders = Order::where([
             'status' => 'Processed'
             ])->get();
-        return view('admin.processed_orders',compact('processed_orders','users'));
+        return view('admin.processed_orders',compact('processed_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function ondeliveryorders(){
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        DB::table('notifications')->where(['data->data' => 'Order On-delivery',
+        'read_at' => null
+    ])->update(['read_at'=>Carbon::now()]);
         $users = User::where([
           
             'Order_Status' => 'On Delivery',
@@ -224,14 +400,48 @@ class AdminController extends Controller
        $ondelivery_orders = Order::where([
             'status' => 'On Delivery'
             ])->get();
-        return view('admin.ondelivery_orders',compact('ondelivery_orders','users'));
+        return view('admin.ondelivery_orders',compact('ondelivery_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function receivedorders(){
+        echo $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+        echo $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+        echo $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+
+        echo $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+        echo $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        DB::table('notifications')->where(['data->data' => 'Order Received',
+        'read_at' => null
+    ])->update(['read_at'=>Carbon::now()]);
         $users = User::where('completed_orders_count', '>',0)->get();
        $received_orders = Order::where([
             'status' => 'Received'
             ])->orderBy('email')->get();
-        return view('admin.received_orders',compact('received_orders','users'));
+        return view('admin.received_orders',compact('received_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function cancelledorders(){
        $users = User::where('cancelled_orders_count', '>',0)->get();

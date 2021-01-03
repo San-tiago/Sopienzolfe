@@ -33,14 +33,16 @@ class OrdersController extends Controller
             'quantity',
             'menu_description', 
         ]);
-        User::find($user_id)->notify(new UserNotification);
-        
+        $status = 'Add Success';
+        User::find($user_id)->notify(new UserNotification($status));
+      
         $request->request->add(['menu_price'=>$total]);
         Order::create($request->all());
         return back();
     }
 
     public function view(){
+        
         auth()->user()->unreadNotifications->markAsRead();
         $user = Auth::user()->email;
         $orders = Order::where([
@@ -70,7 +72,8 @@ class OrdersController extends Controller
                         })->update(['status'=>'Pending']);
         
         //User::find(['is_admin' => 1])->notify(new UserNotification);
-         User::find(1)->notify(new UserNotification);
+        $status = 'Pending Order';
+         User::find(1)->notify(new UserNotification($status));
         return redirect('/myorder');
     }
     public function receiver_page(){

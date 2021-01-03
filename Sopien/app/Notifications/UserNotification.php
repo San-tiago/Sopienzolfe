@@ -16,9 +16,11 @@ class UserNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
-    {
+    protected $status;
+    public function __construct(string $status)
+    {   
         //
+        $this->status = $status;
     }
 
     /**
@@ -56,7 +58,7 @@ class UserNotification extends Notification
     {
         return [
             //
-            'data' => 'Order Success'
+            'data' => $this->status
         ];
     }
 }

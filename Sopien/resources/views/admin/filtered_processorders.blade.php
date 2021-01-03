@@ -14,6 +14,7 @@
             <th scope="col" class="text-center">Receiver Name</th>
             <th scope="col" class="text-center">Address</th>
             <th scope="col" class="text-center">Municipality / City</th>
+            <th scope="col" class="text-center">Province / Region</th>
             <th scope="col" class="text-center">Contact Number</th>
         </tr>
     </thead>
@@ -26,6 +27,7 @@
             <td class="text-center">{{$details['receivername']}}</td>
             <td class="text-center">{{$details['receiveraddress']}}</td>
             <td class="text-center">{{$details['municipality/city']}}</td>
+            <td class="text-center">{{$details['province']}}</td>
             <td class="text-center">{{$details['receivercontactnumber']}}</td>  
         </tr>
    
@@ -53,7 +55,7 @@
             <td class="text-center">{{$filtered_processorder->menu_price}}</td>  
         </tr>
         @endforeach
-        <a href="{{url('/admin/delivering-order/'.$filtered_processorder->email)}}"><button class="btn btn-outline-primary">Deliver Order</button></a>
+        <a href="{{url('/admin/delivering-order/'.$filtered_processorder->email)}}"><button class="btn btn-outline-primary" onclick="deliver_order()">Deliver Order</button></a>
     </table>
 
     <div class="d-flex p-2 d-flex justify-content-center"><h1 name="total">Total: P {{$total_filtered_processorders}}</h1>

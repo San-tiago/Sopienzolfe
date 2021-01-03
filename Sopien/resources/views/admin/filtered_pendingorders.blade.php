@@ -16,6 +16,7 @@
             <th scope="col" class="text-center">Receiver Name</th>
             <th scope="col" class="text-center">Address</th>
             <th scope="col" class="text-center">Municipality / City</th>
+            <th scope="col" class="text-center">Province / Region</th>
             <th scope="col" class="text-center">Contact Number</th>
         </tr>
     </thead>
@@ -23,11 +24,12 @@
      
         <tr>
             
-            <td class="text-center">{{$details['id']}}</td>
+            
             <td class="text-center">{{$details['fromemail']}}</td>
             <td class="text-center">{{$details['receivername']}}</td>
             <td class="text-center">{{$details['receiveraddress']}}</td>
             <td class="text-center">{{$details['municipality/city']}}</td>
+            <td class="text-center">{{$details['province']}}</td>
             <td class="text-center">{{$details['receivercontactnumber']}}</td>  
         </tr>
    
@@ -56,7 +58,7 @@
         </tr>
         @endforeach
         <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->email)}}">
-        <button type="button" class="btn btn-outline-primary">Approve Order</button>
+        <button type="button" class="btn btn-outline-primary" onclick="approve_order()">Approve Order</button>
         </a>
     </tbody>
     </table>
