@@ -18,17 +18,20 @@
     <a href="/admin/pendingorders"><span class="badge badge-danger ">
             {{$pending_count ?? ''}}
         </span><i class="fas fa-clock fa-lg icon"></i>Pending Orders</a><br>
-    <a href="/admin/approvedorders"> 
-    {{$approved_count ?? ''}}
+    <a href="/admin/approvedorders"> <span class="badge badge-danger ">
+            {{$approved_count ?? ''}}
+            </span>
         <i class="fas fa-calendar-check fa-lg icon"></i>Approve Orders
     </a><br>
-    <a href="/admin/processedorders">{{$inprocess_count ?? ''}}<i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
-    <a href="/admin/ondeliveryorders">{{$Ondelivery_count ?? ''}}<i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
-    <a href="/admin/receivedorders">{{$received_count ?? ''}}<i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
+    <a href="/admin/processedorders"><span class="badge badge-danger ">
+            {{$inprocess_count ?? ''}}      
+            </span><i class="fas fa-spinner fa-lg icon"></i>Processed Orders</a><br>
+    <a href="/admin/ondeliveryorders"><span class="badge badge-danger ">{{$Ondelivery_count ?? ''}} </span><i class="fas fa-truck fa-lg icon"></i>On Delivery Orders</a><br>
+    <a href="/admin/receivedorders"><span class="badge badge-danger ">{{$received_count ?? ''}}</span><i class="fas fa-tasks fa-lg icon"></i>Received Orders</a><br>
     <a href="/admin/cancelledorders"><i class="far fa-window-close fa-lg icon"></i>Cancelled Orders</a><br>
     <a href="/admin/sales"><i class="fas fa-file-invoice-dollar fa-lg icon"></i>Sales</a><br>
     <a href="/admin/users"><i class="fas fa-users fa-lg icon"></i>Users</a><br>
-    <a href="/admin/users"><i class="fas fa-book fa-lg icon"></i>Tutorial</a><br>
+    <a href="/admin/users"><i class="fas fa-book fa-lg icon"></i>Guide</a><br>
     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

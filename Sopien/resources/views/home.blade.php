@@ -32,33 +32,48 @@
                     @endif
             
             @foreach($menus as $menu)
-            
-            <div class = "menu-form">
+            <div class="card mr-3" style="width: 18rem;">
+                <img src="https://www.inspiredtaste.net/wp-content/uploads/2019/03/Spaghetti-with-Meat-Sauce-Recipe-1-1200.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                <div class="card-body">
+                   
+   
+                
                 <form action="{{url('/order')}}" method = "post">
-                @csrf
-                <input type="hidden" value="{{$menu->id}}" name = "menu_id"><br>
+                    @csrf
+                
                 @foreach($users as $user)
                     @if($user->email === Auth::user()->email)
                     <input type="hidden" value="{{$user->id}}" name = "user_id"><br>
                     @endif
                 @endforeach 
-                <input type="hidden" value ="{{ Auth::user()->email }}" name="email"><br>
-                <label> Food Name: </label><input type="text" value = "{{$menu->food_name}}" name = "menu_name" readonly><br>
-                <label> Category: </label><input type="text" value = "{{$menu->menu_category}}" name = "menu_category" readonly><br>
-                <label> Description: </label><input type="text" value = "{{$menu->description}}" name = "menu_description" readonly><br>
-            @if(Auth::user()->Order_Status == 'Ordering')
+                    <h2 class="card-title">{{$menu->food_name}}</h2>
+                    <input type="hidden" value ="{{ Auth::user()->email }}" name="email">
+                    <input type="hidden" value = "{{$menu->food_name}}" name = "menu_name">
+
+                    <h3 class="card-title">Price: {{$menu->price}}</h3>
+                    <input type="hidden" value = "{{$menu->menu_category}}" name = "menu_category">
+                    <input type="hidden" value = "{{$menu->description}}" name = "menu_description">
+
+                    <p class="card-text"> Description :{{$menu->description}}.</p>
+                    <input type="hidden" value = "{{$menu->price}}" name = "menu_price">
+                    <input type="hidden" value="{{$new_transac}}" name = "order_id">
+                    <input type="hidden" value="{{$menu->id}}" name = "menu_id">
+                    
+                    @if(Auth::user()->Order_Status == 'Ordering')
                 
-                        <label> Price: </label><input type="text" value = "{{$menu->price}}" name = "menu_price" readonly><br>
-                        <label> Quantity: </label><input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1" min="1" name = "quantity" value = "1">
                         
-                            <input type="hidden" value="{{$new_transac}}" name = "order_id">
-                       
-                        <input type="submit" value = "Add to Food Cart"><br>
+                        <label> Quantity: </label><input type="number" class="form-control" aria-label="Username" aria-describedby="basic-addon1" min="1" name = "quantity" value = "1"><br>
+                        <input type="submit" value = "Add to Food Cart" class="btn btn-primary">
                         
-                 
-            @endif
+                    @endif
+
                 </form>
+                </div>
+                </div>
             </div>
+            
+            
         
             @endforeach
     

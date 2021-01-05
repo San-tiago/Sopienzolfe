@@ -20,10 +20,42 @@ class MenuController extends Controller
         } */
 
     public function category(){
+        $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+         $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+         $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+         $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+         $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
         $categories = Category::orderBy('category')->get();
-        return view('Menu.create_menu',[
-            'categories'=>$categories
-            ]);
+        return view('Menu.create_menu', compact(
+            'categories',
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'
+        )
+            );
     }
     public function store(Request $request){
         $data = request()->validate([
