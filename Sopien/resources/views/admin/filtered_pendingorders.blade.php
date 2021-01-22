@@ -57,16 +57,21 @@
             <td class="text-center">{{$filtered_pendingorder->menu_price}}</td>  
         </tr>
         @endforeach
-        <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->email)}}">
-        <button type="button" class="btn btn-outline-primary" onclick="approve_order()">Approve Order</button>
-        </a>
+    
     </tbody>
     </table>
-
+   
     <div class="d-flex p-2 d-flex justify-content-center"><h1 name="total">Total: P {{$total_filtered_pendingorders}}</h1>
     </div>
 
-    
-
+    <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->email)}}">
+        <button type="button" class="btn btn-outline-primary" onclick="approve_order()">Approve Order</button>
+    </a><br><br><br>
+        <form action="{{url('/decline-order/'.$filtered_pendingorder->email)}}" method="POST">
+        @csrf
+        <label for="exampleInputEmail1"><h3>Decline Order</h3></label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter message" name="message"><br>
+            <button type="submit" class="btn btn-danger">Decline Order</button>
+        </form>
 </div>
 @endsection

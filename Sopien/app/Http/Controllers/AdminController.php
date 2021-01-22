@@ -7,6 +7,7 @@ use App\Menu;
 use App\User;
 use App\Order;
 use App\Category;
+use App\Message;
 use App\ReceiverDetails;
 use DB;
 use Auth;
@@ -20,31 +21,31 @@ class AdminController extends Controller
     $this->middleware('auth');
 }
     public function index(){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -105,31 +106,31 @@ class AdminController extends Controller
 
     // F I L T E R E D  O R D E R S / U S E R
     public function filtered_pendingorders($email){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -155,31 +156,31 @@ class AdminController extends Controller
        
     }
     public function filtered_approveorders($email){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -203,31 +204,31 @@ class AdminController extends Controller
        
     }
     public function filtered_processorders($email){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -253,31 +254,31 @@ class AdminController extends Controller
        
     }
     public function filtered_ondeliveryorders($email){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -308,43 +309,46 @@ class AdminController extends Controller
        
     }
 
-    public function filtered_receivedorders($id){
-        echo $approved_count = DB::table('notifications')
+    public function filtered_receivedorders($id,$email){
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
             ])
         ->count();
-
+             $order_history = ReceiverDetails::where([
+            'fromemail' => $email,
+            'transac_status' => 1
+            ])->get();
         
-          $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
-          $total_filtered_receivedorders = User::find($id)->orders()->where('status','Received')->sum('menu_price');
+         /*  $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
+          $total_filtered_receivedorders = User::find($id)->orders()->where('status','Received')->sum('menu_price'); */
      
-        return view('admin.filtered_receivedorders',compact('filtered_receivedorders','total_filtered_receivedorders','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count')); 
+        return view('admin.filtered_receivedorders',compact('pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','order_history')); 
        
     }
 
@@ -406,13 +410,13 @@ class AdminController extends Controller
     // F E T C H I N G  O R D E R S 
 
     public function approvedorders(){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
@@ -422,20 +426,20 @@ class AdminController extends Controller
         DB::table('notifications')->where(['data->data' => 'Order Approved',
         'read_at' => null
         ])->update(['read_at'=>Carbon::now()]);
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
 
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -454,31 +458,31 @@ class AdminController extends Controller
     public function pendingorders(){
         //echo $orders = User::find(1)->orders;
         //$user = Order::find(1)->users;
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -506,32 +510,32 @@ class AdminController extends Controller
         return view('admin.pending_orders',compact('pending_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function processedorders(){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
 
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -550,32 +554,32 @@ class AdminController extends Controller
         return view('admin.processed_orders',compact('processed_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function ondeliveryorders(){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+         $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
 
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -594,32 +598,32 @@ class AdminController extends Controller
         return view('admin.ondelivery_orders',compact('ondelivery_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function receivedorders(){
-        echo $approved_count = DB::table('notifications')
+         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
             'read_at' => null
             ])
         ->count();
-        echo $pending_count = DB::table('notifications')
+        $pending_count = DB::table('notifications')
         ->where([
             'data->data' => 'Pending Order',
             'read_at' => null
             ])
         ->count();
-        echo $inprocess_count = DB::table('notifications')
+         $inprocess_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order In-process',
             'read_at' => null
             ])
         ->count();
 
-        echo $Ondelivery_count = DB::table('notifications')
+         $Ondelivery_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order On-delivery',
             'read_at' => null
             ])
         ->count();
-        echo $received_count = DB::table('notifications')
+         $received_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Received',
             'read_at' => null
@@ -635,12 +639,44 @@ class AdminController extends Controller
         return view('admin.received_orders',compact('received_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
     public function cancelledorders(){
+         $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+         $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+         $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+
+         $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+         $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+
        $users = User::where('cancelled_orders_count', '>',0)->get();
        $cancelled_orders = Order::where([
             'status' => 'Cancelled'
             ])->orderBy('menu_name')->get();
         
-        return view('admin.cancelled_orders',compact('cancelled_orders','users'));
+        return view('admin.cancelled_orders',compact('cancelled_orders','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
     }
 
     public function sales(){
@@ -787,5 +823,77 @@ class AdminController extends Controller
         User::where('id', $id)->update(['Account_Status'=>'Active']);   
         return back();
     }
+
+    public function view_summary($id,$email){
+        $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+         $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+         $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+         $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+         $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        $orders= Order::where([
+           'email' => $email,
+           'order_id' => $id,
+           'status' => 'Received'
+           ])->get();
+       $total= Order::where([
+           'order_id' => $id,
+           'status' => 'Received'
+           ])->sum('menu_price');
+       return view('admin.view_summary',compact('orders','total','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+   }
+
+
+   public function decline_order(Request $request,$email){
+       //User::find($id)->notify(new UserNotification($message));
+       
+       
+    DB::table('orders')
+    ->where([
+        
+        'email' => $email
+    ])->update(['status' => 'Declined']);
+    
+    DB::table('users')
+    ->where([
+        'email' => $email
+    ])
+    ->update(['Order_Status' => 'None']);
+    $request->request->add(['to_useremail'=>$email]);
+    $message = $request->input('message');
+    $data = request([
+        'message',
+    ]);
+  
+
+    Message::create($request->all());
+    
+    return redirect('/admin/pendingorders');
+    
+   }
 
 }

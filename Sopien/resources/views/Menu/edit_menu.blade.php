@@ -15,12 +15,18 @@
                 @foreach($categories as $category)
                    <option>{{$category->category}}</option>
                 @endforeach
-                </select><br>
+                </select><br> 
 
         Description: <input type="textbox" name = "description" value= "{{$menu->description}}"><br>
         <span style="color: red">@error('description'){{$message}}@enderror</span><br>
         Price: <input type="text" name="price" value= "{{$menu->price}}"><br>
         <span style="color: red">@error('price'){{$message}}@enderror</span><br>
+
+        <div class="form-group d-flex flex-column" >
+            <label>Image</label>
+            <input name = "image" type="file" class="form-control w-25" id="exampleInputEmail1" aria-describedby="emailHelp"value= "{{$menu->description}}" >
+            <span style="color: red">@error('image'){{$message}}@enderror</span><br>
+        </div>
         <input type="submit" value="Submit"><br>
     </form>
 </body>

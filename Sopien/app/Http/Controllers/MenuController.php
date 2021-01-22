@@ -58,14 +58,44 @@ class MenuController extends Controller
             );
     }
     public function store(Request $request){
-        $data = request()->validate([
+        
+        $request->validate([
             'food_name' => 'required',
             'menu_category' => 'required',
             'description' => 'required',
             'price' => 'required',
+            'image' => 'required|image:max:2048'
         ]);
+        /* $menu = new Menu();
+        $menu->food_name = $request->input('food_name');
+        $menu->menu_category = $request->input('menu_category');
+        $menu->description = $request->input('description');
+        $menu->price = $request->input('price'); */
+
+        /* if($request->hasFile('image')){
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time().'.'. $extension;
+            $file->move('uploads/menus/',$filename);
+            $menu->image = $filename;
+
+        }
+        else {
+            return $request;
+            $menu->image = '';
+        } */
+        $image = $request->file('image');
+        $new_name = rand() . '.' .$image->getClientOriginalExtension();
+        $image->move(public_path('images'),$new_name);
+        $form_data = array(
+            'food_name' => $request->food_name,
+            'menu_category' => $request->menu_category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'image' => $new_name
+        );
         $request->session()->flash('menu','Menu was created successfully!');
-        Menu::create($request->all());
+        Menu::create($form_data);
         return redirect('/admin/menu');
     }
     public function edit($id){

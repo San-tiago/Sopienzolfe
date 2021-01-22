@@ -10,9 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Menu;
 Route::get('/', function () {
-    return view('welcome');
+    $menus = Menu::orderBy('food_name')->get();
+    return view('welcome',compact('menus'));
 });
 
 Auth::routes(['verify' => true]);
@@ -21,6 +22,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('verified'
 Route::get('/menu/{category}', 'HomeController@menu_nav');
 Route::get('/order-history/{email}', 'HomeController@orderHistory');
 Route::get('/view/history-orders/{id}/{email}', 'HomeController@view_orderHistory');
+//Route::get('/unread_message', 'HomeController@unread_message');
+Route::get('/messages', 'HomeController@messages');
 
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
@@ -36,7 +39,9 @@ Route::get('/admin/approve-order/{email}', 'AdminController@filtered_approveorde
 Route::get('/admin/process-order/{email}', 'AdminController@filtered_processorders');
 Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondeliveryorders');
 Route::get('/admin/customer-cancelled-order/{id}', 'AdminController@filtered_cancelledorders');
-Route::get('/admin/received-order/{id}', 'AdminController@filtered_receivedorders');
+Route::get('/admin/received-order/{id}/{email}', 'AdminController@filtered_receivedorders');
+Route::get('/view/summary-orders/{id}/{email}', 'AdminController@view_summary');
+Route::post('/decline-order/{email}', 'AdminController@decline_order');
 
 Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
 Route::get('/admin/processing-order/{email}', 'AdminController@processingorder');

@@ -56,9 +56,19 @@ class UserNotification extends Notification
      */
     public function toArray($notifiable)
     {
-        return [
-            //
-            'data' => $this->status
-        ];
+           /* echo $this->status;
+           if($this->status != 'Add Success' || $this->status != 'Order Approved' || $this->status != 'Order In-process' || $this->status != 'Order On-delivery' || $this->status != 'Order Received'){
+                return [
+                //
+                'message' => $this->status
+                ];
+           }
+           else{ */
+            return [
+                //
+                'data' => $this->status
+            ];
+           
+        
     }
 }

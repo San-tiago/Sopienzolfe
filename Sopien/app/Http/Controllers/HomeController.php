@@ -6,9 +6,11 @@ use App\Menu;
 use App\User;
 use App\Order;
 use App\Category;
+use App\Message;
 use App\ReceiverDetails;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -29,11 +31,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {   //
+    public function index(){   
 
+        $email = auth::user()->email;
         $users = User::all();
-        $menus = Menu::orderBy('food_name')->get();
+        
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
+
+        $menus = Menu::all();
         $menus_count = count($menus);
         $categories = Category::orderBy('category')->get();
         /* $check = DB::table('receiver_details')
@@ -48,11 +56,17 @@ class HomeController extends Controller
                             'fromemail' => Auth::user()->email
                             )->get(); */
                 
-        return view('home',compact('menus','categories','users','new_transac','menus_count'));
+        return view('home',compact('menus','categories','users','new_transac','menus_count','message_count'));
     
     }
 
     public function menu_nav($category){
+        $email = auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
+
         $users = User::all();
         $menus = Menu::where('menu_category',$category)->get();
         $menus_count = count($menus);
@@ -65,17 +79,25 @@ class HomeController extends Controller
             ])
         ->latest()
         ->get(); 
-        return view('home',compact('menus','categories','users','check','menus_count','new_transac'));
+        return view('home',compact('menus','categories','users','check','menus_count','new_transac','message_count'));
     }
 
     public function orderHistory($email){
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
         $order_history = ReceiverDetails::where([
             'fromemail' => $email,
             'transac_status' => 1
             ])->get();
-        return view('Order.orderhistory',compact('order_history'));
+        return view('Order.orderhistory',compact('order_history','message_count'));
     }
     public function view_orderHistory($id,$email){
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
          $orders= Order::where([
             'email' => $email,
             'order_id' => $id,
@@ -85,6 +107,38 @@ class HomeController extends Controller
             'order_id' => $id,
             'status' => 'Received'
             ])->sum('menu_price');
-        return view('Order.view_historyorder',compact('orders','total'));
+        return view('Order.view_historyorder',compact('orders','total','message_count'));
     }
+
+    /* public function unread_message(){
+        $email = auth::user()->email;
+        $date = Carbon::now()->toDateTimeString();
+        
+        return redirect('/messages');
+        
+    } */
+
+    public function messages(){
+        $email = auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
+
+        
+        $date = Carbon::now()->toDateTimeString();
+        $unread = Message::where([
+            'to_useremail' =>$email,
+            'read_at' => null
+            ])->get();
+        if($unread != null){
+            Message::where([
+                'to_useremail' =>$email,
+                'read_at' => null
+                ])->update(['read_at' => $date]);    
+        }
+        $messages = Message::where('to_useremail',$email)->orderBy('created_at','DESC')->get();
+        return view('messages',compact('message_count','messages'));
+    }
+
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Order;
 use App\User;
 use App\PlacedOrder;
+use App\Message;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,10 @@ class OrdersController extends Controller
         
         auth()->user()->unreadNotifications->markAsRead();
         $user = Auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $user
+            ])->count();
         $orders = Order::where([
             'email'=>$user,
             'status'=> ' ',
@@ -53,7 +58,7 @@ class OrdersController extends Controller
             'email'=>$user,
             'status'=> ' ',
             ])->sum('menu_price');
-        return view('Order.order',compact('orders','total')); 
+        return view('Order.order',compact('orders','total','message_count')); 
        
     }
     public function delete($id){
@@ -116,13 +121,18 @@ class OrdersController extends Controller
             ->get(); */
             /* ->whereIn('id', [1, 2, 3])
             ->get(); */
-            
+            $message_count = Message::where([
+                'read_at'=> null,
+                'to_useremail' => $user
+                ])->count();
+
+
            $orders = DB::table('orders')
             ->where(function ($query) {
                 $user = Auth::user()->email;
                 $query->where([
                     'email' => $user,
-                    ])->whereNotIn('status',['Received','Cancelled'])->get();
+                    ])->whereNotIn('status',['Received','Cancelled',' ','Declined'])->get();
                             })
                             ->get();
 
@@ -131,14 +141,11 @@ class OrdersController extends Controller
                      $user = Auth::user()->email;
                         $query->where([
                              'email' => $user,
-                                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                                ])->whereNotIn('status',['Received','Cancelled',' ','Declined'])->get();
                                     })
                                     ->sum('menu_price');
                             
-                             return view('Order.myorder',[
-                                 'orders' => $orders,
-                                 'orders_sum' => $orders_sum
-                             ]); 
+                             return view('Order.myorder',compact('orders','orders_sum','message_count')); 
         }
         
      public function cancelOrder($email,$id){
@@ -159,7 +166,11 @@ class OrdersController extends Controller
     }
 
     public function mycancelledOrders($email){
-        
+        $email = auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
         $cancelled_order_history = ReceiverDetails::where([
             'fromemail' => $email,
             'transac_status' => 'Cancelled'
@@ -170,9 +181,13 @@ class OrdersController extends Controller
             'email' => $email,
             'status' => 'Cancelled',
             ])->get(); */
-        return view('Order.mycancelledorders',compact('cancelled_order_history')); 
+        return view('Order.mycancelledorders',compact('cancelled_order_history','message_count')); 
     }
     public function cancelled_orderHistory($id,$email){
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
        $orders= Order::where([
             'order_id' => $id,
             'email' => $email,
@@ -183,7 +198,7 @@ class OrdersController extends Controller
             'order_id' => $id,
             'status' => 'Cancelled'
             ])->sum('menu_price');
-       return view('Order.view_cancelledorders',compact('orders','total'));
+       return view('Order.view_cancelledorders',compact('orders','total','message_count'));
     }
 
 

@@ -8,7 +8,7 @@ class Menu extends Model
 {
     //
     protected $fillable = [
-        'food_name','menu_category','description','price',
+        'food_name','menu_category','description','price','image'
     ];
 
     public function menu()

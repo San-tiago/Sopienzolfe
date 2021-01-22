@@ -6,17 +6,34 @@
 <div class="container">
 <div class="d-flex p-2 d-flex justify-content-center table-bordered"> <h1>Order Status</h1></div>
     <div class="d-flex p-2 d-flex justify-content-center table-bordered d-flex justify-content-around">
-         <div>
-            <p>Pending</p>
+         <div >
+         @if(Auth::user()->Order_Status == 'Pending' || Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
+            <button type="button" class="btn btn-success">Pending</button>
+        @else
+            <button type="button" class="btn btn-secondary">Pending</button>
+        @endif
         </div>
         <div>
-             <p>Order Approve</p>
+        @if(Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
+            <button type="button" class="btn btn-success">Approved</button>
+        @else
+        <button type="button" class="btn btn-secondary">Approved</button>
+        @endif
          </div>
         <div>
-             <p>Order Processed</p>
+        @if(Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
+            <button type="button" class="btn btn-success">Processed</button>
+        @else
+            <button type="button" class="btn btn-secondary">Processed</button>
+        @endif
         </div>
         <div>
-             <p>On Delivery</p>
+        @if(Auth::user()->Order_Status == 'On Delivery' )
+            <button type="button" class="btn btn-success">On Delivery</button>
+        @else
+            <button type="button" class="btn btn-secondary">On Delivery</button>
+        @endif
+             
         </div>
     </div>
 
@@ -57,9 +74,9 @@
                 <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"> 
                     <button type="button" class="btn btn-outline-danger">Cancel Orders</button>
                 </a>
-            @else 
-            <div class="d-flex p-2 d-flex justify-content-center table-bordered border border-success">
-                    <h5>Your order has been approved, orders cannot be cancel thank you!</h5>
+            @elseif(Auth::user()->Order_Status == 'Approved')
+                <div class="d-flex p-2 d-flex justify-content-center table-bordered border border-success">
+                        <h5>Your order has been approved, orders cannot be cancel thank you!</h5>
                 </div>
             @endif
 @else

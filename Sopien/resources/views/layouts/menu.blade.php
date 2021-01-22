@@ -23,6 +23,8 @@
     <link href="/css/home.css" rel="stylesheet">
 </head>
 <body>
+
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -57,12 +59,15 @@
                     
                     <a class="btn btn-light btn-sm" href="{{url('/customer-order')}}">
                         <span class="badge badge-danger ">
-                            {{auth()->user()->unreadNotifications->count()}}
+                            {{auth::user()->unreadNotifications->count()}}
                         </span>
                         <i class="fas fa-shopping-cart"></i>
                             Food Cart
                     </a>
-            
+                   
+                    <a href="{{url('/messages')}}" class="btn btn-light btn-sm mr-3">
+                        <span class="badge badge-danger ">{{$message_count}}</span>
+                        <i class="fa fa-comment" aria-hidden="true"></i></a>
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest

@@ -12,7 +12,12 @@
     <div class = "flex-container">
     @if($menus_count > 0)   
         <div class="nav">
-            <h1>Categories</h1>
+         
+                @if(Auth::user()->Order_Status == 'None' && $menus_count > 0)
+                                <a href="/receiver_page" class="create"><button type="button" class="btn btn-outline-success"><i class="far fa-plus-square fa-lg "></i> Create Order</button></a>
+                @endif
+           
+            <h3>Categories</h3>
             <div class = "category">
                 <a href="/home"><button type="button" class="btn btn-outline-dark btn-lg">All</button></a></li>
             @foreach($categories as $category)
@@ -27,13 +32,11 @@
             
         <div class = "menu">
            
-                    @if(Auth::user()->Order_Status == 'None' && $menus_count > 0)
-                        <a href="/receiver_page"><button type="button" class="btn btn-success">Create Order</button></a> 
-                    @endif
+                   
             
             @foreach($menus as $menu)
             <div class="card mr-3" style="width: 18rem;">
-                <img src="https://www.inspiredtaste.net/wp-content/uploads/2019/03/Spaghetti-with-Meat-Sauce-Recipe-1-1200.jpg" class="card-img-top" alt="...">
+                <img src="{{asset('images/'.$menu->image)}}" class="card-img-top" alt="...">
                 <div class="card-body">
                 <div class="card-body">
                    
@@ -80,5 +83,8 @@
         </div>
     </div>
 @endif
+
 @endsection
+
+
 

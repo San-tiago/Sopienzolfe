@@ -10,7 +10,7 @@
     <div class="email-section">
         <h4>From :</h4>
         @foreach($users as $user)
-        <a href="{{url('/admin/received-order/'.$user->id)}}" class ="orders-link"><button type="button" class="btn btn-light">{{$user->email}}</button></a>
+        <a href="{{url('/admin/received-order/'.$user->id.'/'.$user->email)}}" class ="orders-link"><button type="button" class="btn btn-light">{{$user->email}}</button></a>
         @endforeach
         
 </div>   

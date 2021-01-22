@@ -54,3 +54,21 @@
     height: 300px;
     align-items: center;
 }
+
+.create{
+    margin-top: 20px ;
+    margin-bottom: 20px ;
+}
+.image{
+    height: 250px;
+    width: 320px;
+}
+
+.homemenu{
+    margin: auto;
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content:space-around; 
+}

@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="{{ asset('css/home.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -78,12 +79,33 @@
                     @endauth
                 </div>
             @endif
-
             <div class="content">
                 <div class="title m-b-md">
                     Sopienzolfe
                 </div>
             </div>
         </div>
+
+            
+
+            
+            <div class="homemenu">
+                    
+                    @foreach($menus as $menu)
+
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top image" src="{{asset('images/'.$menu->image)}}" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">{{$menu->food_name}}</h5>
+                            <p class="card-text">Price: {{$menu->price}}</p>
+                            <p class="card-text"> Description :{{$menu->description}}.</p>
+                            
+                        </div>
+                        </div>
+                    @endforeach
+            
+                
+            </div>
+        
     </body>
 </html>
