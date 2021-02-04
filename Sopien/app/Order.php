@@ -8,7 +8,7 @@ class Order extends Model
 {
     //
     protected $fillable = [
-        'email','menu_name','menu_category','menu_description','menu_price','quantity','user_id','menu_id','order_id'
+        'email','menu_name','menu_category','menu_description','menu_price','quantity','user_id','menu_id','order_id','menu_image'
     ];
     protected $table = "orders"; 
     protected $dates = [

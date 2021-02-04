@@ -8,10 +8,10 @@
 
 <div class="d-flex justify-content-center flex-column">
 @foreach($messages as $message)
-    <div class="d-flex justify-content-center w-50 h-75 align-self-center p-3 border d-flex flex-wrap flex-column shadow p-4 mb-4 bg-white rounded text-secondary">
-        <h5 class ="align-self-center font-weight-bold text-dark">From Admin:</h5><br>
-        <p class="text-secondary">{{$message->message}}</p><br>
-        <p class="text-secondary">{{$message->created_at}}</p>
+    <div class="d-flex justify-content-center w-50 h-75 align-self-center p-3 border d-flex flex-wrap flex-column shadow p-4 mb-4 bg-info rounded">
+        <h5 class ="align-self-center font-weight-bold text-white">From Admin:</h5><br>
+        <p class="text-white">{{$message->message}}</p><br>
+        <p class="text-white">{{$message->created_at}}</p>
     </div>
 @endforeach
 </div>

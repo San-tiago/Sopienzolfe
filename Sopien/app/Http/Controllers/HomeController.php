@@ -31,6 +31,16 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+
+    public function termsnconditions(){
+        $email = auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $email
+            ])->count();
+       
+        return view('terms&conditions',compact('message_count'));
+    }
     public function index(){   
 
         $email = auth::user()->email;

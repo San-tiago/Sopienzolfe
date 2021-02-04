@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->foreign('menu_id')->references('id')->on('menus');
             $table->string('email');
             $table->string('menu_name');
+            $table->string('menu_image');
             $table->string('menu_category');
             $table->string('menu_description');
             $table->double('menu_price');

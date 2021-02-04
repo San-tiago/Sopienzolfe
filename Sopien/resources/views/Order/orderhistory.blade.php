@@ -24,7 +24,7 @@
             <tr>
                 <td class="text-center">{{$orderhistory->receivername}}</td>
                 <td class="text-center">{{$orderhistory->receiveraddress}}</td>
-                <td class="text-center">{{date('d-m-Y', strtotime($orderhistory->created_at))}}</td>
+                <td class="text-center">{{date('d-m-Y', strtotime($orderhistory->created_at. '+3 days'))}}</td>
                 <td class="text-center">
                     <a href="{{url('/view/history-orders/'.$orderhistory->id.'/'.$orderhistory->fromemail)}}">
                         <button type="button" class="btn btn-primary">View</button>

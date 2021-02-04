@@ -24,12 +24,14 @@ class OrdersController extends Controller
         $quantity = $request->input('quantity');
         $user_id = $request->input('user_id');
         $price = $request->input('menu_price');
+        $menu_image = $request->input('menu_image');
         $total = $quantity * $price;
         $data = request([
             'user_name',
             'user_id',
             'menu_id',
             'menu_name',
+            'menu_image',
             'menu_category',
             'quantity',
             'menu_description', 
@@ -82,20 +84,12 @@ class OrdersController extends Controller
         return redirect('/myorder');
     }
     public function receiver_page(){
-       /*  $ncr_cities = Http::get('https://psgc.gitlab.io/api/regions/130000000/cities/')->body(); //NCR CITIES
-        $calab_cities = Http::get('https://psgc.gitlab.io/api/regions/040000000/cities/')->body(); // CALABARZON CITIES
-           $calab_prov = Http::get('https://psgc.gitlab.io/api/regions/040000000/provinces/')->body(); // provinces sa CALABARZON
-          //$regions = Http::get('https://psgc.gitlab.io/api/regions/130000000/provinces/')->body(); // provinces sa NCR
-         $municip = Http::get('https://psgc.gitlab.io/api/regions/040000000/municipalities')->body(); */
-        
-       /*  $data_calab = json_decode($calab_prov,true);
-        $calab_cities = json_decode($calab_cities,true);
-        $ncr_cities = json_decode($ncr_cities,true);
-        $municip = json_decode($municip,true);
-
-        $municip = collect($municip);
-        $municip = $municip->sortBy('name'); */
-        return view('Receiver.receiver');
+        $user = Auth::user()->email;
+        $message_count = Message::where([
+            'read_at'=> null,
+            'to_useremail' => $user
+            ])->count();
+        return view('Receiver.receiver',compact('message_count'));
     }
     public function receiver(Request $request){
           $data = request()->validate([
@@ -144,16 +138,18 @@ class OrdersController extends Controller
                                 ])->whereNotIn('status',['Received','Cancelled',' ','Declined'])->get();
                                     })
                                     ->sum('menu_price');
-                            
+                       
                              return view('Order.myorder',compact('orders','orders_sum','message_count')); 
         }
         
      public function cancelOrder($email,$id){
-         User::where('email',$email)->update(['Order_Status' => 'None']);
-        Order::where([
-            'email' => $email,
-            'order_id' => $id
-            ])->update(['status'=>'Cancelled']);
+         User::where('email',$email)->update(['Order_Status' => 'None']); 
+         
+         DB::table('orders')->where([
+             'email' => $email,
+             'status' => 'Pending'
+         ])->update(['status' => 'Cancelled']);
+      
         DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
         DB::table('receiver_details')
                 ->where([
@@ -162,7 +158,7 @@ class OrdersController extends Controller
                     ])  
                 ->latest()
                 ->update(['transac_status' => 'Cancelled']);
-        return redirect('/home');
+         return redirect('/home');
     }
 
     public function mycancelledOrders($email){

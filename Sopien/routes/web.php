@@ -11,9 +11,11 @@
 |
 */
 use App\Menu;
+use App\Category;
 Route::get('/', function () {
+    $categories = Category::orderBy('category')->get();
     $menus = Menu::orderBy('food_name')->get();
-    return view('welcome',compact('menus'));
+    return view('welcome',compact('menus','categories'));
 });
 
 Auth::routes(['verify' => true]);
@@ -24,6 +26,7 @@ Route::get('/order-history/{email}', 'HomeController@orderHistory');
 Route::get('/view/history-orders/{id}/{email}', 'HomeController@view_orderHistory');
 //Route::get('/unread_message', 'HomeController@unread_message');
 Route::get('/messages', 'HomeController@messages');
+Route::get('/terms&conditions', 'HomeController@termsnconditions');
 
 
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
