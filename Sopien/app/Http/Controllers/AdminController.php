@@ -10,6 +10,7 @@ use App\Category;
 use App\Message;
 use App\ReceiverDetails;
 use DB;
+use PDF;
 use Auth;
 use Carbon\Carbon;
 use App\Notifications\UserNotification;
@@ -364,7 +365,7 @@ class AdminController extends Controller
                         })->update(['status'=>'Approved']);
          $status = 'Order Approved';
         User::find(1)->notify(new UserNotification($status));
-        return redirect('/admin/pendingorders');
+        return redirect('/receipt/pendingorders');
     }
     public function processingorder($email){
         User::where('email', $email)->update(['Order_Status'=>'Processed']);
@@ -883,17 +884,48 @@ class AdminController extends Controller
         'email' => $email
     ])
     ->update(['Order_Status' => 'None']);
-    $request->request->add(['to_useremail'=>$email]);
-    $message = $request->input('message');
-    $data = request([
-        'message',
-    ]);
-  
 
-    Message::create($request->all());
+    $from_useremail = Auth::user()->email;
+    $message = $request->input('message');
+    $date = Carbon::now()->toDateTimeString();
+  
+    DB::table('message')->insert(
+        ['from_useremail' => $from_useremail, 
+        'to_useremail' => $email, 
+        'message' => $message,
+        'created_at' => $date]
+    );
+    $request->session()->flash('adminmessage_sent','Message Sent!');
+
+    /* Message::create($request->all()); */
     
     return redirect('/admin/pendingorders');
     
+   }
+
+   public function generateReceipt($email){
+    $user = $email;
+    $filtered_pendingorders = Order::where([
+        'email'=> $email,
+        'status'=> 'Pending'
+        ])->get();
+    $total_filtered_pendingorders = Order::where([
+        'email'=> $email,
+        'status'=> 'Pending'
+        ])->sum('menu_price');
+
+    $pdf = PDF::loadview('receipt',[
+        'user' => $user,
+        'filtered_pendingorders' => $filtered_pendingorders,
+        'total_filtered_pendingorders' => $total_filtered_pendingorders
+        ]);
+    return $pdf->stream('receipt.pdf');
+     
+/*        return view('receipt',compact('filtered_pendingorders','total_filtered_pendingorders','user'));
+ */
+
+      
+       
    }
 
 }

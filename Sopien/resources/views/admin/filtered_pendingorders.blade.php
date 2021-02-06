@@ -67,11 +67,24 @@
     <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->email)}}">
         <button type="button" class="btn btn-outline-primary" onclick="approve_order()">Approve Order</button>
     </a><br><br><br>
+    <a href="{{url('/receipt/pdf/'.$filtered_pendingorder->email)}}">
+        <button type="button" class="btn btn-outline-primary" onclick="approve_order()">Generate Receipt</button>
+    </a><br><br><br>
         <form action="{{url('/decline-order/'.$filtered_pendingorder->email)}}" method="POST">
         @csrf
-        <label for="exampleInputEmail1"><h3>Decline Order</h3></label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter message" name="message"><br>
-            <button type="submit" class="btn btn-danger">Decline Order</button>
+            <div class="input-group mb-3">
+                    <input type="text" name = "message"class="form-control" placeholder="Send message" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <input class="btn btn-danger" type="submit" value = "Decline Order">
+                    </div>
+                    
+                </div>
         </form>
+        
+        @if(session('adminmessage_sent'))
+            <div class="d-flex justify-content-center alert alert-success" role="alert">
+             <h5>{{Session::get('adminmessage_sent')}}</h5>
+            </div>
+         @endif
 </div>
 @endsection

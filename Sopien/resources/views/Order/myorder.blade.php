@@ -72,6 +72,21 @@
                         <p class="text-secondary">{{date('d-m-Y', strtotime($order->created_at. '+3 days'))}}</p>
                     </div>
                 </div>
+                <form action="{{url('/customer-message')}}" method="post">
+                    @csrf
+                <div class="input-group mb-3">
+                    <input type="text" name = "customermessage"class="form-control" placeholder="Send message to admin" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" value = "Send">
+                    </div>
+                    
+                </div>
+                </form>
+                @if(session('message_sent'))
+                        <div class="d-flex justify-content-center alert alert-success" role="alert">
+                            <h5>{{Session::get('message_sent')}}</h5>
+                        </div>
+                @endif
     @endif
             @if(Auth::user()->Order_Status == 'Pending')    
                 <!-- Button trigger modal -->

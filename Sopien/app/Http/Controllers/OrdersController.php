@@ -197,6 +197,25 @@ class OrdersController extends Controller
        return view('Order.view_cancelledorders',compact('orders','total','message_count'));
     }
 
+    public function customerMessage(Request $request){
+        $users = User::all();
+        $user = $users->find(1);
+        $to_useremail= $user->email;
+        $from_useremail = Auth::user()->email;
+        $message = $request->input('customermessage');
+        $date = Carbon::now()->toDateTimeString();
+        DB::table('message')->insert(
+            ['from_useremail' => $from_useremail, 
+            'to_useremail' => $to_useremail, 
+            'created_at' => $date, 
+            'message' => $message]
+        );
+        $request->session()->flash('message_sent','Message Sent!');
+    
+       
+        return back();
+    }
+
 
 
 

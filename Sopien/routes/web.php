@@ -44,6 +44,8 @@ Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondelive
 Route::get('/admin/customer-cancelled-order/{id}', 'AdminController@filtered_cancelledorders');
 Route::get('/admin/received-order/{id}/{email}', 'AdminController@filtered_receivedorders');
 Route::get('/view/summary-orders/{id}/{email}', 'AdminController@view_summary');
+Route::get('/receipt/pdf/{email}', 'AdminController@generateReceipt');
+Route::get('/print', 'AdminController@print');
 Route::post('/decline-order/{email}', 'AdminController@decline_order');
 
 Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
@@ -75,6 +77,7 @@ Route::get('/customer-order', 'OrdersController@view');
 Route::get('/order/delete/{id}', 'OrdersController@delete');
 Route::get('/placeorder', 'OrdersController@placeOrder');
 Route::post('/receiver', 'OrdersController@receiver');
+Route::post('/customer-message', 'OrdersController@customerMessage');
 Route::get('/receiver_page', 'OrdersController@receiver_page');
 Route::get('/myorder', 'OrdersController@myorder');
 Route::get('/cancel-order/{email}/{id}', 'OrdersController@cancelOrder');

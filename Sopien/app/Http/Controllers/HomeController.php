@@ -129,6 +129,8 @@ class HomeController extends Controller
     } */
 
     public function messages(){
+    
+
         $email = auth::user()->email;
         $message_count = Message::where([
             'read_at'=> null,
