@@ -1,5 +1,4 @@
-@extends('layouts.dashboard')
-
+@extends('layouts.admin_layout')
 @section('dashboard')
 <div>
 <h1>Add Category</h1>

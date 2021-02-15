@@ -1,6 +1,5 @@
 
-@extends('layouts.dashboard')
-
+@extends('layouts.admin_layout')
 @section('dashboard')
 <div>
 

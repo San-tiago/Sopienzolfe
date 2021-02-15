@@ -34,9 +34,9 @@ class HomeController extends Controller
 
     public function termsnconditions(){
         $email = auth::user()->email;
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
        
         return view('terms&conditions',compact('message_count'));
@@ -45,10 +45,9 @@ class HomeController extends Controller
 
         $email = auth::user()->email;
         $users = User::all();
-        
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
 
         $menus = Menu::all();
@@ -72,9 +71,9 @@ class HomeController extends Controller
 
     public function menu_nav($category){
         $email = auth::user()->email;
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
 
         $users = User::all();
@@ -93,9 +92,9 @@ class HomeController extends Controller
     }
 
     public function orderHistory($email){
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
         $order_history = ReceiverDetails::where([
             'fromemail' => $email,
@@ -104,9 +103,9 @@ class HomeController extends Controller
         return view('Order.orderhistory',compact('order_history','message_count'));
     }
     public function view_orderHistory($id,$email){
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
          $orders= Order::where([
             'email' => $email,
@@ -137,7 +136,7 @@ class HomeController extends Controller
             'to_useremail' => $email
             ])->count();
 
-        
+        date_default_timezone_set('Asia/Manila');
         $date = Carbon::now()->toDateTimeString();
         $unread = Message::where([
             'to_useremail' =>$email,

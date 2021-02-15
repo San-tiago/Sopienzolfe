@@ -1,6 +1,5 @@
 
-@extends('layouts.dashboard')
-
+@extends('layouts.admin_layout')
 @section('dashboard')
 <div class="d-flex justify-content-center table-bordered"><h1>Cancelled Orders</h1></div>
 

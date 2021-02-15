@@ -14,6 +14,11 @@
 <div class="sidebar">
                          
                       
+    <a href="/chatify"> <span class="badge badge-danger ">
+    {{$adminmessage_count ?? ''}}
+            </span>
+        <i class="fas fa-calendar-check fa-lg icon"></i>Messages
+    </a><br>
     <a href="/admin/menu"><i class="fas fa-calendar-minus fa-lg icon"></i>Menu</a><br>
     <a href="/admin/pendingorders"><span class="badge badge-danger ">
             {{$pending_count ?? ''}}

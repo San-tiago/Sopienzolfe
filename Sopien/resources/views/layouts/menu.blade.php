@@ -57,7 +57,9 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown-a">
+                        @if(auth::user()->Order_Status == 'Pending' || auth::user()->Order_Status == 'Approve' || auth::user()->Order_Status == 'Processed' || auth::user()->Order_Status == 'On Delivery')
                             <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
+                        @endif
                             <a class="dropdown-item" href="{{url('/my-cancelled-orders/'. Auth::user()->email)}}">Cancelled Orders</a>
                             <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->email)}}">Order History</a>
 							</div>	
@@ -71,7 +73,7 @@
                                 Food Cart
                             </a></li>
                         @endif
-                    <li class="nav-item"><a href="{{url('/messages')}}" class="nav-link">
+                    <li class="nav-item"><a href="{{url('/chatify')}}" class="nav-link">
                         <span class="badge badge-danger ">{{$message_count}}</span>
                         <i class="fa fa-comment" aria-hidden="true"></i></a></li>
                         <!-- Authentication Links -->

@@ -1,50 +1,67 @@
 
-@extends('layouts.dashboard')
-
+@extends('layouts.admin_layout')
 @section('dashboard')
-
-<h1>Approve Orders</h1>
+    
+<h1 class = "pending-order-h1">Approved Orders</h1>
 <div class="main-section">
-    <div>
-    <h4>From :</h4>
+    
+    <div class="btn-group">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    From Customer
+  </button>
+  <div class="dropdown-menu">
         @foreach($users as $user)
-        <a href="{{url('/admin/approve-order/'.$user->email)}}" class ="orders-link">
-            <button type="button" class="btn btn-light">{{$user->email}}</button>
-        </a><br>
+        <a href="{{url('/admin/approve-order/'.$user->email)}}" class ="dropdown-item">
+         {{$user->email}}
+        </a>
         @endforeach
     </div>
+   
 
-
-    <div class="info-section">
-        <table class="table table-bordered">
-        <thead>
-         <tr>
-            <th scope="col" class="text-center">#</th>
-            <th scope="col" class="text-center">Food Name</th>
-            <th scope="col" class="text-center">Category</th>
-            <th scope="col" class="text-center">Description</th>
-            <th scope="col" class="text-center">Quantity</th>
-            <th scope="col" class="text-center">Price</th>
-        </tr>
-        </thead>
-     <tbody>
-     @foreach($approved_orders as $approved_order)
-        <tr>
-            <td class="text-center">{{$loop->index+1}}</td>
-            <td class="text-center">{{$approved_order->menu_name}}</td>
-            <td class="text-center">{{$approved_order->menu_category}}</td>
-            <td class="text-center">{{$approved_order->menu_description}}</td>
-            <td class="text-center">{{$approved_order->quantity}}</td>
-            <td class="text-center">{{$approved_order->menu_price}}</td>  
-        </tr>
-        @endforeach
-
-        </tbody>
-     </table>
-    </div>
 </div>
 
-    
 
+<div class="col-md-12">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Food Name
+                        </th>
+                        <th>
+                          Category
+                        </th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                        Quantity
+                        </th>
+                        <th>
+                         Price
+                        </th>
+                        
+                      </thead>
+                      <tbody>
+                      @foreach($approved_orders as $approved_order)
+                        <tr>
+                            <td>{{$approved_order->menu_name}}</td>
+                            <td >{{$approved_order->menu_category}}</td>
+                            <td>{{$approved_order->menu_description}}</td>
+                            <td>{{$approved_order->quantity}}</td>
+                            <td>{{$approved_order->menu_price}}</td>  
+                        </tr>
+                        @endforeach
+                        
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 @endsection

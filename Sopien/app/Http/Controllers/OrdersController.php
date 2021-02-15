@@ -7,6 +7,7 @@ use App\Order;
 use App\User;
 use App\PlacedOrder;
 use App\Message;
+use Carbon\Carbon;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class OrdersController extends Controller
     }
     //
     public function store(Request $request){
-
+        date_default_timezone_set('Asia/Manila');
         $quantity = $request->input('quantity');
         $user_id = $request->input('user_id');
         $price = $request->input('menu_price');
@@ -45,12 +46,12 @@ class OrdersController extends Controller
     }
 
     public function view(){
-        
+        date_default_timezone_set('Asia/Manila');
         auth()->user()->unreadNotifications->markAsRead();
         $user = Auth::user()->email;
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $user
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
         $orders = Order::where([
             'email'=>$user,
@@ -69,13 +70,14 @@ class OrdersController extends Controller
         return back();
     }
     public function placeOrder(Request $request){
+        date_default_timezone_set('Asia/Manila');
         $user = Auth::user()->email;
         User::where('email', $user)->update(['Order_Status'=>'Pending']); //ditooooooooooooooo
         Order::where('email', $user)->where(function ($query) {
             $user = Auth::user()->email;
             $query->where([
                 'email' => $user,
-                ])->whereNotIn('status',['Received','Cancelled'])->get();
+                ])->whereNotIn('status',['Received','Cancelled','Declined'])->get();
                         })->update(['status'=>'Pending']);
         
         //User::find(['is_admin' => 1])->notify(new UserNotification);
@@ -85,9 +87,9 @@ class OrdersController extends Controller
     }
     public function receiver_page(){
         $user = Auth::user()->email;
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $user
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
         return view('Receiver.receiver',compact('message_count'));
     }
@@ -115,9 +117,9 @@ class OrdersController extends Controller
             ->get(); */
             /* ->whereIn('id', [1, 2, 3])
             ->get(); */
-            $message_count = Message::where([
-                'read_at'=> null,
-                'to_useremail' => $user
+            $message_count = db::table('messages')->where([
+                'seen'=> 0,
+                'from_id' => 1
                 ])->count();
 
 
@@ -147,7 +149,7 @@ class OrdersController extends Controller
          
          DB::table('orders')->where([
              'email' => $email,
-             'status' => 'Pending'
+             'order_id' => $id
          ])->update(['status' => 'Cancelled']);
       
         DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
@@ -163,9 +165,9 @@ class OrdersController extends Controller
 
     public function mycancelledOrders($email){
         $email = auth::user()->email;
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
         $cancelled_order_history = ReceiverDetails::where([
             'fromemail' => $email,
@@ -180,9 +182,9 @@ class OrdersController extends Controller
         return view('Order.mycancelledorders',compact('cancelled_order_history','message_count')); 
     }
     public function cancelled_orderHistory($id,$email){
-        $message_count = Message::where([
-            'read_at'=> null,
-            'to_useremail' => $email
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
             ])->count();
        $orders= Order::where([
             'order_id' => $id,
@@ -203,6 +205,7 @@ class OrdersController extends Controller
         $to_useremail= $user->email;
         $from_useremail = Auth::user()->email;
         $message = $request->input('customermessage');
+        date_default_timezone_set('Asia/Manila');
         $date = Carbon::now()->toDateTimeString();
         DB::table('message')->insert(
             ['from_useremail' => $from_useremail, 

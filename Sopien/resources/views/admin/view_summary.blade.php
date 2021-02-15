@@ -1,46 +1,51 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin_layout')
+
 
 @section('dashboard')
-<div >
 
-<div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1>Received Orders Summary</h1></div>
+<div class="col-md-12">
+              <div class="card">
+                
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th>
+                          Food Name
+                        </th>
+                        <th>
+                          Category
+                        </th>
+                        <th>
+                          Description
+                        </th>
+                        <th>
+                        Quantity
+                        </th>
+                        <th>
+                         Price
+                        </th>
+                        
+                      </thead>
+                      <tbody>
+                      @foreach($orders as $order)
+                        <tr>
+                            <td>{{$order->menu_name}}</td>
+                            <td >{{$order->menu_category}}</td>
+                            <td>{{$order->menu_description}}</td>
+                            <td>{{$order->quantity}}</td>
+                            <td>{{$order->menu_price}}</td>  
+                        </tr>
+                        @endforeach
+                        <tr col-span="5">
+                            <td><h3>Total: P {{$total}}</h3></td>
+                        </tr>
+                       
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                <th scope="col" class="text-center">Food Name</th>
-                <th scope="col" class="text-center">Category</th>
-                <th scope="col" class="text-center">Description</th>
-                <th scope="col" class="text-center">Quantity</th>
-                <th scope="col" class="text-center">Price</th>
-                </tr>
-                </thead>
-             <tbody>
-
-      
-        @foreach($orders as $order)
-                    <tr>
-                   
-                        <td class="text-center">{{$order->menu_name}}</td>
-                        <td class="text-center">{{$order->menu_category}}</td>
-                        <td class="text-center">{{$order->menu_description}}</td>
-                        <td class="text-center">{{$order->quantity}}</td>
-                        <td class="text-center">{{$order->menu_price}}</td>  
-                    </tr>
-                    @endforeach
-
-                    </tbody>
-                </table>
-
-</table>
-
-    <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total}}</h1>
-    </div>
-</div>
-
-
-
-
-
-</div>
 @endsection

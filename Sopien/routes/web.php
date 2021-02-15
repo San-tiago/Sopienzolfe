@@ -34,6 +34,7 @@ Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback
 //admin controller
 Route::get('/admin', 'AdminController@index');
 Route::get('/admin/menu', 'AdminController@menu');
+Route::get('/admin/messages', 'AdminController@messages');
 Route::get('/admin/orders', 'AdminController@orders');
 Route::get('/admin/sales', 'AdminController@sales');
 Route::get('/admin/users', 'AdminController@users');
@@ -46,12 +47,12 @@ Route::get('/admin/received-order/{id}/{email}', 'AdminController@filtered_recei
 Route::get('/view/summary-orders/{id}/{email}', 'AdminController@view_summary');
 Route::get('/receipt/pdf/{email}', 'AdminController@generateReceipt');
 Route::get('/print', 'AdminController@print');
-Route::post('/decline-order/{email}', 'AdminController@decline_order');
+Route::post('/decline-order/{order_id}/{email}', 'AdminController@decline_order');
 
-Route::get('/admin/approving-order/{email}', 'AdminController@approvingorder');
-Route::get('/admin/processing-order/{email}', 'AdminController@processingorder');
-Route::get('/admin/delivering-order/{email}', 'AdminController@deliveringorder');
-Route::get('/admin/receiving-order/{email}/{id}', 'AdminController@receivingorder');
+Route::get('/admin/approving-order/{order_id}/{email}', 'AdminController@approvingorder');
+Route::get('/admin/processing-order/{order_id}/{email}', 'AdminController@processingorder');
+Route::get('/admin/delivering-order/{order_id}/{email}', 'AdminController@deliveringorder');
+Route::get('/admin/receiving-order/{id}/{email}', 'AdminController@receivingorder');
 
 
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');

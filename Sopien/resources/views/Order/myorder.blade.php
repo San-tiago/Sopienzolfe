@@ -65,11 +65,12 @@
                 <div class="d-flex justify-content-center w-100 h-75 align-self-center p-3 border d-flex flex-wrap flex-column shadow-sm p-3 mb-5 bg-white rounded text-secondary">
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary">Order Time</p>
-                        <p class="text-secondary">{{$order->created_at}}</p>
+                        <p class="text-secondary">{{date('m/d/Y h:i:s a', strtotime($order->created_at))}}</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-secondary">Ship Date</p>
-                        <p class="text-secondary">{{date('d-m-Y', strtotime($order->created_at. '+3 days'))}}</p>
+                        <p class="text-secondary">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
+                       
                     </div>
                 </div>
                 <form action="{{url('/customer-message')}}" method="post">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Category;
 use App\Menu;
+use App\User;
+use App\Message;
 use Illuminate\Http\Request;
 use DB;
 class MenuController extends Controller
@@ -50,10 +52,13 @@ class MenuController extends Controller
             'read_at' => null
             ])
         ->count();
+        $admin = User::find(1);
+        $admin_email = $admin->email;
+        $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
         $categories = Category::orderBy('category')->get();
         return view('Menu.create_menu', compact(
             'categories',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count'
         )
             );
     }

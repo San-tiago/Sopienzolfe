@@ -1,5 +1,5 @@
-@extends('layouts.dashboard')
 
+@extends('layouts.admin_layout')
 @section('dashboard')
 <div>
 <h1>Menu</h1>
@@ -35,8 +35,8 @@
             <td class="text-center">{{$menu->menu_category}}</td>
             <td class="text-center">{{$menu->description}}</td>
             <td class="text-center">{{$menu->price}}</td>
-            <td class="text-center"> <a href="{{url('/menu/edit/'.$menu->id)}}"><button class="btn btn-info btn-sm">Edit</button></a> </td>
-            <td class="text-center"><a href="{{url('/menu/delete/'.$menu->id)}}"><button class="btn btn-danger btn-sm">Delete</button></a></td>
+            <td class="text-center"> <a href="{{url('/menu/edit/'.$menu->id)}}"><button class="btn btn-info">Edit</button></a></td>
+            <td class="text-center"><a href="{{url('/menu/delete/'.$menu->id)}}"><button class="btn btn-danger">Delete</button></a></td>
             
         </tr>
         @endforeach
