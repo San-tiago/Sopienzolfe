@@ -12,20 +12,28 @@
 */
 use App\Menu;
 use App\Category;
+use App\CustomerReview;
+use App\Events\Notif;
 Route::get('/', function () {
     $categories = Category::orderBy('category')->get();
     $menus = Menu::orderBy('food_name')->get();
-    return view('welcome',compact('menus','categories'));
+    $reviews = CustomerReview::orderBy('customer_name')->get();
+    return view('welcome',compact('menus','categories','reviews'));
 });
 
 Auth::routes(['verify' => true]);
 
+Route::get('/test', function(){
+    event(new Notif('test message'));
+    return "sent";
+});
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/menu/{category}', 'HomeController@menu_nav');
 Route::get('/order-history/{email}', 'HomeController@orderHistory');
 Route::get('/view/history-orders/{id}/{email}', 'HomeController@view_orderHistory');
 //Route::get('/unread_message', 'HomeController@unread_message');
 Route::get('/messages', 'HomeController@messages');
+Route::get('/mark-asread/{id}', 'HomeController@mark_asread');
 Route::get('/terms&conditions', 'HomeController@termsnconditions');
 
 
@@ -45,7 +53,7 @@ Route::get('/admin/ondelivery-order/{email}', 'AdminController@filtered_ondelive
 Route::get('/admin/customer-cancelled-order/{id}', 'AdminController@filtered_cancelledorders');
 Route::get('/admin/received-order/{id}/{email}', 'AdminController@filtered_receivedorders');
 Route::get('/view/summary-orders/{id}/{email}', 'AdminController@view_summary');
-Route::get('/receipt/pdf/{email}', 'AdminController@generateReceipt');
+Route::post('/receipt/pdf/{email}/{id}', 'AdminController@generateReceipt');
 Route::get('/print', 'AdminController@print');
 Route::post('/decline-order/{order_id}/{email}', 'AdminController@decline_order');
 
@@ -53,6 +61,9 @@ Route::get('/admin/approving-order/{order_id}/{email}', 'AdminController@approvi
 Route::get('/admin/processing-order/{order_id}/{email}', 'AdminController@processingorder');
 Route::get('/admin/delivering-order/{order_id}/{email}', 'AdminController@deliveringorder');
 Route::get('/admin/receiving-order/{id}/{email}', 'AdminController@receivingorder');
+Route::get('/admin/receipts', 'AdminController@receipts');
+Route::get('/admin/customer-receipts/{id}/{email}', 'AdminController@customer_receipts');
+Route::get('/admin/view-receipt/{receipt_name}', 'AdminController@view_receipt');
 
 
 Route::get('/admin/pendingorders', 'AdminController@pendingorders');
@@ -101,3 +112,12 @@ Route::get('/category/delete/{id}', 'CategoryController@delete');
 //User Controller
 Route::get('/admin/deactivate_account/{id}', 'AdminController@deactivate_account');
 Route::get('/admin/activate_account/{id}', 'AdminController@activate_account');
+
+//Customer Review Form
+Route::get('/review-form', 'HomeController@customer_review');
+Route::post('/insert-reviewform', 'HomeController@insert_review');
+
+//Account Settings Controller
+Route::get('/account-settings', 'AccountController@account_settings');
+Route::post('/edit-accountdetails', 'AccountController@edit_accountdetails');
+

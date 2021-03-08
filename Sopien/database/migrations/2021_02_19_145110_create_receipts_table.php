@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMessageTable extends Migration
+class CreateReceiptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateMessageTable extends Migration
      */
     public function up()
     {
-        Schema::create('message', function (Blueprint $table) {
+        Schema::create('receipts', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('to_useremail');
-            $table->string('message');
-            $table->integer('read_at')->default(0);
+            $table->integer('customer_id')->nullable();
+            $table->string('receipt_name')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateMessageTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('message');
+        Schema::dropIfExists('receipts');
     }
 }

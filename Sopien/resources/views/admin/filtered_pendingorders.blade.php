@@ -115,23 +115,42 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to approve this order?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}">
-            <button type="button" class="btn btn-primary">Confirm</button>
-         </a>
+      <form action="{{url('/receipt/pdf/'.$filtered_pendingorder->email.'/'.$filtered_pendingorder->user_id)}}" method="post">
+        @csrf
+              
+              <div class="form-group" id="payment">
+                  Amount Paid: 
+                  <select class="form-control" id="exampleFormControlSelect1" name="amount_paid">
+              
+                    <option class="dropdown-item" value="Partial">Partial</option>
+                    <option class="dropdown-item" value="Full">Full</option>
+                </select>
+                </div>
+      
+                <p id="text">Receipt generated, click Approve Button</p>
+
+        </div>
+            <div class="modal-footer">
+             <!--  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+       
+                <a href="{{url('/admin/approving-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}">
+                    <button type="button" class="btn btn-primary " id="approveButton">Confirm</button>
+                </a>
+             
+              
+                  <input type="submit" id = "generateButton" class="btn btn-outline-primary" value = "Generate Receipt" onclick="generate()">
+           
+                 
+    
+        </form>
       </div>
     </div>
   </div>
 </div>
     
-    <a href="{{url('/receipt/pdf/'.$filtered_pendingorder->email)}}">
-        <button type="button" class="btn btn-outline-primary" >Generate Receipt</button>
-    </a><br><br><br>
+   
 
-        <form action="{{url('/decline-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}" method="POST">
+   <!--      <form action="{{url('/decline-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}" method="POST">
         @csrf
             <div class="input-group mb-3">
                     <input type="text" name = "message"class="form-control" placeholder="Send message" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -140,8 +159,42 @@
                     </div>
                     
                 </div>
-        </form>
+        </form> -->
+<!--         <a href="{{url('/decline-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}"><button class="btn btn-danger" type="submit">Decline Order</button></a>
+ -->        
+      <!-- Button trigger modal -->
+      
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelOrderModal">
+          Decline Order
+        </button>
+      
 
+<!-- Modal -->
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Decline Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form action="{{url('/decline-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}" method="post">
+        @csrf
+        <label for="exampleInputEmail1">Message:</label>
+        <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter message" name="message">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <a href="">
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </a>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
         
         @if(session('adminmessage_sent'))
             <div class="d-flex justify-content-center alert alert-success" role="alert">
@@ -152,5 +205,20 @@
 
 
 
+<script>
+let approveButton = document.getElementById("approveButton");
+let generateButton = document.getElementById("generateButton");
+let payment = document.getElementById("payment");
+let text = document.getElementById("text");
+approveButton.style.display = "none";
+text.style.display = "none";
 
+  function generate(){
+    approveButton.style.display = "block";
+    text.style.display = "block";
+    generateButton.style.display = "none";
+    payment.style.display = "none";
+
+  }
+</script>
 @endsection

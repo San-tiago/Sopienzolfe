@@ -64,6 +64,7 @@
                             <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->email)}}">Order History</a>
 							</div>	
 						</li>
+                        
                         @if(Auth::user()->Order_Status == 'Ordering')
                             <li class="nav-item"> <a class="nav-link" href="{{url('/customer-order')}}">
                             <span class="badge badge-danger ">
@@ -74,8 +75,16 @@
                             </a></li>
                         @endif
                     <li class="nav-item"><a href="{{url('/chatify')}}" class="nav-link">
-                        <span class="badge badge-danger ">{{$message_count}}</span>
+                        <span class="badge badge-danger ">{{$message_count ?? ''}}</span>
                         <i class="fa fa-comment" aria-hidden="true"></i></a></li>
+
+                        <li class="nav-item" data-toggle="modal" data-target="#notif"> <a class="nav-link">
+                            <span class="badge badge-danger ">
+                               {{$decline_messages_count}}
+                            </span>
+                            <i class="fas fa-bell" aria-hidden="true"></i>
+                              
+                            </a></li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
@@ -96,7 +105,7 @@
                                                         document.getElementById('logout-form').submit();">
                                             {{ __('Logout') }}
                                         </a>
-                                        <a class="dropdown-item" href="">Account Settings</a>
+                                        <a class="dropdown-item" href="{{url(('/account-settings'))}}">Account Settings</a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             @csrf
@@ -108,8 +117,40 @@
 				</div>
 			</div>
 		</nav>
+
+
+
+
 	</header>
         <main class="py-4">
+                <!-- Modal -->
+                <div class="modal fade" id="notif" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Notification</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                        @foreach($decline_messages as $decline_message)
+                            <div class="alert alert-info" role="alert">
+                                {{$decline_message->message}}</br>
+                                <small>{{$decline_message->created_at}}</small><br>
+                                @if($decline_message->read_at == 0)
+                                 <a href="{{url('/mark-asread/'.$decline_message->id)}}"><span>Mark as read</span></a>
+                                @endif
+                            </div>
+                        @endforeach
+                        
+                        </div>
+                        <div>
+                        
+                        </div>
+                    </div>
+                </div>
+                </div>
             @yield('content')
         </main>
         

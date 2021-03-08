@@ -38,7 +38,7 @@
         </div>
     </div>
 @endif
-  
+    
    <div class="flex-column"> 
 
         <h1 class="d-flex p-2 d-flex justify-content-center p-3 border bg-white rounded mb-0">Order Details</h1>    
@@ -54,6 +54,7 @@
                             <p class="font-weight-bold mb-1">P {{$order->menu_price}}</p>
                         </div>
                     </div>
+                    
                 @endforeach
                 <div class="d-flex p-2 d-flex justify-content-center p-3 border mb-3 bg-white rounded mt-0">
                     <h3 name="total">Total: P{{$orders_sum}}</h3>
@@ -89,35 +90,70 @@
                         </div>
                 @endif
     @endif
-            @if(Auth::user()->Order_Status == 'Pending')    
+            @if(Auth::user()->Order_Status == 'Pending')   
+                  <!-- Button payment modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Pay Here
+                    </button> 
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">
                 Cancel Orders
                 </button>
+
             @endif
             
 
                         <!-- Cancel Order Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        Do you want to cancel your order?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        
-                        <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"><button type="button" class="btn btn-primary">Confirm</button> </a>
-                    </div>
+                <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Do you want to cancel your order?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            
+                            <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"><button type="button" class="btn btn-primary">Confirm</button> </a>
+                        </div>
+                        </div>
                     </div>
                 </div>
-                </div>
+
+              
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content w-100">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Payment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center w-100">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{asset('images/sopienzolfe_gcash.jpg')}}" alt="Card image cap">
+                                <p class="card-text align-self-center pt-2">or on this number below</p>
+<!--                                 <h2 id="gcash_number" class="card-text align-self-center" value="+6399999999">+6399999999</h2>
+ -->                                <input type="text" value="+6399999999" id="myInput" class="text-center rounded border border-info font-weight-bold" readonly>
+                                <button type="button" class="btn btn-info" onclick="myFunction()">Copy</button>
+                                <p class="card-text align-self-center p-md-3">After sending the payment, just wait for the approval of your order. Thank you!</p>
+
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
 @else
 <div class="card text-center mt-md-3">
 
@@ -128,5 +164,17 @@
         </div>
 </div>
 @endif
+
+
+<script>
+function myFunction() {
+  var copyText = document.getElementById("myInput");
+  copyText.select();
+  copyText.setSelectionRange(0, 99999)
+  document.execCommand("copy");
+  alert("Copied the text: " + copyText.value);
+  
+}
+</script>
 </div>
 @endsection

@@ -7,6 +7,7 @@ use App\User;
 use App\Order;
 use App\Category;
 use App\Message;
+use App\CustomerReview;
 use App\ReceiverDetails;
 use Auth;
 use DB;
@@ -42,7 +43,7 @@ class HomeController extends Controller
         return view('terms&conditions',compact('message_count'));
     }
     public function index(){   
-
+        
         $email = auth::user()->email;
         $users = User::all();
         $message_count = db::table('messages')->where([
@@ -64,8 +65,16 @@ class HomeController extends Controller
                             'id' => \DB::raw("(select max(`id`) from receiver_details)"),
                             'fromemail' => Auth::user()->email
                             )->get(); */
-                
-        return view('home',compact('menus','categories','users','new_transac','menus_count','message_count'));
+         $decline_messages_count = Message::where([
+             'to_useremail'=> $email,
+             'read_at'=> 0
+             ])->count();
+         $decline_messages = Message::where('to_useremail',$email)->orderBy('created_at','desc')->get();
+         $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
+            ])->count();
+        return view('home',compact('menus','categories','users','new_transac','menus_count','decline_messages','decline_messages_count','message_count'));
     
     }
 
@@ -127,12 +136,12 @@ class HomeController extends Controller
         
     } */
 
-    public function messages(){
+    /* public function messages(){
     
 
         $email = auth::user()->email;
         $message_count = Message::where([
-            'read_at'=> null,
+            'read_at'=> 0,
             'to_useremail' => $email
             ])->count();
 
@@ -150,6 +159,40 @@ class HomeController extends Controller
         }
         $messages = Message::where('to_useremail',$email)->orderBy('created_at','DESC')->get();
         return view('messages',compact('message_count','messages'));
+    } */
+
+
+    public function customer_review(){
+        $email = auth::user()->email;
+        $users = User::all();
+        $message_count = db::table('messages')->where([
+            'seen'=> 0,
+            'from_id' => 1
+            ])->count();
+        return view('customerreview');
+    }
+
+    public function insert_review(Request $request){
+        $user = auth::user()->name;
+        $message = $request->input('review_message');
+        DB::table('customerreview')->insert(
+            ['customer_name' => $user, 
+            'review_message' => $message]
+        );
+        return redirect('/home');
+    }
+
+    public function mark_asread($id){
+        //may error pa
+        /* $user_email = auth::user()->id; */
+        echo $id;
+        DB::table('message')->where([
+            'id' => $id,
+            'read_at' => 0
+            ])->update(['read_at' => '1']);  
+        
+        return back();
+
     }
 
 }

@@ -28,6 +28,7 @@ The above copyright notice and this permission notice shall be included in all c
   <link href=" {{url('/')}}/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href=" {{url('/')}}/assets/demo/demo.css" rel="stylesheet" />
+  
 </head>
 
 <body class="">
@@ -38,7 +39,7 @@ The above copyright notice and this permission notice shall be included in all c
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a class="simple-text logo-normal">
           Sopienzolfe
         </a></div>
       <div class="sidebar-wrapper">
@@ -50,6 +51,13 @@ The above copyright notice and this permission notice shall be included in all c
             </a>
           </li>
           <li class="nav-item ">
+          
+            <a class="nav-link" href="/chatify">
+              <i class="material-icons">person</i>
+              <p><span class="badge badge-danger mr-2"> {{$adminmessage_count ?? ''}}</span>Messages</p>
+            </a>
+          </li>
+          <li class="nav-item ">
             <a class="nav-link" href="/admin/menu">
               <i class="material-icons">person</i>
               <p>Menu</p>
@@ -58,43 +66,49 @@ The above copyright notice and this permission notice shall be included in all c
           <li class="nav-item ">
             <a class="nav-link" href="/admin/pendingorders">
               <i class="material-icons">content_paste</i>
-              <p>Pending Orders</p>
+              <p><span class="badge badge-danger mr-2">{{$pending_count ?? ''}}</span>Pending Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/approvedorders">
               <i class="material-icons">library_books</i>
-              <p>Approved Orders</p>
+              <p><span class="badge badge-danger mr-3">{{$approved_count ?? ''}}</span>Approved Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/processedorders">
               <i class="material-icons">bubble_chart</i>
-              <p>In Process Orders</p>
+              <p><span class="badge badge-danger mr-3">{{$inprocess_count ?? ''}}  </span>In Process Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/ondeliveryorders">
               <i class="material-icons">location_ons</i>
-              <p>On Delivery Orders</p>
+              <p><span class="badge badge-danger mr-3">{{$Ondelivery_count ?? ''}}</span>On Delivery Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/receivedorders">
               <i class="material-icons">notifications</i>
-              <p>Received Orders</p>
+              <p><span class="badge badge-danger mr-3">{{$received_count ?? ''}}</span>Received Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/cancelledorders">
               <i class="material-icons">language</i>
-              <p>Cancelled Orders</p>
+              <p><span class="badge badge-danger mr-3"></span>Cancelled Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/sales">
               <i class="material-icons">language</i>
               <p>Sales</p>
+            </a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="/admin/receipts">
+              <i class="material-icons">language</i>
+              <p>Receipts</p>
             </a>
           </li>
           <li class="nav-item ">

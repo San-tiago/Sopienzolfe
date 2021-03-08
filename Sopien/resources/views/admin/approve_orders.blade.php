@@ -6,19 +6,35 @@
 <div class="main-section">
     
     <div class="btn-group">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    From Customer
-  </button>
-  <div class="dropdown-menu">
-        @foreach($users as $user)
-        <a href="{{url('/admin/approve-order/'.$user->email)}}" class ="dropdown-item">
-         {{$user->email}}
-        </a>
-        @endforeach
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Partially Paid
+      </button>
+      <div class="dropdown-menu">
+            @foreach($users as $user)
+              @if($user->amount_paid == 'Partial')
+                <a href="{{url('/admin/approve-order/'.$user->email)}}" class ="dropdown-item">
+                {{$user->email}}
+                </a>
+              @endif
+          
+            @endforeach
+        </div>
     </div>
-   
-
-</div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Fully Paid
+      </button>
+      <div class="dropdown-menu">
+            @foreach($users as $user)
+              @if($user->amount_paid == 'Full')
+                <a href="{{url('/admin/approve-order/'.$user->email)}}" class ="dropdown-item">
+                 {{$user->email}}
+                </a>
+              @endif
+            
+            @endforeach
+        </div>
+    </div>
 
 
 <div class="col-md-12">

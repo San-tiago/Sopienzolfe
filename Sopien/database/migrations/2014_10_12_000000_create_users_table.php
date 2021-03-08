@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->string('lastname');
             $table->string('email');
             $table->boolean('is_admin')->default(false);
             $table->string('address')->nullable();
@@ -25,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('cancelled_orders_count')->default(0);
             $table->string('Account_Status')->default('Active');
             $table->string('password')->nullable();
-            $table->string('provider_id')->nullable();
+            $table->string('amount_paid')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -22,20 +22,20 @@
                                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                     <div class="row">
                                     @foreach($orders as $order)
-                                        <div class="col-lg-4 col-md-6 special-grid drinks">
-                                            <div class="gallery-single fix">
-                                                <img src="{{asset('images/'.$order->menu_image)}}" class="img-fluid" alt="Image">
-                                                <div class="why-text">
-                                                <p>{{$order->menu_description}}.</p>
-                                                </div>
-                                                <h4>{{$order->menu_name}}</h4>
-                                                <p>Qty: {{$order->quantity}}</p>
-                                                <h5>Sub Total: ${{$order->menu_price}}</h5>
-                                            </div>
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove</button>
+                                    <div class="card" style="width: 20rem;">
                                             
+                                            <img class="card-img-top" src="{{asset('images/'.$order->menu_image)}}" rel="nofollow" alt="Card image cap">
+                                            <div class="card-body">
+                                                <p class="card-text">{{$order->menu_name}}</p>
+                                                <p class="card-text">Qty: {{$order->quantity}}</p>
+                                                <p class="card-text"> <h5>Sub Total: ${{$order->menu_price}}</h5></p>
+                                            </div>
+                                        </div>
+<!--                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove</button>
+ -->                                            
 
                                         </div>
+                                      
                                         
                                          <!-- Modal -->
                                 <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">

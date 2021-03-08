@@ -36,7 +36,21 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+	<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script>
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('0ab4606c761bfe27542a', {
+      cluster: 'ap1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
     </head>
     <body>
         <!--  -->
@@ -285,7 +299,7 @@
 			<div class="row">
 				<div class="col-md-8 mr-auto ml-auto text-center">
 					<div id="reviews" class="carousel slide" data-ride="carousel">
-						<div class="carousel-inner mt-4">
+					<div class="carousel-inner mt-4">
 							<div class="carousel-item text-center active">
 								<div class="img-box p-1 border rounded-circle m-auto">
 									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">

@@ -54,11 +54,11 @@ class MenuController extends Controller
         ->count();
         $admin = User::find(1);
         $admin_email = $admin->email;
-        $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
-        $categories = Category::orderBy('category')->get();
+/*         $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();l
+ */        $categories = Category::orderBy('category')->get();
         return view('Menu.create_menu', compact(
             'categories',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count'
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'
         )
             );
     }
@@ -69,7 +69,7 @@ class MenuController extends Controller
             'menu_category' => 'required',
             'description' => 'required',
             'price' => 'required',
-            'image' => 'required|image:max:2048'
+            'image' => 'required|image:max:2048|mimes:jpg,jpeg'
         ]);
         /* $menu = new Menu();
         $menu->food_name = $request->input('food_name');
@@ -91,7 +91,7 @@ class MenuController extends Controller
         } */
         $image = $request->file('image');
         $new_name = rand() . '.' .$image->getClientOriginalExtension();
-        $image->move(public_path('images'),$new_name);
+        echo $image->move(public_path('images'),$new_name);
         $form_data = array(
             'food_name' => $request->food_name,
             'menu_category' => $request->menu_category,

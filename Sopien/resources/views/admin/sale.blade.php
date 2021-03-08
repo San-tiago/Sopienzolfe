@@ -44,10 +44,9 @@
                         <th class="text-center" scope="col">Date</th>
                     </tr>
                     
-                    @if(!$orders_today->isEmpty())
+                    @if(count($orders_today))
                         @foreach($orders_today as $order_today)
                         <tr>
-
                             <td  class="text-center">{{$loop->index+1}}</td>      
                             <td  class="text-center">{{$order_today->menu_name}}</td>       
                             <td  class="text-center">{{$order_today->menu_category}}</td>       

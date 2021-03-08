@@ -285,14 +285,22 @@ a {
                                 <table width="100%" cellpadding="0" cellspacing="0">
                                     <tbody><tr>
                                         <td class="content-block">
-                                            <h2>Thanks for using our app</h2>
+                                            <h2>Sopienzolfe</h2>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="content-block">
                                             <table class="invoice">
                                                 <tbody><tr>
-                                                    <td>{{$user}}<br>Invoice #12345<br>June 01 2015</td>
+                                                    <td>
+                                                        {{$user}}<br>
+                                                    @foreach($details as $detail)
+                                                        Invoice #{{$detail->id}}<br>
+                                                        Receiver Name: {{$detail->receivername}}<br>
+                                                        Address: {{$detail->province}},{{$detail->receiveraddress}}
+                                                    @endforeach
+                                                    <br>
+                                                        {{$date}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -316,11 +324,7 @@ a {
                                         </td>
                                     </tr>
                                    
-                                    <tr>
-                                        <td class="content-block">
-                                            Company Inc. 123 Van Ness, San Francisco 94102
-                                        </td>
-                                    </tr>
+                                   
                                 </tbody>
                             </table>
                             </td>
