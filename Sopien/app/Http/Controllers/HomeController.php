@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth'=>'verified']);
     }
 
     /**
@@ -109,7 +109,12 @@ class HomeController extends Controller
             'fromemail' => $email,
             'transac_status' => 1
             ])->get();
-        return view('Order.orderhistory',compact('order_history','message_count'));
+        $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+        $decline_messages = Message::where('to_useremail',$email)->get();
+        return view('Order.orderhistory',compact('order_history','message_count','decline_messages_count','decline_messages'));
     }
     public function view_orderHistory($id,$email){
         $message_count = db::table('messages')->where([
@@ -125,7 +130,12 @@ class HomeController extends Controller
             'order_id' => $id,
             'status' => 'Received'
             ])->sum('menu_price');
-        return view('Order.view_historyorder',compact('orders','total','message_count'));
+        $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+        $decline_messages = Message::where('to_useremail',$email)->get();
+        return view('Order.view_historyorder',compact('orders','total','message_count','decline_messages_count','decline_messages'));
     }
 
     /* public function unread_message(){

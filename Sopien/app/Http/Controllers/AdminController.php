@@ -53,13 +53,33 @@ class AdminController extends Controller
             'read_at' => null
             ])
         ->count();
+         $receivedorder_count = DB::table('receiver_details')
+        ->where([
+            'transac_status' => 1
+            ])
+        ->count();
+         $cancelledorder_count = DB::table('receiver_details')
+        ->where([
+            'transac_status' => 'Cancelled'
+            ])
+        ->count();
+         $pendingorder_count = DB::table('receiver_details')
+        ->where([
+            'transac_status' => 'Pending'
+            ])
+        ->count();
          $user_count = DB::table('users')
         ->count();
         
         $admin = User::find(1);
         $admin_email = $admin->email;
 /*         $  = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
- */        return view ('admin.admin_dashboard',compact('user_count','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+ */        return view ('admin.admin_dashboard',compact(
+                        'user_count','pending_count',
+                        'approved_count','inprocess_count',
+                        'Ondelivery_count','received_count',
+                        'receivedorder_count','cancelledorder_count',
+                        'pendingorder_count'));
     }
 
     public function menu(){
@@ -825,7 +845,7 @@ class AdminController extends Controller
 /*         $  = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
  */
         //DAILY
-        echo $orders_today = Order::whereDate('created_at',today())->where('status','Received')->get(); // orders today
+        $orders_today = Order::whereDate('created_at',today())->where('status','Received')->get(); // orders today
        
        $totalsales_today = Order::whereDate('created_at',today())->where('status','Received')->sum('menu_price'); // total daily sales
         //MONTHLY
@@ -1050,11 +1070,11 @@ class AdminController extends Controller
     $user = $email;
     $user_id = $id;
     $date = Carbon::now()->format('d-m-Y');
-    $details = ReceiverDetails::where([
-           'fromemail'=> $email,
-           'transac_status'=> 0
-           ])->latest()->get();
-/*      echo $details = DB::table('receiver_details')->where('fromemail',$email)->max('id')->get();
+    $details =  DB::table('receiver_details')->where([
+            ['transac_status','=','0'],
+            ['fromemail','=', $email]
+           ])->get();
+/*      $details = DB::table('receiver_details')->where('fromemail',$email)->max('id')->get();
  */     $filtered_pendingorders = Order::where([
         'email'=> $email,
         'status'=> 'Pending'
@@ -1084,6 +1104,9 @@ class AdminController extends Controller
         ]
     );  */
 
+
+
+    
      Receipt::firstOrCreate([
         'customer_id' => $user_id, 
         'receipt_name' => $receipt_name,

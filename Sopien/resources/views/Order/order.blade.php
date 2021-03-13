@@ -31,8 +31,8 @@
                                                 <p class="card-text"> <h5>Sub Total: ${{$order->menu_price}}</h5></p>
                                             </div>
                                         </div>
-<!--                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove</button>
- -->                                            
+                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove</button>
+                                           
 
                                         </div>
                                       

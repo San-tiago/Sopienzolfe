@@ -159,11 +159,11 @@ class OrdersController extends Controller
         }
         
      public function cancelOrder($email,$id){
-         User::where('email',$email)->update(['Order_Status' => 'None']); 
-         
-         DB::table('orders')->where([
+          User::where('email',$email)->update(['Order_Status' => 'None']); 
+     
+         echo DB::table('orders')->where([
              'email' => $email,
-             'order_id' => $id
+             'status' => 'Pending',
          ])->update(['status' => 'Cancelled']);
       
         DB::table('users')->where('email',$email)->increment('cancelled_orders_count');
@@ -193,7 +193,12 @@ class OrdersController extends Controller
             'email' => $email,
             'status' => 'Cancelled',
             ])->get(); */
-        return view('Order.mycancelledorders',compact('cancelled_order_history','message_count')); 
+            $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+        $decline_messages = Message::where('to_useremail',$email)->get();
+        return view('Order.mycancelledorders',compact('cancelled_order_history','message_count','decline_messages_count','decline_messages')); 
     }
     public function cancelled_orderHistory($id,$email){
         $message_count = db::table('messages')->where([
@@ -210,7 +215,12 @@ class OrdersController extends Controller
             'order_id' => $id,
             'status' => 'Cancelled'
             ])->sum('menu_price');
-       return view('Order.view_cancelledorders',compact('orders','total','message_count'));
+        $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+        $decline_messages = Message::where('to_useremail',$email)->get();
+       return view('Order.view_cancelledorders',compact('orders','total','message_count','decline_messages_count','decline_messages'));
     }
 
     /* public function customerMessage(Request $request){

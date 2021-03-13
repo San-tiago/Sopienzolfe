@@ -1,34 +1,37 @@
 @extends('layouts.admin_layout')
 @section('dashboard')
-<div>
-
-<h1>{{$menu_name}}</h1>
-
-<table class="table table-bordered">
-        <thead>
-         <tr>
-            <th scope="col" class="text-center">ID</th>
-            <th scope="col" class="text-center">Food Item</th>
-            <th scope="col" class="text-center">Total Price</th>
-            <th scope="col" class="text-center">Quantity</th>
-            <th scope="col" class="text-center">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($menu_details as $menu_detail)
-     <tr>
-        <td class="text-center">{{$menu_detail->id}}</td>
-        <td class="text-center">{{$menu_detail->menu_name}}</td>
-        <td class="text-center">{{$menu_detail->menu_price}}</td>
-        <td class="text-center">{{$menu_detail->quantity}}</td>
-        <td class="text-center">{{$menu_detail->created_at}}</td>
-        </tr>
-        @endforeach
-        </tbody>
-    </table>
-
-    <h1>Total : {{$menusales_sum}}</h1>
-    
-
-</div>
+<div class="col-md-12">
+              <div class="card">
+              <div class="card-header card-header-primary">
+                  <h4 class="card-title ">{{$menu_name}}</h4>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class=" text-primary">
+                        <th >ID</th>
+                        <th >Food Item</th>
+                        <th >Total Price</th>
+                        <th >Quantity</th>
+                        <th >Date</th>
+                      </thead>
+                      <tbody>
+                      @foreach($menu_details as $menu_detail)
+                        <tr>
+                        <td >{{$menu_detail->id}}</td>
+                        <td >{{$menu_detail->menu_name}}</td>
+                        <td >{{$menu_detail->menu_price}}</td>
+                        <td >{{$menu_detail->quantity}}</td>
+                        <td >{{$menu_detail->created_at}}</td>   
+                        </tr>
+                        @endforeach
+                        
+                       
+                      </tbody>
+                    </table>
+                    <h3>Total : {{$menusales_sum}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
 @endsection
