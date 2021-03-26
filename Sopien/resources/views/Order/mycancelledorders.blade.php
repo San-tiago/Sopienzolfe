@@ -1,10 +1,16 @@
 @extends('layouts.menu')
 
 @section('content')
+<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Cancelled Order History</h1>
+				</div>
+			</div>
+		</div>
+	</div>
 <div >
-<a href="/home"><button button type="button" class="btn btn-primary">Back</button></a>
-
-<div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1>Cancelled Orders History</h1></div>
 
         <table class="table table-bordered">
             <thead>
@@ -36,14 +42,5 @@
                 </tbody>
             </table>
 
-</table>
-
-   
-</div>
-
-
-
-
-
-</div>
+\
 @endsection

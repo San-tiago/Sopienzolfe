@@ -2,50 +2,51 @@
 @extends('layouts.menu')
 
 @section('content')
-<!-- Start Menu -->
-<div class="menu-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="heading-title text-center">
-						<h2>Special Menu</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-					</div>
-				</div>
-			</div> 
-			
-			<div class="row inner-menu-box">
-				<div class="col-3">
-					<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    @if($menus_count > 0) 
-                         @if(Auth::user()->Order_Status == 'None' && $menus_count > 0)
-						    <a class="nav-link" href="{{url('/receiver_page')}}"  role="tab">Create Order</a>
-                        @endif
-                        <a class="nav-link " href="{{url('/home')}}" role="tab">All</a>
-                        @foreach($categories as $category)
-						    <a class="nav-link"   href="/menu/{{$category->category}}">{{$category->category}}</a>
-                        @endforeach
-                    @endif
-
-                      
-					</div>
-				</div>  
-				
-				<div class="col-9">
-					<div class="tab-content" id="v-pills-tabContent">
-						<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-							<div class="row">
-                            @foreach($menus as $menu)
-								<div class="col-lg-4 col-md-6 special-grid drinks">
-									<div class="gallery-single fix">
-										<img src="{{asset('images/'.$menu->image)}}" class="img-fluid" alt="Image">
-										<div class="why-text">
-											<h4>{{$menu->food_name}}</h4>
-											<p>{{$menu->description}}.</p>
-											<h5> ${{$menu->price}}</h5>
+   <!-- Start Gallery -->
+   <div class="gallery-box">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="heading-title text-center">
+                                <h2>Sopienzolfe Menu</h2>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+                            </div>
+							<div class="d-flex flex-row justify-content-center mb-1">
+								@if($menus_count > 0) 
+									@if(Auth::user()->Order_Status == 'None' && $menus_count > 0)
+										<div class="p-2">
+											<h3>
+											<a class="nav-link" href="{{url('/receiver_page')}}"  role="tab">Create Order</a>
+											</h3>
 										</div>
+									@endif
+									<div class="p-2">
+										<h3>
+										<a class="nav-link " href="{{url('/home')}}" role="tab">All</a>
+										</h3>
 									</div>
-                                    <form action="{{url('/order')}}" method = "post">
+									@foreach($categories as $category)
+										<div class="p-2">
+											<h3>
+												<a class="nav-link"   href="/menu/{{$category->category}}">{{$category->category}}</a>
+											</h3>
+										</div>
+									@endforeach
+								@endif
+							</div>
+                        </div>
+                    </div>
+                    <div class="tz-gallery">
+                        <div class="row mb-5">
+                        @foreach($menus as $menu)
+                            <div class="col-sm-12 col-md-4 col-lg-4 mb-5"> 
+                                <a class="lightbox">
+                                    <img class="img-fluid" src="{{asset('images/'.$menu->image)}}" alt="Gallery Images">
+                                </a>
+                                <strong><p>{{$menu->food_name}}</p></strong>
+                                <p class="card-text">Description: {{$menu->description}}</p>
+                                <p class="card-text"> <strong>Price: P{{$menu->price}}</strong></p>
+								<form action="{{url('/order')}}" method = "post">
                                         @csrf
                         
                                     @foreach($users as $user)
@@ -72,16 +73,14 @@
                                         @endif
 
                                     </form>
-								</div>
-							@endforeach
-                          </div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Menu -->
+                            </div>
+                        @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Gallery -->
+
 @if(Auth::user()->Account_Status == 'Deactivated')
 <div class="d-flex justify-content-center">
     <div class="alert alert-danger " role="alert">

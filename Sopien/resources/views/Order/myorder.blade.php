@@ -1,11 +1,20 @@
 @extends('layouts.menu')
 
 @section('content')
-<div>
+    <!-- Order Status -->
 
-<div class="container">
+	<div class="gallery-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+						<h2>Order Status</h2>
+						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+					</div>
+				</div>
+			</div>
+			<div class="container">
 @if(auth::user()->Order_Status !== 'Ordering' && auth::user()->Order_Status !== 'None')
-    <div class="d-flex  d-flex justify-content-center table-bordered shadow-sm bg-white rounded"> <h1>Order Status</h1></div>
         <div class="d-flex p-2 d-flex justify-content-center table-bordered d-flex justify-content-around shadow-sm p-3 mb-3 bg-white rounded flex-nowrap">
          <div >
          @if(Auth::user()->Order_Status == 'Pending' || Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
@@ -38,28 +47,54 @@
         </div>
     </div>
 @endif
-    
-   <div class="flex-column"> 
+		</div>
+	</div>
+    <!-- Order Status -->
 
-        <h1 class="d-flex p-2 d-flex justify-content-center p-3 border bg-white rounded mb-0">Order Details</h1>    
-        @if(!$orders->isEmpty())
-                @foreach($orders as $order)
-                    
-                    <div class="d-flex flex-row justify-content-center w-100 h-75 align-self-center  border d-flex flex-wrap bg-white rounded text-secondary">
-                        <img  class="w-25 p-3 h-75 ml-0" src="{{asset('images/'.$order->menu_image)}}">
-                        <div class="flex-column justify-content-start w-75 mt-1">
-                            <h4 class="font-weight-bold ">{{$order->menu_name}}</h4>
-                            <p class="text-secondary mb-1">Description: {{$order->menu_description}}</p>
-                            <p class="text-secondary mb-1">Quantity :{{$order->quantity}}</p>
-                            <p class="font-weight-bold mb-1">P {{$order->menu_price}}</p>
+
+<!-- Start Gallery -->
+	<div class="gallery-box">
+		<div class="container">
+			<div class="tz-gallery">
+				<div class="row">
+    @if(!$orders->isEmpty())
+                    @foreach($orders as $order)
+                        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <a class="lightbox">
+                                <img class="img-fluid" src="{{asset('images/'.$order->menu_image)}}" alt="Gallery Images">
+                            </a>
+                            <strong><p>{{$order->menu_name}}</p></strong>
+                            <p class="card-text">Qty: {{$order->quantity}}</p>
+                            <p class="card-text"> <strong>Sub Total: P {{$order->menu_price}}</strong></p>
                         </div>
-                    </div>
-                    
-                @endforeach
-                <div class="d-flex p-2 d-flex justify-content-center p-3 border mb-3 bg-white rounded mt-0">
-                    <h3 name="total">Total: P{{$orders_sum}}</h3>
-                </div>
-    </div> 
+                        
+                    @endforeach
+               
+				</div>
+			</div>
+		</div>
+	    </div>  
+        <div class="d-flex p-2 d-flex justify-content-center mb-3 bg-white rounded mt-0">
+                   <strong><p name="total">Total: P{{$orders_sum}}</p></strong> 
+        </div>
+      
+	<!-- End Gallery -->
+
+    @else
+    <div class="card text-center mt-md-3 m-auto">
+        <div class="card-body ">
+            <h5 class="card-title"></h5>
+            <img src="images/sopien" alt="" />
+            <p class="h2 mb-5">You have no Order</p>
+            <a href="/home" class="btn btn-primary">Click here to Order</a>
+        </div>
+    </div>
+    @endif
+
+
+
+    
+ 
 
     @if(Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery')    
 
@@ -74,56 +109,45 @@
                        
                     </div>
                 </div>
-                <form action="{{url('/customer-message')}}" method="post">
-                    @csrf
-                <div class="input-group mb-3">
-                    <input type="text" name = "customermessage"class="form-control" placeholder="Send message to admin" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <input class="btn btn-primary" type="submit" value = "Send">
-                    </div>
-                    
-                </div>
-                </form>
-                @if(session('message_sent'))
-                        <div class="d-flex justify-content-center alert alert-success" role="alert">
-                            <h5>{{Session::get('message_sent')}}</h5>
-                        </div>
-                @endif
+    
+            <div class="d-flex p-2 d-flex justify-content-center" >
+                    @if(Auth::user()->Order_Status == 'Pending')   
+                        <!-- Button payment modal -->
+                            <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#exampleModal">
+                            Pay Here
+                            </button> 
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">
+                        Cancel Orders
+                        </button>
+
+                    @endif
+            </div>
     @endif
-            @if(Auth::user()->Order_Status == 'Pending')   
-                  <!-- Button payment modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Pay Here
-                    </button> 
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">
-                Cancel Orders
-                </button>
 
-            @endif
-            
-
-                        <!-- Cancel Order Modal -->
-                <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Do you want to cancel your order?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            
-                            <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"><button type="button" class="btn btn-primary">Confirm</button> </a>
-                        </div>
+        @if(!$orders->isEmpty())
+                            <!-- Cancel Order Modal -->
+                    <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to cancel your order?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                
+                                <a href="{{url('/cancel-order/'.Auth::user()->email.'/'.$order->id)}}"><button type="button" class="btn btn-primary">Confirm</button> </a>
+                            </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+        @endif
 
               
 
@@ -154,16 +178,7 @@
                         </div>
                     </div>
                     </div>
-@else
-<div class="card text-center mt-md-3">
 
-        <div class="card-body ">
-            <h5 class="card-title"></h5>
-            <p class="h2">You have no Order</p>
-            <a href="/home" class="btn btn-primary">Click here to Order</a>
-        </div>
-</div>
-@endif
 
 
 <script>

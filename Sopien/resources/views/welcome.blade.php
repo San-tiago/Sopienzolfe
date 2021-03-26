@@ -37,20 +37,7 @@
     <![endif]-->
 
 	<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  <script>
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('0ab4606c761bfe27542a', {
-      cluster: 'ap1'
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
-    });
-  </script>
+  
     </head>
     <body>
         <!--  -->
@@ -70,9 +57,8 @@
                         @auth
 						<li class="nav-item active"><a class="nav-link" href="{{ url('/home') }}">Home</a></li>
                         @else
-						<li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
-						<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">About</a></li>
 						<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Log-In</a></li>
                             @if (Route::has('register'))
                             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
@@ -221,7 +207,7 @@
 										<div class="why-text">
 											<h4>{{$menu->food_name}}</h4>
 											<p>{{$menu->description}}.</p>
-											<h5> ${{$menu->price}}</h5>
+											<h5> P {{$menu->price}}</h5>
                                             
 										</div>
 									</div>
@@ -249,7 +235,7 @@
 			</div>
 			<div class="tz-gallery">
 				<div class="row">
-					<div class="col-sm-12 col-md-4 col-lg-4">
+					<div class="col-sm-12 col-md-4 col-lg-4"> 
 						<a class="lightbox" href="images/gallery-img-01.jpg">
 							<img class="img-fluid" src="images/gallery-img-01.jpg" alt="Gallery Images">
 						</a>
@@ -285,60 +271,7 @@
 	</div>
 	<!-- End Gallery -->
 
-    <!-- Start Customer Reviews -->
-	<div class="customer-reviews-box">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="heading-title text-center">
-						<h2>Customer Reviews</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-8 mr-auto ml-auto text-center">
-					<div id="reviews" class="carousel slide" data-ride="carousel">
-					<div class="carousel-inner mt-4">
-							<div class="carousel-item text-center active">
-								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
-								</div>
-								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Paul Mitchel</strong></h5>
-								<h6 class="text-dark m-0">Web Developer</h6>
-								<p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
-							</div>
-							<div class="carousel-item text-center">
-								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
-								</div>
-								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Steve Fonsi</strong></h5>
-								<h6 class="text-dark m-0">Web Designer</h6>
-								<p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
-							</div>
-							<div class="carousel-item text-center">
-								<div class="img-box p-1 border rounded-circle m-auto">
-									<img class="d-block w-100 rounded-circle" src="images/quotations-button.png" alt="">
-								</div>
-								<h5 class="mt-4 mb-0"><strong class="text-warning text-uppercase">Daniel vebar</strong></h5>
-								<h6 class="text-dark m-0">Seo Analyst</h6>
-								<p class="m-0 pt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante. Idac bibendum scelerisque non non purus. Suspendisse varius nibh non aliquet.</p>
-							</div>
-						</div>
-						<a class="carousel-control-prev" href="#reviews" role="button" data-slide="prev">
-							<i class="fa fa-angle-left" aria-hidden="true"></i>
-							<span class="sr-only">Previous</span>
-						</a>
-						<a class="carousel-control-next" href="#reviews" role="button" data-slide="next">
-							<i class="fa fa-angle-right" aria-hidden="true"></i>
-							<span class="sr-only">Next</span>
-						</a>
-                    </div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Customer Reviews -->
+    
 
 
 <!-- Start Contact info -->
@@ -359,7 +292,7 @@
 					<div class="overflow-hidden">
 						<h4>Email</h4>
 						<p class="lead">
-							yourmail@gmail.com
+							sopienzfole@gmail.com
 						</p>
 					</div>
 				</div>
@@ -368,7 +301,7 @@
 					<div class="overflow-hidden">
 						<h4>Location</h4>
 						<p class="lead">
-							800, Lorem Street, US
+						Sabutan, Silang, Cavite
 						</p>
 					</div>
 				</div>
@@ -383,7 +316,7 @@
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
 					<h3>About Us</h3>
-					<a href="/terms&conditions"><p>Terms and Conditions</p></a>
+					<a href="{{ url('/terms&conditions') }}"><p>Terms and Conditions</p></a>
                     <a href=""><p>Privacy Policy</p></a>
 				</div>
 				<div class="col-lg-3 col-md-6">

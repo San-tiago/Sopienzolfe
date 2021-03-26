@@ -39,8 +39,12 @@ class HomeController extends Controller
             'seen'=> 0,
             'from_id' => 1
             ])->count();
-       
-        return view('terms&conditions',compact('message_count'));
+            $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+            $decline_messages = Message::where('to_useremail',$email)->orderBy('created_at','desc')->get();
+        return view('terms&conditions',compact('message_count','decline_messages_count','decline_messages'));
     }
     public function index(){   
         
@@ -84,6 +88,12 @@ class HomeController extends Controller
             'seen'=> 0,
             'from_id' => 1
             ])->count();
+            $decline_messages_count = Message::where([
+                'to_useremail'=> $email,
+                'read_at'=> 0
+                ])->count();
+            $decline_messages = Message::where('to_useremail',$email)->orderBy('created_at','desc')->get();
+
 
         $users = User::all();
         $menus = Menu::where('menu_category',$category)->get();
@@ -97,7 +107,7 @@ class HomeController extends Controller
             ])
         ->latest()
         ->get(); 
-        return view('home',compact('menus','categories','users','check','menus_count','new_transac','message_count'));
+        return view('home',compact('menus','categories','users','check','menus_count','new_transac','message_count','decline_messages_count','decline_messages'));
     }
 
     public function orderHistory($email){
@@ -172,7 +182,7 @@ class HomeController extends Controller
     } */
 
 
-    public function customer_review(){
+   /*  public function customer_review(){
         $email = auth::user()->email;
         $users = User::all();
         $message_count = db::table('messages')->where([
@@ -180,7 +190,7 @@ class HomeController extends Controller
             'from_id' => 1
             ])->count();
         return view('customerreview');
-    }
+    } */
 
     public function insert_review(Request $request){
         $user = auth::user()->name;

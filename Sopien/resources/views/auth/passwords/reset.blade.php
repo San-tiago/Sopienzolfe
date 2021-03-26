@@ -1,6 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Start All Pages -->
+<div class="all-page-title page-breadcrumb">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Reset Password</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- End All Pages -->
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">

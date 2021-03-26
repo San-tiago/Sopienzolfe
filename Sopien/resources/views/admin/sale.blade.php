@@ -153,8 +153,7 @@
                       </thead>
                       <tbody>
                       @foreach($orders_month as $order_month)
-                        <tr>
-                        <td>{{$loop->index+1}}</td>      
+                        <tr>   
                             <td>{{$order_month->menu_name}}</td>       
                             <td>{{$order_month->menu_category}}</td>       
                             <td>{{$order_month->quantity}}</td>       

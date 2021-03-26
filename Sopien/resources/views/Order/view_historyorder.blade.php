@@ -1,10 +1,15 @@
 @extends('layouts.menu')
 
 @section('content')
-<div >
-<a href="{{url('/order-history/'.Auth::user()->email)}}"><button button type="button" class="btn btn-primary">Back</button></a>
-
-<div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1>Order History</h1></div>
+<div class="gallery-box">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="heading-title text-center">
+						<h2>Food Ordered</h2>
+					</div>
+				</div>
+			</div>
 
         <table class="table table-bordered">
             <thead>
@@ -33,15 +38,11 @@
                     </tbody>
                 </table>
 
-</table>
+        </table>
 
-    <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total}}</h1>
+        <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total}}</h1>
+        </div>
     </div>
 </div>
 
-
-
-
-
-</div>
 @endsection

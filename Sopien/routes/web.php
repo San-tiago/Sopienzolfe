@@ -23,10 +23,6 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/test', function(){
-    event(new Notif('test message'));
-    return "sent";
-});
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/menu/{category}', 'HomeController@menu_nav');
 Route::get('/order-history/{email}', 'HomeController@orderHistory');

@@ -49,26 +49,26 @@
     <![endif]-->
 
 </head>
+
+
 <body>
-    <div id="app">
-        
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<!-- Start header -->
+	<header class="top-navbar">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container">
-				<a class="navbar-brand" href="index.html">
+				<a class="navbar-brand" href="{{ url('/') }}">
 					Sopienzolfe
 				</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbars-rs-food">
-					<ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav ml-auto">
                         @auth
 						<li class="nav-item active"><a class="nav-link" href="{{ url('/home') }}">Home</a></li>
                         @else
 						<li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>        
-						<li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+						<li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">About</a></li>
 						<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Log-In</a></li>
                             @if (Route::has('register'))
                             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
@@ -78,13 +78,51 @@
 				</div>
 			</div>
 		</nav>
-    </header>
+	</header>
+	<!-- End header -->
         <main class="py-4 ">
             @yield('content')
         </main>
     </div>
     
-
+	<!-- Start Footer -->
+	<footer class="footer-area bg-f">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<h3>About Us</h3>
+                    <a href="{{ url('/terms&conditions') }}"><p>Terms and Conditions</p></a>
+                    <a href=""><p>Privacy Policy</p></a>
+				</div>
+               
+			
+				<div class="col-lg-3 col-md-6">
+					<h3>Contact information</h3>
+				
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<h3>Opening hours</h3>
+					<p><span class="text-color">Monday: </span>Closed</p>
+					<p><span class="text-color">Tue-Wed :</span> 9:Am - 10PM</p>
+					<p><span class="text-color">Thu-Fri :</span> 9:Am - 10PM</p>
+					<p><span class="text-color">Sat-Sun :</span> 5:PM - 10PM</p>
+				</div>
+                <div class="col-lg-3 col-md-6">
+					<h3>Follow us on</h3>
+					 
+					<ul class="list-inline f-social">
+						<li class="list-inline-item"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+						<li class="list-inline-item"><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		
+	</footer>
+	<!-- End Footer -->
 	
 <!-- ALL JS FILES -->
 <script src="js/jquery-3.2.1.min.js"></script>

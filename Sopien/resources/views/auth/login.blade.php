@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<!-- Start All Pages -->
+<div class="all-page-title page-breadcrumb mb-5">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Log-in</h1>
+				</div>
+			</div>
+		</div>
+</div>
+	<!-- End All Pages -->
+<div class="container mb-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -60,15 +71,15 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div class="col-md-8 offset-md-4">                                
+                                <button  class="btn btn-common" id="submit" type="submit">
                                     {{ __('Login') }}
                                 </button>
-
-                                <a href="login/google">Login with Google</a>
+                                
+                                <a href="login/google" class="btn btn-common">Login with Google</a>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn btn-common" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif
