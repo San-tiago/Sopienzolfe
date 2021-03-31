@@ -293,14 +293,16 @@ a {
                                             <table class="invoice">
                                                 <tbody><tr>
                                                     <td>
-                                                        {{$user}}<br>
+                                                        From: {{$user}}<br>
                                                     @foreach($details as $detail)
-                                                        Invoice #{{$detail->id}}<br>
+            
                                                         Receiver Name: {{$detail->receivername}}<br>
                                                         Address: {{$detail->province}},{{$detail->receiveraddress}}
+                                                        <br>
+                                                        Payment Type: {{$detail->payment_type}}
                                                     @endforeach
                                                     <br>
-                                                        {{$date}}</td>
+                                                        Created at: {{$date}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>
@@ -312,10 +314,15 @@ a {
                                                                 <td class="alignright">P {{{$filtered_pendingorder->menu_price}}}</td>
                                                             </tr>
                                                         @endforeach
+                                                            <tr>
+                                                                <td>Shipping Fee</td>
+                                                                <td class="alignright">P 150</td>
+                                                            </tr>
+                                                            
                                                             
                                                             <tr class="total">
                                                                 <td class="alignright" width="80%">Total</td>
-                                                                <td class="alignright">P {{$total_filtered_pendingorders}}</td>
+                                                                <td class="alignright">P {{$total_filtered_pendingorders+150}}</td>
                                                             </tr>
                                                         </tbody></table>
                                                     </td>

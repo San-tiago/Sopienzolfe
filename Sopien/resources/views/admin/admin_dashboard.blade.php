@@ -16,7 +16,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
+                 
                   </div>
                 </div>
               </div>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
+                 
                   </div>
                 </div>
               </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
+                 
                   </div>
                 </div>
               </div>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="card-footer">
                   <div class="stats">
-                  <i class="material-icons">access_time</i> updated 4 minutes ago
+                 
                   </div>
                 </div>
               </div>

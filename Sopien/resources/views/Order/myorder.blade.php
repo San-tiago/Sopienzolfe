@@ -3,18 +3,19 @@
 @section('content')
     <!-- Order Status -->
 
-	<div class="gallery-box">
+	
+@if(auth::user()->Order_Status !== 'Ordering' && auth::user()->Order_Status !== 'None')
+    <div class="gallery-box">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-title text-center">
 						<h2>Order Status</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+						
 					</div>
 				</div>
 			</div>
 			<div class="container">
-@if(auth::user()->Order_Status !== 'Ordering' && auth::user()->Order_Status !== 'None')
         <div class="d-flex p-2 d-flex justify-content-center table-bordered d-flex justify-content-around shadow-sm p-3 mb-3 bg-white rounded flex-nowrap">
          <div >
          @if(Auth::user()->Order_Status == 'Pending' || Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
@@ -74,19 +75,40 @@
 			</div>
 		</div>
 	    </div>  
-        <div class="d-flex p-2 d-flex justify-content-center mb-3 bg-white rounded mt-0">
-                   <strong><p name="total">Total: P{{$orders_sum}}</p></strong> 
+        
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Payment Type</p>
+                        <p class="text-secondary mr-5">{{$paymenttype['payment_type']}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Shipping Fee</p>
+                        <p class="text-secondary mr-5">P{{150}}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Order Time</p>
+                        <p class="text-secondary mr-5">{{date('m/d/Y h:i:s a', strtotime($order->created_at))}}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Ship Date</p>
+                        <p class="text-secondary mr-5">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
+                    </div>
+       
+        <div class="d-flex p-2 d-flex justify-content-center border my-5">
+                                <h1 name="total" class="font-weight-bold">Total: P {{$orders_sum + 150}}</h1>
         </div>
       
 	<!-- End Gallery -->
+    
 
     @else
-    <div class="card text-center mt-md-3 m-auto">
+    <div class="card text-center m-auto mb-5 h-100vh">
         <div class="card-body ">
             <h5 class="card-title"></h5>
-            <img src="images/sopien" alt="" />
-            <p class="h2 mb-5">You have no Order</p>
-            <a href="/home" class="btn btn-primary">Click here to Order</a>
+            <img class="img-thumbnail" src="{{asset('images/sopien.jpg')}}" height="250px"/>
+            <p class="h2 mt-5 mb-5">You have no order</p>
+            <a href="/home" class="btn btn-primary">Click here to order</a>
         </div>
     </div>
     @endif
@@ -96,21 +118,14 @@
     
  
 
-    @if(Auth::user()->Order_Status == 'Approve' || Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery')    
+     
 
-                <div class="d-flex justify-content-center w-100 h-75 align-self-center p-3 border d-flex flex-wrap flex-column shadow-sm p-3 mb-5 bg-white rounded text-secondary">
-                    <div class="d-flex justify-content-between">
-                        <p class="text-secondary">Order Time</p>
-                        <p class="text-secondary">{{date('m/d/Y h:i:s a', strtotime($order->created_at))}}</p>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <p class="text-secondary">Ship Date</p>
-                        <p class="text-secondary">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
-                       
-                    </div>
-                </div>
+                    
+                
     
-            <div class="d-flex p-2 d-flex justify-content-center" >
+            
+    
+    <div class="d-flex p-2 d-flex justify-content-center" >
                     @if(Auth::user()->Order_Status == 'Pending')   
                         <!-- Button payment modal -->
                             <button type="button" class="btn btn-primary mr-3" data-toggle="modal" data-target="#exampleModal">
@@ -123,7 +138,6 @@
 
                     @endif
             </div>
-    @endif
 
         @if(!$orders->isEmpty())
                             <!-- Cancel Order Modal -->

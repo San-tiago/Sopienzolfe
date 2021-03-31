@@ -20,6 +20,9 @@
                           Receiver Name
                         </th>
                         <th>
+                          Payment Type
+                        </th>
+                        <th>
                           Address
                         </th>
                         <th>
@@ -36,6 +39,7 @@
                         <tr>
                         <td>{{$details['fromemail']}}</td>
                         <td >{{$details['receivername']}}</td>
+                        <td >{{$details['payment_type']}}</td>
                         <td >{{$details['receiveraddress']}}</td>
                         <td >{{$details['municipality/city']}}</td>
                         <td >{{$details['province']}}</td>
@@ -83,8 +87,11 @@
                             <td>{{$filtered_approveorder->menu_price}}</td>  
                         </tr>
                         @endforeach
+                        <tr class="mt-5">
+                          <td>Shipping Fee: P150</td>
+                        </tr>
                         <tr col-span="5">
-                            <td><h3>Total: P {{$total_filtered_approveorders}}</h3></td>
+                            <td><h3>Total: P {{$total_filtered_approveorders + 150}}</h3></td>
                         </tr>
                        
                       </tbody>

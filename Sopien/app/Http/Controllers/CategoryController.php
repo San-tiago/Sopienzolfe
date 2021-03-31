@@ -7,6 +7,7 @@ use App\Category;
 use App\Message;
 use App\User;
 use DB;
+use auth;
 class CategoryController extends Controller
 {
     //
@@ -46,14 +47,15 @@ class CategoryController extends Controller
             ])
         ->count();
 
-        $admin = User::find(1);
-        $admin_email = $admin->email;
-/*         $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
- */
+        $admin_id = auth::user()->id;
+        $adminmessage_count = DB::table('messages')->where([
+            'to_id' => $admin_id,
+            'seen' => 0
+        ])->count();
         $categories = Category::orderBy('category')->get();
         return view('Category.categories', compact(
             'categories',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count' 
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count'
         )
             );
     }
@@ -88,10 +90,12 @@ class CategoryController extends Controller
             'read_at' => null
             ])
         ->count();
-        $admin = User::find(1);
-        $admin_email = $admin->email;
-/*         $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();
- */        return view('Category.createcategory',compact('pending_count','approved_count','inprocess_count','Ondelivery_count','received_count' ));
+        $admin_id = auth::user()->id;
+        $adminmessage_count = DB::table('messages')->where([
+            'to_id' => $admin_id,
+            'seen' => 0
+        ])->count();
+         return view('Category.createcategory',compact('pending_count','adminmessage_count','approved_count','inprocess_count','Ondelivery_count','received_count' ));
     }
     public function store(Request $request){
         $data = request()->validate([

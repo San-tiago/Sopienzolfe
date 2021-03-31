@@ -8,6 +8,6 @@ class ReceiverDetails extends Model
 {
     //
     protected $fillable = [
-        'fromemail','receivername','receiveraddress','receivercontactnumber','province','municipality/city'
+        'fromemail','receivername','receiveraddress','receivercontactnumber','province','municipality/city','payment_type'
     ];
 }

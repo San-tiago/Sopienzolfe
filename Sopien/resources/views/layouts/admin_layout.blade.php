@@ -54,7 +54,13 @@ The above copyright notice and this permission notice shall be included in all c
           
             <a class="nav-link" href="/chatify">
               <i class="material-icons">person</i>
-              <p><span class="badge badge-danger mr-2"> {{$adminmessage_count ?? ''}}</span>Messages</p>
+              <p>
+                @if($adminmessage_count == 0) 
+
+                @else
+                 <span class="badge badge-danger mr-2">  {{$adminmessage_count}}</span>
+                @endif
+                Messages</p>
             </a>
           </li>
           <li class="nav-item ">
@@ -66,54 +72,84 @@ The above copyright notice and this permission notice shall be included in all c
           <li class="nav-item ">
             <a class="nav-link" href="/admin/pendingorders">
               <i class="material-icons">content_paste</i>
-              <p><span class="badge badge-danger mr-2">{{$pending_count ?? ''}}</span>Pending Orders</p>
+              <p>
+              @if($pending_count == 0) 
+
+              @else
+              <span class="badge badge-danger mr-2">{{$pending_count}}</span>
+              @endif
+              Pending Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/approvedorders">
               <i class="material-icons">library_books</i>
-              <p><span class="badge badge-danger mr-3">{{$approved_count ?? ''}}</span>Approved Orders</p>
+              <p>
+              @if($approved_count == 0) 
+
+              @else
+              <span class="badge badge-danger mr-3">{{$approved_count}}</span>
+              @endif
+              Approved Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/processedorders">
-              <i class="material-icons">bubble_chart</i>
-              <p><span class="badge badge-danger mr-3">{{$inprocess_count ?? ''}}  </span>In Process Orders</p>
+              <i class="material-icons">restore</i>
+              <p>
+              @if($approved_count == 0) 
+
+              @else
+                <span class="badge badge-danger mr-3">{{$inprocess_count}}</span>
+              @endif
+              In Process Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/ondeliveryorders">
-              <i class="material-icons">location_ons</i>
-              <p><span class="badge badge-danger mr-3">{{$Ondelivery_count ?? ''}}</span>On Delivery Orders</p>
+              <i class="material-icons">delivery_dining</i>
+              <p>
+              @if($Ondelivery_count == 0) 
+
+              @else
+                <span class="badge badge-danger mr-3">{{$Ondelivery_count}}</span>
+              @endif
+                On Delivery Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/receivedorders">
-              <i class="material-icons">notifications</i>
-              <p><span class="badge badge-danger mr-3">{{$received_count ?? ''}}</span>Received Orders</p>
+              <i class="material-icons">done</i>
+              <p>
+              @if($received_count == 0) 
+
+              @else
+                <span class="badge badge-danger mr-3">{{$received_count}}</span>
+              @endif  
+              Received Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/cancelledorders">
-              <i class="material-icons">language</i>
+              <i class="material-icons">free_cancellation</i>
               <p><span class="badge badge-danger mr-3"></span>Cancelled Orders</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/sales">
-              <i class="material-icons">language</i>
+              <i class="material-icons">paid</i>
               <p>Sales</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link" href="/admin/receipts">
-              <i class="material-icons">language</i>
+              <i class="material-icons">receipt_long</i>
               <p>Receipts</p>
             </a>
           </li>
           <li class="nav-item ">
             <a class="nav-link"href="/admin/users">
-              <i class="material-icons">language</i>
+              <i class="material-icons">manage_accounts</i>
               <p>Users</p>
             </a>
           </li>

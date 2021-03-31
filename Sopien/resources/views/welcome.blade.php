@@ -71,7 +71,7 @@
         @endif
 	</header>
 	<!-- End header -->
-
+		
 
 
     <!-- Start slides -->
@@ -83,8 +83,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h1 class="m-b-20"><strong>Welcome To <br> Sopienzolfe</strong></h1>
-							<p class="m-b-40">See how your users experience your website in realtime or view  <br> 
-							trends to see any changes in performance over time.</p>
+							<p class="m-b-40">Need food for your occasion? No time for cooking? </p>
+							<p class="m-b-40">We got your back.</p>
 							
 						</div>
 					</div>
@@ -96,8 +96,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h1 class="m-b-20"><strong>Welcome To <br> Sopienzolfe</strong></h1>
-							<p class="m-b-40">See how your users experience your website in realtime or view  <br> 
-							trends to see any changes in performance over time.</p>
+							<p class="m-b-40">Need food for your occasion? No time for cooking? </p>
+							<p class="m-b-40">We got your back.</p>
 							
 						</div>
 					</div>
@@ -109,8 +109,8 @@
 					<div class="row">
 						<div class="col-md-12">
 							<h1 class="m-b-20"><strong>Welcome To <br> Sopienzolfe</strong></h1>
-							<p class="m-b-40">See how your users experience your website in realtime or view  <br> 
-							trends to see any changes in performance over time.</p>
+							<p class="m-b-40">Need food for your occasion? No time for cooking? </p>
+							<p class="m-b-40">We got your back.</p>
 							
 						</div>
 					</div>
@@ -168,7 +168,7 @@
 		<div class="container text-center">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>Special Menu</h1>
+					<h1>Menu</h1>
 				</div>
 			</div>
 		</div>
@@ -180,8 +180,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-title text-center">
-						<h2>Special Menu</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
+						<h2></h2>
 					</div>
 				</div>
 			</div>
@@ -223,13 +222,12 @@
 	<!-- End Menu -->
 
 	<!-- Start Gallery -->
-	<div class="gallery-box">
+	<div class="gallery-box"> 
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="heading-title text-center">
 						<h2>Gallery</h2>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
 					</div>
 				</div>
 			</div>

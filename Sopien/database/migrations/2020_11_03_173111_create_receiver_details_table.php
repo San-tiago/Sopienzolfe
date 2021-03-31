@@ -17,6 +17,7 @@ class CreateReceiverDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->string('fromemail');
             $table->string('receivername');
+            $table->string('payment_type');
             $table->string('receiveraddress');
             $table->string('province');
             $table->string('municipality/city');

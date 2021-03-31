@@ -39,6 +39,12 @@
 
 
     </head>
+    <style>
+			img{
+			
+				object-fit: cover; 
+			}
+		</style>
 <body>
     <div id="app">
     <!-- Start header -->

@@ -7,6 +7,7 @@ use App\User;
 use App\Message;
 use Illuminate\Http\Request;
 use DB;
+use auth;
 class MenuController extends Controller
 {   
     public function __construct()
@@ -52,13 +53,15 @@ class MenuController extends Controller
             'read_at' => null
             ])
         ->count();
-        $admin = User::find(1);
-        $admin_email = $admin->email;
-/*         $adminmessage_count = Message::where('from_useremail','!=',$admin_email)->whereNull('read_at')->count();l
- */        $categories = Category::orderBy('category')->get();
+        $admin_id = auth::user()->id;
+        $adminmessage_count = DB::table('messages')->where([
+            'to_id' => $admin_id,
+            'seen' => 0
+        ])->count();
+        $categories = Category::orderBy('category')->get();
         return view('Menu.create_menu', compact(
             'categories',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count'
         )
             );
     }

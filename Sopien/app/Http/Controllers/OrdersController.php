@@ -107,6 +107,7 @@ class OrdersController extends Controller
           $data = request()->validate([
             'fromemail',
             'receivername' => 'required',
+            'payment_type' => 'required',
             'receiveraddress' => 'required',
             'province' => 'required',
             'municipality/city' => 'required',
@@ -155,7 +156,8 @@ class OrdersController extends Controller
                                         'read_at'=> 0
                                         ])->count();
                                 $decline_messages = Message::where('to_useremail',$user)->get();
-                             return view('Order.myorder',compact('orders','orders_sum','message_count','decline_messages_count','decline_messages')); 
+             $paymenttype = ReceiverDetails::where('fromemail',$user)->latest()->first();
+                             return view('Order.myorder',compact('orders','paymenttype','orders_sum','message_count','decline_messages_count','decline_messages')); 
         }
         
      public function cancelOrder($email,$id){

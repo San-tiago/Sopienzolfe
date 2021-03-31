@@ -32,12 +32,31 @@
                                 <div class="btn btn-danger" data-toggle="modal" data-target="#removeModal">Remove</div>
 
                             </div>
+                            
                         @endforeach
-                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Shipping Fee</p>
+                        <p class="text-secondary mr-5">P 150</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Order Time</p>
+                        <p class="text-secondary mr-5">{{date('m/d/Y h:i:s a', strtotime($order->created_at))}}</p>
+                    </div>
+
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Ship Date</p>
+                        <p class="text-secondary mr-5">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
+                    </div>
+
                         @if($total > 0)
-                            <div class="d-flex p-2 d-flex justify-content-center bg-white shadow my-5">
-                                <h1 name="total" class="font-weight-bold">Total:{{$total}}</h1>
+                            <div class="d-flex p-2 d-flex justify-content-center border my-5">
+                                <h1 name="total" class="font-weight-bold">Total:{{$total + 150}}</h1>
                             </div>
+                            
+
                         <button type="button" class="btn btn-primary w-100 d-flex p-2 d-flex justify-content-center mt-5" data-toggle="modal" data-target="#exampleModal">
                             Checkout
                         </button>

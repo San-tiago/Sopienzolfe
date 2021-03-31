@@ -34,12 +34,23 @@
 											<div class="help-block with-errors"> <span style="color: red">@error('receivername'){{$message}}@enderror </span></div>
 										</div>                                 
 									</div>
+					<div class="col-md-12">
+                   	 	<label class="text-secondary">PAYMENT TYPE</label>
+						<div class="form-group">
+							<select class="custom-select d-block form-control" name="payment_type">
+								<option value="Partial">Partial</option>
+								<option value="Full">Full</option>
+							</select>
+							<div class="help-block with-errors"></div>
+						</div> 
+                    </div>
+
 									<div class="col-md-12">
                   <label class="text-secondary">PROVINCE/REGION</label>
 										<div class="form-group">
 										    <select class="custom-select d-block form-control" id="province" name="province">
-                          <option>NCR</option>
-                        </select>
+                         						 <option>NCR</option>
+                        					</select>
 											</select>
 											<div class="help-block with-errors"></div>
 										</div> 
@@ -47,13 +58,13 @@
 								</div>
 								<div class="col-md-6">
                   <div class="col-md-12">
-                    <label class="text-secondary">CITY/MUNICIPALITY</label>
-                      <div class="form-group">
-                        <select class="custom-select d-block form-control" id="message" name="municipality/city">
-                          
-                        </select>
-                        <div class="help-block with-errors"></div>
-                      </div> 
+                   	 	<label class="text-secondary">CITY/MUNICIPALITY</label>
+						<div class="form-group">
+							<select class="custom-select d-block form-control" id="message" name="municipality/city">
+							
+							</select>
+							<div class="help-block with-errors"></div>
+						</div> 
                     </div>
 									<div class="col-md-12">
                   <label class="text-secondary">ADDRESS</label>

@@ -22,6 +22,9 @@
                           Receiver Name
                         </th>
                         <th>
+                          Payment Type
+                        </th>
+                        <th>
                           Address
                         </th>
                         <th>
@@ -38,6 +41,7 @@
                         <tr>
                         <td>{{$details['fromemail']}}</td>
                         <td >{{$details['receivername']}}</td>
+                        <td >{{$details['payment_type']}}</td>
                         <td >{{$details['receiveraddress']}}</td>
                         <td >{{$details['municipality/city']}}</td>
                         <td >{{$details['province']}}</td>
@@ -82,11 +86,14 @@
                             <td >{{$filtered_pendingorder->menu_category}}</td>
                             <td>{{$filtered_pendingorder->menu_description}}</td>
                             <td>{{$filtered_pendingorder->quantity}}</td>
-                            <td>{{$filtered_pendingorder->menu_price}}</td>  
+                            <td>P{{$filtered_pendingorder->menu_price}}</td>  
                         </tr>
                         @endforeach
+                        <tr class="mt-5">
+                          <td>Shipping Fee: P150</td><q></q>
+                        </tr>
                         <tr col-span="5">
-                            <td><h3>Total: P {{$total_filtered_pendingorders}}</h3></td>
+                            <td><h3>Total: P {{$total_filtered_pendingorders + 150}}</h3></td>
                         </tr>
                        
                       </tbody>

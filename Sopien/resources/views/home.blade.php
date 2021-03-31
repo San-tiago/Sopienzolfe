@@ -9,7 +9,6 @@
                         <div class="col-lg-12">
                             <div class="heading-title text-center">
                                 <h2>Sopienzolfe Menu</h2>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
                             </div>
 							<div class="d-flex flex-row justify-content-center mb-1">
 								@if($menus_count > 0) 
@@ -41,7 +40,7 @@
                         @foreach($menus as $menu)
                             <div class="col-sm-12 col-md-4 col-lg-4 mb-5"> 
                                 <a class="lightbox">
-                                    <img class="img-fluid" src="{{asset('images/'.$menu->image)}}" alt="Gallery Images">
+                                    <img class="img-fluid "style="object-fit: cover; width:100%" src="{{asset('images/'.$menu->image)}}" alt="">
                                 </a>
                                 <strong><p>{{$menu->food_name}}</p></strong>
                                 <p class="card-text">Description: {{$menu->description}}</p>

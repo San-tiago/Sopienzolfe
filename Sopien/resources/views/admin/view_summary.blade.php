@@ -37,8 +37,11 @@
                             <td>{{$order->menu_price}}</td>  
                         </tr>
                         @endforeach
+                        <tr>
+                          <td>Shipping Fee: 150</td>
+                        </tr>
                         <tr col-span="5">
-                            <td><h3>Total: P {{$total}}</h3></td>
+                            <td><h3>Total: P {{$total + 150}}</h3></td>
                         </tr>
                        
                       </tbody>
