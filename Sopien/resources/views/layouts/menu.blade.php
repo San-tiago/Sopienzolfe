@@ -57,70 +57,73 @@
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars-rs-food" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
 				  <span class="navbar-toggler-icon"></span>
 				</button>
-				<div class="collapse navbar-collapse" id="navbars-rs-food">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active"><a class="nav-link" href="/home">Menu</a></li>                        
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown-a">
-                        @if(auth::user()->Order_Status == 'Pending' || auth::user()->Order_Status == 'Approve' || auth::user()->Order_Status == 'Processed' || auth::user()->Order_Status == 'On Delivery')
-                            <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
-                        @endif
-                            <a class="dropdown-item" href="{{url('/my-cancelled-orders/'. Auth::user()->email)}}">Cancelled Orders</a>
-                            <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->email)}}">Order History</a>
-							</div>	
-						</li>
-                        
-                        @if(Auth::user()->Order_Status == 'Ordering')
-                            <li class="nav-item"> <a class="nav-link" href="{{url('/customer-order')}}">
-                            <span class="badge badge-danger ">
-                                {{auth::user()->unreadNotifications->count()}}
-                            </span>
-                            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
-                                Food Cart
-                            </a></li>
-                        @endif
-                    <li class="nav-item"><a href="{{url('/chatify')}}" class="nav-link">
-                        <span class="badge badge-danger ">{{$message_count ?? ''}}</span>
-                        <i class="fa fa-comment" aria-hidden="true"></i></a></li>
+                @if(Auth::user()->Account_Status != 'Deactivated')
 
-                        <li class="nav-item" data-toggle="modal" data-target="#notif"> <a class="nav-link">
-                            <span class="badge badge-danger ">
-                               {{$decline_messages_count}}
-                            </span>
-                            <i class="fas fa-bell" aria-hidden="true"></i>
-                              
-                            </a></li>
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
+                    <div class="collapse navbar-collapse" id="navbars-rs-food">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item active"><a class="nav-link" href="/home">Menu</a></li>                        
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></a>
+                                <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown-a">
-                                    
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{url(('/account-settings'))}}">Account Settings</a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                </div>
+                            @if(auth::user()->Order_Status == 'Pending' || auth::user()->Order_Status == 'Approve' || auth::user()->Order_Status == 'Processed' || auth::user()->Order_Status == 'On Delivery')
+                                <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
+                            @endif
+                                <a class="dropdown-item" href="{{url('/my-cancelled-orders/'. Auth::user()->email)}}">Cancelled Orders</a>
+                                <a class="dropdown-item" href="{{url('/order-history/'. Auth::user()->email)}}">Order History</a>
+                                </div>	
                             </li>
-					    @endguest
-					</ul>
-				</div>
+                            
+                            @if(Auth::user()->Order_Status == 'Ordering')
+                                <li class="nav-item"> <a class="nav-link" href="{{url('/customer-order')}}">
+                                <span class="badge badge-danger ">
+                                    {{auth::user()->unreadNotifications->count()}}
+                                </span>
+                                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
+                                    Food Cart
+                                </a></li>
+                            @endif
+                        <li class="nav-item"><a href="{{url('/chatify')}}" class="nav-link">
+                            <span class="badge badge-danger ">{{$message_count ?? ''}}</span>
+                            <i class="fa fa-comment" aria-hidden="true"></i></a></li>
+
+                            <li class="nav-item" data-toggle="modal" data-target="#notif"> <a class="nav-link">
+                                <span class="badge badge-danger ">
+                                {{$decline_messages_count}}
+                                </span>
+                                <i class="fas fa-bell" aria-hidden="true"></i>
+                                
+                                </a></li>
+                            <!-- Authentication Links -->
+                            @guest
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                                @if (Route::has('register'))
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    </li>
+                                @endif
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">{{ Auth::user()->name }} <span class="caret"></span></a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdown-a">
+                                        
+                                            <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+                                            <a class="dropdown-item" href="{{url(('/account-settings'))}}">Account Settings</a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                @csrf
+                                            </form>
+                                    </div>
+                                </li>
+                            @endguest
+                        </ul>
+                    </div>
+                @endif
 			</div>
 		</nav>
 
@@ -179,6 +182,9 @@
 			
 				<div class="col-lg-3 col-md-6">
 					<h3>Contact information</h3>
+                    <p><span class="text-color">0966 591 3386</span></p>
+                    <p><span class="text-color">sopienzolfe@gmail.com</span></p>
+
 				
 				</div>
 				<div class="col-lg-3 col-md-6">

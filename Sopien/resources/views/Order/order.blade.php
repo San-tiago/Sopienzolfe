@@ -51,6 +51,13 @@
                         <p class="text-secondary mr-5">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
                     </div>
 
+                    @foreach($user_form as $user_address)
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Delivery Address</p>
+                        <p class="text-secondary mr-5">{{$user_address->receiveraddress}}</p>
+                    </div>
+                    @endforeach
+
                         @if($total > 0)
                             <div class="d-flex p-2 d-flex justify-content-center border my-5">
                                 <h1 name="total" class="font-weight-bold">Total:{{$total + 150}}</h1>

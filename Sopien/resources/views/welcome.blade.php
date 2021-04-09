@@ -281,7 +281,8 @@
 					<div class="overflow-hidden">
 						<h4>Phone</h4>
 						<p class="lead">
-							+01 123-456-4590
+						0966 591 3386
+
 						</p>
 					</div>
 				</div>
@@ -310,7 +311,7 @@
 	
 	<!-- Start Footer -->
 	<footer class="footer-area bg-f">
-		<div class="container">
+		<div class="container">	
 			<div class="row">
 				<div class="col-lg-3 col-md-6">
 					<h3>About Us</h3>
@@ -330,7 +331,7 @@
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3>Contact information</h3>
-					
+					<p><span class="text-color">0966 591 3386</span></p>
 				</div>
 				<div class="col-lg-3 col-md-6">
 					<h3>Opening hours</h3>

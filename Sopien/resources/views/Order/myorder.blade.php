@@ -94,8 +94,15 @@
                         <p class="text-secondary ml-5">Ship Date</p>
                         <p class="text-secondary mr-5">{{date('m/d/Y', strtotime($order->created_at. '+3 days'))}}</p>
                     </div>
+
+                    @foreach($user_form as $user_address)
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Delivery Address</p>
+                        <p class="text-secondary mr-5">{{$user_address->receiveraddress}}</p>
+                    </div>
+                    @endforeach
        
-        <div class="d-flex p-2 d-flex justify-content-center border my-5">
+        <div class="d-flex p-2 d-flex justify-content-center  my-5">
                                 <h1 name="total" class="font-weight-bold">Total: P {{$orders_sum + 150}}</h1>
         </div>
       
@@ -179,8 +186,8 @@
                             <div class="card" style="width: 18rem;">
                                 <img class="card-img-top" src="{{asset('images/sopienzolfe_gcash.jpg')}}" alt="Card image cap">
                                 <p class="card-text align-self-center pt-2">or on this number below</p>
-<!--                                 <h2 id="gcash_number" class="card-text align-self-center" value="+6399999999">+6399999999</h2>
- -->                                <input type="text" value="+6399999999" id="myInput" class="text-center rounded border border-info font-weight-bold" readonly>
+<!--                            <h2 id="gcash_number" class="card-text align-self-center" value="+6399999999">+6399999999</h2>
+ -->                            <input type="text" value="0966 591 3386" id="myInput" class="text-center rounded border border-info font-weight-bold" readonly>
                                 <button type="button" class="btn btn-info" onclick="myFunction()">Copy</button>
                                 <p class="card-text align-self-center p-md-3">After sending the payment, just wait for the approval of your order. Thank you!</p>
 

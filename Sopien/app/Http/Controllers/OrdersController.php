@@ -61,12 +61,19 @@ class OrdersController extends Controller
         $orders = Order::where([
             'email'=>$user,
             'status'=> ' ',
-            ])->get();
+            ])->get(); 
         $total = Order::where([
             'email'=>$user,
             'status'=> ' ',
             ])->sum('menu_price');
-        return view('Order.order',compact('orders','total','message_count','decline_messages_count','decline_messages')); 
+        
+            $user_form =  DB::table('receiver_details')->where([
+                ['transac_status','=','0'],
+                ['fromemail','=', $user]
+               ])->orderBy('created_at', 'desc')
+               ->limit(1)->get();
+        
+        return view('Order.order',compact('orders','total','message_count','decline_messages_count','decline_messages','user_form')); 
        
     }
     public function delete($id){
@@ -111,7 +118,7 @@ class OrdersController extends Controller
             'receiveraddress' => 'required',
             'province' => 'required',
             'municipality/city' => 'required',
-            'receivercontactnumber' => 'required',
+            'receivercontactnumber' => 'required|min:11',
         ]);
         ReceiverDetails::create($request->all());
         $user = Auth::user()->email;
@@ -157,7 +164,13 @@ class OrdersController extends Controller
                                         ])->count();
                                 $decline_messages = Message::where('to_useremail',$user)->get();
              $paymenttype = ReceiverDetails::where('fromemail',$user)->latest()->first();
-                             return view('Order.myorder',compact('orders','paymenttype','orders_sum','message_count','decline_messages_count','decline_messages')); 
+
+             $user_form =  DB::table('receiver_details')->where([
+                ['transac_status','=','0'],
+                ['fromemail','=', $user]
+               ])->orderBy('created_at', 'desc')
+               ->limit(1)->get();
+                             return view('Order.myorder',compact('orders','paymenttype','orders_sum','message_count','decline_messages_count','decline_messages','user_form')); 
         }
         
      public function cancelOrder($email,$id){

@@ -8,6 +8,7 @@ use App\Message;
 use Illuminate\Http\Request;
 use DB;
 use auth;
+use Storage;
 class MenuController extends Controller
 {   
     public function __construct()
@@ -94,7 +95,7 @@ class MenuController extends Controller
         } */
         $image = $request->file('image');
         $new_name = rand() . '.' .$image->getClientOriginalExtension();
-        echo $image->move(public_path('images'),$new_name);
+        $image->move(public_path('images'),$new_name);
         $form_data = array(
             'food_name' => $request->food_name,
             'menu_category' => $request->menu_category,
@@ -107,14 +108,94 @@ class MenuController extends Controller
         return redirect('/admin/menu');
     }
     public function edit($id){
+        $approved_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Approved',
+            'read_at' => null
+            ])
+        ->count();
+         $pending_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Pending Order',
+            'read_at' => null
+            ])
+        ->count();
+         $inprocess_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order In-process',
+            'read_at' => null
+            ])
+        ->count();
+         $Ondelivery_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order On-delivery',
+            'read_at' => null
+            ])
+        ->count();
+         $received_count = DB::table('notifications')
+        ->where([
+            'data->data' => 'Order Received',
+            'read_at' => null
+            ])
+        ->count();
+        $admin_id = auth::user()->id;
+        $adminmessage_count = DB::table('messages')->where([
+            'to_id' => $admin_id,
+            'seen' => 0
+        ])->count();
+
+
         $menu = Menu::find($id);
         $categories = Category::orderBy('category')->get();
         return view('Menu.edit_menu', compact('menu','categories'));
     }
+
     public function update(Request $request, $id){
+        $request->validate([
+            'food_name' => 'required',
+            'menu_category' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'image' => 'required|image:max:2048|mimes:jpg,jpeg'
+        ]);
+
+
+        
         $menu = Menu::find($id);
-        $menu->update($request->all());
-        $request->session()->flash('edit','Edit successfully!');
+        $menu->food_name =$request->input('food_name');
+        $menu->menu_category=$request->input('menu_category');
+        $menu->description=$request->input('description');
+        $menu->price=$request->input('price');  
+
+        if($request->hasFile('image')){
+            $image = $request->file('image');
+            $filename = rand() . '.' .$image->getClientOriginalExtension();
+            $location = public_path('images/'.$filename);
+            $image->move(public_path('images'),$filename);
+            
+            $oldimage = $menu->image;
+            $menu->image = $filename;
+            Storage::delete($oldimage);
+        }
+
+        $menu->save();
+        
+        /*   $image = $request->file('image');
+          $new_name = rand() . '.' .$image->getClientOriginalExtension();
+          $image->move(public_path('images'),$new_name); */
+
+        /* $form_data = array(
+            'food_name' => $request->food_name,
+            'menu_category' => $request->menu_category,
+            'description' => $request->description,
+            'price' => $request->price,
+            'image' => $new_name
+        ); */
+       /*  $request->session()->flash('menu','Menu was created successfully!');
+        ; */
+        
+/*         $menu->update($request->all());
+ */        $request->session()->flash('edit','Edited successfully!');
         return redirect('/admin/menu');
     }
 

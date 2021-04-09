@@ -2,6 +2,21 @@
 @extends('layouts.menu')
 
 @section('content')
+@if(Auth::user()->Account_Status == 'Deactivated')
+<div class="w-90 card text-center mb-5 mt-5 pb-5">
+  <div class="card-header bg-danger">
+     <p class="text-white fw-bold">Account Deactivated</p> 
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">FROM ADMIN</h5>
+    <p class="card-text">Your account has been deactivated.Please contact us on .</p>
+    <a href="#" class="btn btn-light ">sopienzolfe@gmail.com</a>
+  </div>
+  <div class="card-footer text-muted">
+    
+  </div>
+</div>
+@else
    <!-- Start Gallery -->
    <div class="gallery-box">
                 <div class="container">
@@ -16,6 +31,12 @@
 										<div class="p-2">
 											<h3>
 											<a class="nav-link" href="{{url('/receiver_page')}}"  role="tab">Create Order</a>
+											</h3>
+										</div>
+                                    @elseif(auth::user()->Order_Status == 'Pending' || auth::user()->Order_Status == 'Approved' || auth::user()->Order_Status == 'Processed' || auth::user()->Order_Status == 'On-Delivery')
+                                        <div class="p-2">
+											<h3>
+											<a class="nav-link bg-primary rounded text-light" href="{{url('/myorder')}}"  role="tab">Track Order</a>
 											</h3>
 										</div>
 									@endif
@@ -80,19 +101,14 @@
             </div>
             <!-- End Gallery -->
 
-@if(Auth::user()->Account_Status == 'Deactivated')
-<div class="d-flex justify-content-center">
-    <div class="alert alert-danger " role="alert">
-         Your account have been deactivated because of too much cancelled orders
-    </div>
-</div> 
+
 <script>
 	function addtoCart(){
         alert("Add to cart successfully!")
     }
 </script>
-
 @endif
+
 
 @endsection
 

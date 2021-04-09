@@ -5,26 +5,35 @@
 <h1>Edit Menu</h1>
 
 
-    <form action="{{url('/menu/update/'.$menu->id)}}" method="post">
+    <form action="{{url('/menu/update/'.$menu->id)}}" method="post" enctype="multipart/form-data">
         @csrf
-        Food Name: <input type="text" name="food_name" value="{{$menu->food_name}}"><br>
+        <label for="exampleInputEmail1">Food Name</label>
+        <input type="text" class="form-control" name="food_name" value="{{$menu->food_name}}"><br>
         <span style="color: red">@error('food_name'){{$message}}@enderror</span><br>
 
-
-       Category: <select name="menu_category">
+        <label for="exampleInputEmail1">Category</label>
+        <select name="menu_category" class="form-control">
                 @foreach($categories as $category)
                    <option>{{$category->category}}</option>
                 @endforeach
-                </select><br> 
-
-        Description: <input type="textbox" name = "description" value= "{{$menu->description}}"><br>
+                </select><br>  
+        <label for="exampleInputEmail1">Food Description</label>
+        <input type="textbox" name = "description" class="form-control" value= "{{$menu->description}}"><br>
         <span style="color: red">@error('description'){{$message}}@enderror</span><br>
-        Price: <input type="text" name="price" value= "{{$menu->price}}"><br>
+
+        <label for="exampleInputEmail1">Price</label>
+        <input type="text" name="price" value= "{{$menu->price}}" class="form-control"><br>
         <span style="color: red">@error('price'){{$message}}@enderror</span><br>
 
         
-            <label>Image</label>
-            <input name = "image" type="file" class="form-control w-25" id="exampleInputEmail1" aria-describedby="emailHelp"value= "{{$menu->image}}" >
+        <label for="exampleInputEmail1">Image</label>
+        <div class="col-sm-12 col-md-3 col-lg-3">
+                            <a class="lightbox">
+                                <img class="img-fluid" src="{{asset('images/'.$menu->image)}}" alt="Gallery Images">
+                            </a>
+        
+        </div>
+            <input name = "image" type="file" class="form-control w-25" id="exampleInputEmail1" class="form-control" aria-describedby="emailHelp" value= "{{$menu->image}}" >
             <span style="color: red">@error('image'){{$message}}@enderror</span><br>
        
         <input type="submit" value="Submit"><br>

@@ -97,7 +97,7 @@ The above copyright notice and this permission notice shall be included in all c
             <a class="nav-link" href="/admin/processedorders">
               <i class="material-icons">restore</i>
               <p>
-              @if($approved_count == 0) 
+              @if($inprocess_count == 0) 
 
               @else
                 <span class="badge badge-danger mr-3">{{$inprocess_count}}</span>

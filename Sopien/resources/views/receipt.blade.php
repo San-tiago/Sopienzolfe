@@ -297,7 +297,7 @@ a {
                                                     @foreach($details as $detail)
             
                                                         Receiver Name: {{$detail->receivername}}<br>
-                                                        Address: {{$detail->province}},{{$detail->receiveraddress}}
+                                                        Delivery Address: {{$detail->province}},{{$detail->receiveraddress}}
                                                         <br>
                                                         Payment Type: {{$detail->payment_type}}
                                                     @endforeach

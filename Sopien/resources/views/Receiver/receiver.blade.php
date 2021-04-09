@@ -67,7 +67,7 @@
 						</div> 
                     </div>
 									<div class="col-md-12">
-                  <label class="text-secondary">ADDRESS</label>
+                  <label class="text-secondary">DELIVERY ADDRESS</label>
 										<div class="form-group">
 											<input type="text" placeholder="Address" class="form-control" id="name" name="receiveraddress" placeholder="Address" required data-error="Please enter your address">
 											<div class="help-block with-errors"><span style="color: red">@error('receiveraddress'){{$message}}@enderror</span></div>
@@ -76,7 +76,7 @@
 									<div class="col-md-12">
                   <label class="text-secondary">CONTACT NUMBER</label>
 										<div class="form-group">
-											<input type="text" placeholder="Your Email" id="email" class="form-control" name="receivercontactnumber"  required data-error="Please enter your number">
+											<input type="text" placeholder="Contact Number" id="email" class="form-control" name="receivercontactnumber"  required data-error="Please enter your number">
 											<div class="help-block with-errors"><span style="color: red">@error('receivercontactnumber'){{$message}}@enderror</span></div>
 										</div> 
 									</div>
