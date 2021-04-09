@@ -189,8 +189,16 @@
       <div class="modal-body">
       <form action="{{url('/decline-order/'.$filtered_pendingorder->order_id.'/'.$filtered_pendingorder->email)}}" method="post">
         @csrf
+
+        <label for="exampleInputEmail1">Contact Number:</label>
+        <input type="text" class="form-control mb-3" id="exampleInputEmail1"  placeholder="Enter message" name="contactnumber" value="{{$details['receivercontactnumber']}}" readonly>
         <label for="exampleInputEmail1">Message:</label>
         <input type="text" class="form-control" id="exampleInputEmail1"  placeholder="Enter message" name="message">
+        @error('message')
+          <span class="invalid-feedback" role="alert">
+          <strong>{{ $message }}</strong>
+          </span>
+        @enderror
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

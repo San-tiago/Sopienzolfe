@@ -1046,37 +1046,77 @@ class AdminController extends Controller
 
    public function decline_order(Request $request,$order_id,$email){
        //User::find($id)->notify(new UserNotification($message));
-       
-       
-    DB::table('orders')
-    ->where([
-        'order_id' => $order_id,
-        'email' => $email
-    ])->update(['status' => 'Declined']);
+
+    //##########################################################################
+    // ITEXMO SEND SMS API - PHP - CURL-LESS METHOD
+    // Visit www.itexmo.com/developers.php for more info about this API
+    //##########################################################################
+    function itexmo($number,$message,$apicode,$passwd){
+        $url = 'https://www.itexmo.com/php_api/api.php';
+        $itexmo = array('1' => $number, '2' => $message, '3' => $apicode, 'passwd' => $passwd);
+        $param = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($itexmo),
+            ),
+        );
+        $context  = stream_context_create($param);
+        return file_get_contents($url, false, $context);
+    }
+    //##########################################################################
+
+    $this->validate($request, [
+        'message' => 'required',
+        
+    ]);
+
+    $contact_number = $request->input('contactnumber');
+    $txtmessage = $request->input('message');
     
-    DB::table('users')
-    ->where([
-        'email' => $email
-    ])
-    ->update(['Order_Status' => 'None']);
 
-   
-    $message = $request->input('message');
-    date_default_timezone_set('Asia/Manila');
-    $date = Carbon::now()->toDateTimeString();
-  
-    DB::table('message')->insert(
-        [
-        'to_useremail' => $email, 
-        'message' => $message,
-        'created_at' => $date]
-    );
-    $request->session()->flash('adminmessage_sent','Message Sent!');
+    $result = itexmo($contact_number,$txtmessage,"TR-TESTI679121_G9XPQ", "igygk6y1)c");
+            if ($result == ""){
+            echo "iTexMo: No response from server!!!
+            Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.	
+            Please CONTACT US for help. ";	
+            }else if ($result == 0){
+            
+                                DB::table('orders')
+                        ->where([
+                            'order_id' => $order_id,
+                            'email' => $email
+                        ])->update(['status' => 'Declined']);
+                        
+                        DB::table('users')
+                        ->where([
+                            'email' => $email
+                        ])
+                        ->update(['Order_Status' => 'None']);
 
+                    
+                        $message = $request->input('message');
+                        date_default_timezone_set('Asia/Manila');
+                        $date = Carbon::now()->toDateTimeString();
+                    
+                        DB::table('message')->insert(
+                            [
+                            'to_useremail' => $email, 
+                            'message' => $message,
+                            'created_at' => $date]
+                        );
+                        $request->session()->flash('adminmessage_sent','Message Sent!');
+
+                        
+                        return redirect('/admin/pendingorders');
+            }
+            else{	
+            echo "Error Num ". $result . " was encountered!";
+            }
+       
+    
+    
     /* Message::create($request->all()); */
-    
-    return redirect('/admin/pendingorders');
-    
    }
    public function receipts(){
     $users = DB::table('users')->where('is_admin','==',0)->get();

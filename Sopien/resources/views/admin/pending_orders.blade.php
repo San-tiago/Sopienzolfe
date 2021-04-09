@@ -5,8 +5,11 @@
 
 <h1 class = "pending-order-h1">Pending Orders</h1>
 
-
-
+@if(session('adminmessage_sent'))
+    <div class="d-flex h-25 justify-content-center alert alert-success" role="alert">
+        <h5>{{Session::get('adminmessage_sent')}}</h5>
+    </div>
+@endif
 <div class="main-section">
     
   <div class="btn-group">

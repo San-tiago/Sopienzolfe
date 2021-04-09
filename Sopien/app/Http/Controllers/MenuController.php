@@ -196,7 +196,7 @@ class MenuController extends Controller
         
 /*         $menu->update($request->all());
  */        $request->session()->flash('edit','Edited successfully!');
-        return redirect('/admin/menu');
+        return redirect('/admin/menu'); 
     }
 
     public function create(){
