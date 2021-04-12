@@ -3,7 +3,7 @@
 @section('dashboard')
 <div>
 <h1>Categories</h1>
-<a href="{{url('/admin/add-category')}}"><button class="btn btn-outline-primary">Add Category</button></a><br>
+
 
 @if(session('category_added'))
     <div class="d-flex justify-content-center alert alert-success" role="alert">
@@ -35,8 +35,10 @@
         @endforeach
         
     </table>
-
-    
+    <a href="{{url('/admin/add-category')}}"><button class="btn btn-outline-primary">Add Category</button></a>
+    @if($categories!=null)
+        <a href="{{url('/admin/add-fooditem')}}"><button  class="btn btn-outline-primary">Add Food Item</button></a>
+    @endif
 
 </div>
 @endsection

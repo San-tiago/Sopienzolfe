@@ -8,6 +8,8 @@
 <table class="table table-bordered">
         <thead>
          <tr>
+
+            <th scope="col" class="text-center"> Status</th>
             <th scope="col" class="text-center"> Email</th>
             <th scope="col" class="text-center"> Address</th>
             <th scope="col" class="text-center">Contact Number</th>
@@ -21,11 +23,13 @@
         @foreach($users as $user)
      <tr>
         <td class="text-center">
-            @if($user->isOnline())
-                <i class="fas fa-user fa-lg active-user"></i>
+             @if($user->isOnline())
+             <span class="text-success">Online</span>
             @else
-                <i class="fas fa-user-alt-slash offline-user fa-lg"></i>
+                <span class="text-default">Offline</span>
             @endif
+        </td>
+        <td class="text-center">
             {{$user->email}}
         </td>
         <td class="text-center">{{$user->address}}</td>

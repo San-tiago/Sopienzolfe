@@ -25,6 +25,11 @@
                             <div class="heading-title text-center">
                                 <h2>Sopienzolfe Menu</h2>
                             </div>
+                            @if(session('receiverForm'))
+                                <div class="alert alert-success text-center w-50 m-auto" role="alert">
+                                 {{Session::get('receiverForm')}}
+                                </div>
+                            @endif
 							<div class="d-flex flex-row justify-content-center mb-1">
 								@if($menus_count > 0) 
 									@if(Auth::user()->Order_Status == 'None' && $menus_count > 0)

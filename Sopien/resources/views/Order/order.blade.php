@@ -53,6 +53,14 @@
 
                     @foreach($user_form as $user_address)
                     <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Order Number</p>
+                        <p class="text-secondary mr-5">{{$user_address->order_number}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Payment Type</p>
+                        <p class="text-secondary mr-5">{{$user_address->payment_type}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom mb-3">
                         <p class="text-secondary ml-5">Delivery Address</p>
                         <p class="text-secondary mr-5">{{$user_address->receiveraddress}}</p>
                     </div>

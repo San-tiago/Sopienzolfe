@@ -44,116 +44,281 @@ The above copyright notice and this permission notice shall be included in all c
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active  ">
-            <a class="nav-link" href="/admin">
+        @if($uri == 'dashboard')
+          <li class="nav-item active">
+            <a class="nav-link" href="/dashboard">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
+        @else
+          <li class="nav-item">
+              <a class="nav-link" href="/dashboard">
+                <i class="material-icons">dashboard</i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+        @endif
           <li class="nav-item ">
-          
             <a class="nav-link" href="/chatify">
               <i class="material-icons">person</i>
               <p>
                 @if($adminmessage_count == 0) 
 
                 @else
-                 <span class="badge badge-danger mr-2">  {{$adminmessage_count}}</span>
+                 <span class="badge badge-danger mr-2">{{$adminmessage_count ?? ''}}</span>
                 @endif
                 Messages</p>
             </a>
           </li>
-          <li class="nav-item ">
+
+
+
+         <!--  MENU NAV -->
+        @if($uri == 'admin/menu')
+            <li class="nav-item active">
+              <a class="nav-link" href="/admin/menu">
+                <i class="material-icons">person</i>
+                <p>Menu</p>
+              </a>
+            </li>
+        @elseif($uri == 'admin/categories')
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/menu">
+                  <i class="material-icons">person</i>
+                  <p>Menu</p>
+                </a>
+              </li>
+        @elseif($uri == 'admin/add-fooditem')
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/menu">
+                  <i class="material-icons">person</i>
+                  <p>Menu</p>
+                </a>
+              </li>
+        @elseif($uri == 'admin/add-category')
+            <li class="nav-item active">
+                <a class="nav-link" href="/admin/menu">
+                  <i class="material-icons">person</i>
+                  <p>Menu</p>
+                </a>
+            </li>
+        @else
+          <li class="nav-item">
             <a class="nav-link" href="/admin/menu">
-              <i class="material-icons">person</i>
+            <i class="material-icons">person</i>
               <p>Menu</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="/admin/pendingorders">
-              <i class="material-icons">content_paste</i>
-              <p>
-              @if($pending_count == 0) 
+        @endif
 
-              @else
-              <span class="badge badge-danger mr-2">{{$pending_count}}</span>
-              @endif
-              Pending Orders</p>
-            </a>
-          </li>
-          <li class="nav-item ">
+      <!--MENU NAV END--> 
+
+
+
+         @if($uri == 'admin/pendingorders' || $uri == 'pending-order')
+            <li class="nav-item active">
+              <a class="nav-link" href="/admin/pendingorders">
+                <i class="material-icons">content_paste</i>
+                <p>
+                @if($pending_count == 0) 
+
+                @else
+                <span class="badge badge-danger mr-2">{{$pending_count ?? ''}}</span>
+                @endif
+                Pending Orders</p>
+              </a>
+            </li>
+          @else
+          <li class="nav-item">
+              <a class="nav-link" href="/admin/pendingorders">
+                <i class="material-icons">content_paste</i>
+                <p>
+                @if($pending_count == 0) 
+
+                @else
+                <span class="badge badge-danger mr-2">{{$pending_count ?? ''}}</span>
+                @endif
+                Pending Orders</p>
+              </a>
+            </li>
+          @endif
+
+        @if($uri == 'admin/approvedorders' || $uri == 'approve-order')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/approvedorders">
               <i class="material-icons">library_books</i>
               <p>
               @if($approved_count == 0) 
 
               @else
-              <span class="badge badge-danger mr-3">{{$approved_count}}</span>
+              <span class="badge badge-danger mr-3">{{$approved_count ?? ''}}</span>
               @endif
               Approved Orders</p>
             </a>
           </li>
+        @else
           <li class="nav-item ">
+              <a class="nav-link" href="/admin/approvedorders">
+                <i class="material-icons">library_books</i>
+                <p>
+                @if($approved_count == 0) 
+
+                @else
+                <span class="badge badge-danger mr-3">{{$approved_count ?? ''}}</span>
+                @endif
+                Approved Orders</p>
+              </a>
+            </li>
+        @endif
+
+        @if($uri == 'admin/processedorders' || $uri == 'process-order')
+       
+          <li class="nav-item active">
+            <a class="nav-link " href="/admin/processedorders">
+              <i class="material-icons">restore</i>
+              <p>
+              @if($inprocess_count == 0) 
+
+              @else
+                <span class="badge badge-danger mr-3">{{$inprocess_count ?? ''}}</span>
+              @endif
+              In Process Orders</p>
+            </a>
+          </li>
+        @else
+        <li class="nav-item ">
             <a class="nav-link" href="/admin/processedorders">
               <i class="material-icons">restore</i>
               <p>
               @if($inprocess_count == 0) 
 
               @else
-                <span class="badge badge-danger mr-3">{{$inprocess_count}}</span>
+                <span class="badge badge-danger mr-3">{{$inprocess_count ?? ''}}</span>
               @endif
               In Process Orders</p>
             </a>
           </li>
-          <li class="nav-item ">
+        @endif
+        
+
+        @if($uri == 'admin/ondeliveryorders' || $uri == 'ondelivery-order')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/ondeliveryorders">
               <i class="material-icons">delivery_dining</i>
               <p>
-              @if($Ondelivery_count == 0) 
+              @if($Ondelivery_count  == 0) 
 
               @else
-                <span class="badge badge-danger mr-3">{{$Ondelivery_count}}</span>
+                <span class="badge badge-danger mr-3">{{$Ondelivery_count ?? ''}}</span>
               @endif
                 On Delivery Orders</p>
             </a>
           </li>
+        @else
           <li class="nav-item ">
+              <a class="nav-link" href="/admin/ondeliveryorders">
+                <i class="material-icons">delivery_dining</i>
+                <p>
+                @if($Ondelivery_count == 0) 
+
+                @else
+                  <span class="badge badge-danger mr-3">{{$Ondelivery_count ?? ''}}</span>
+                @endif
+                  On Delivery Orders</p>
+              </a>
+            </li>
+        @endif
+
+        @if($uri == 'admin/receivedorders' || $uri == 'received-order' || $uri == 'summary-orders')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/receivedorders">
               <i class="material-icons">done</i>
               <p>
-              @if($received_count == 0) 
+              @if($received_count== 0) 
 
               @else
-                <span class="badge badge-danger mr-3">{{$received_count}}</span>
+                <span class="badge badge-danger mr-3">{{$received_count ?? ''}}</span>
               @endif  
               Received Orders</p>
             </a>
           </li>
+        @else
           <li class="nav-item ">
+              <a class="nav-link" href="/admin/receivedorders">
+                <i class="material-icons">done</i>
+                <p>
+                @if($received_count == 0) 
+
+                @else
+                  <span class="badge badge-danger mr-3">{{$received_count ?? ''}}</span>
+                @endif  
+                Received Orders</p>
+              </a>
+            </li>
+        @endif
+
+        @if($uri == 'cancelledorders' || $uri == 'customer-cancelled-order')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/cancelledorders">
               <i class="material-icons">free_cancellation</i>
               <p><span class="badge badge-danger mr-3"></span>Cancelled Orders</p>
             </a>
           </li>
-          <li class="nav-item ">
+        @else
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/cancelledorders">
+              <i class="material-icons">free_cancellation</i>
+              <p><span class="badge badge-danger mr-3"></span>Cancelled Orders</p>
+            </a>
+          </li>
+        @endif
+        @if($uri == 'sales')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/sales">
               <i class="material-icons">paid</i>
               <p>Sales</p>
             </a>
           </li>
-          <li class="nav-item ">
+        @else
+        <li class="nav-item">
+            <a class="nav-link" href="/admin/sales">
+              <i class="material-icons">paid</i>
+              <p>Sales</p>
+            </a>
+          </li>
+        @endif
+
+        @if($uri == 'receipts' || $uri == 'customer-receipts')
+          <li class="nav-item active">
             <a class="nav-link" href="/admin/receipts">
               <i class="material-icons">receipt_long</i>
               <p>Receipts</p>
             </a>
           </li>
-          <li class="nav-item ">
+        @else 
+        <li class="nav-item ">
+            <a class="nav-link" href="/admin/receipts">
+              <i class="material-icons">receipt_long</i>
+              <p>Receipts</p>
+            </a>
+          </li>
+        @endif
+        @if($uri == 'users')
+          <li class="nav-item active">
             <a class="nav-link"href="/admin/users">
               <i class="material-icons">manage_accounts</i>
               <p>Users</p>
             </a>
           </li>
-         
+        @else
+          <li class="nav-item ">
+              <a class="nav-link"href="/admin/users">
+                <i class="material-icons">manage_accounts</i>
+                <p>Users</p>
+              </a>
+            </li>
+        @endif
         </ul>
       </div>
     </div>

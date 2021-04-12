@@ -23,6 +23,11 @@
 					</div>
 				</div>
 			</div>
+            @if(Session::get('registeration_failed'))
+            <div class="alert alert-danger" role="alert">
+                {{Session::get('registeration_failed')}}
+            </div>
+            @endif
 			<div class="row">
 				<div class="col-lg-12 col-sm-12 col-xs-12">
 				    <div class="contact-block">

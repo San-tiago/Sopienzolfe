@@ -22,7 +22,9 @@ class AdminController extends Controller
 {
     $this->middleware('auth');
 }
-    public function index(){
+    public function index(Request $request){
+          $uri = $request->path();
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -82,10 +84,11 @@ class AdminController extends Controller
                         'approved_count','inprocess_count',
                         'Ondelivery_count','received_count',
                         'receivedorder_count','cancelledorder_count',
-                        'pendingorder_count','adminmessage_count'));
+                        'pendingorder_count','adminmessage_count','uri'));
     }
 
-    public function menu(){
+    public function menu(Request $request){
+          $uri = $request->path();
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -128,7 +131,7 @@ class AdminController extends Controller
             'menus',
             'adminmessage_count',
             'category',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'
             )
             
             );
@@ -143,7 +146,10 @@ class AdminController extends Controller
     }
 
     // F I L T E R E D  O R D E R S / U S E R
-    public function filtered_pendingorders($email){
+    public function filtered_pendingorders(Request $request, $email){
+
+       $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -196,10 +202,15 @@ class AdminController extends Controller
            'status'=> 'Pending'
            ])->sum('menu_price');
         $customer = User::where('email',$email)->get();
-        return view('admin.filtered_pendingorders',compact('filtered_pendingorders','adminmessage_count','users','total_filtered_pendingorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','customer')); 
+        return view('admin.filtered_pendingorders',compact('filtered_pendingorders',
+        'adminmessage_count',
+        'users','total_filtered_pendingorders',
+        'details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','customer','uri')); 
        
     }
-    public function filtered_approveorders($email){
+    public function filtered_approveorders(Request $request,$email){
+          $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -249,10 +260,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Approved'
            ])->sum('menu_price');
-        return view('admin.filtered_approveorders',compact('filtered_approveorders','adminmessage_count','users','total_filtered_approveorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count')); 
+        return view('admin.filtered_approveorders',compact('filtered_approveorders','adminmessage_count','users','total_filtered_approveorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri')); 
        
     }
-    public function filtered_processorders($email){
+    public function filtered_processorders(Request $request, $email){
+          $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -303,10 +316,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'Processed'
            ])->sum('menu_price');
-        return view('admin.filtered_processorders',compact('filtered_processorders','adminmessage_count','users','total_filtered_processorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count')); 
+        return view('admin.filtered_processorders',compact('filtered_processorders','adminmessage_count','users','total_filtered_processorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri')); 
        
     }
-    public function filtered_ondeliveryorders($email){
+    public function filtered_ondeliveryorders(Request $request,$email){
+          $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -357,10 +372,12 @@ class AdminController extends Controller
            'email'=> $email,
            'status'=> 'On Delivery'
            ])->sum('menu_price');
-        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','adminmessage_count','users','total_filtered_ondeliveryorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count')); 
+        return view('admin.filtered_ondeliveryorders',compact('filtered_ondeliveryorders','adminmessage_count','users','total_filtered_ondeliveryorders','details','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri')); 
        
     }
-    public function filtered_cancelledorders($id){
+    public function filtered_cancelledorders(Request $reques,$id){
+          $uri = request()->segment(2);
+
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -398,11 +415,13 @@ class AdminController extends Controller
             'seen' => 0
         ])->count();
         $filtered_cancelledorders = User::find($id)->orders()->where('status','Cancelled')->get();
-        return view('admin.filtered_cancelledorders',compact('pending_count','adminmessage_count','approved_count','inprocess_count','Ondelivery_count','received_count','filtered_cancelledorders')); 
+        return view('admin.filtered_cancelledorders',compact('pending_count','adminmessage_count','approved_count','inprocess_count','Ondelivery_count','received_count','filtered_cancelledorders','uri')); 
        
     }
 
-    public function filtered_receivedorders($id,$email){
+    public function filtered_receivedorders(Request $request,$id,$email){
+          $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -447,7 +466,7 @@ class AdminController extends Controller
          /*  $filtered_receivedorders = User::find($id)->orders()->where('status','Received')->get();
           $total_filtered_receivedorders = User::find($id)->orders()->where('status','Received')->sum('menu_price'); */
      
-        return view('admin.filtered_receivedorders',compact('pending_count','adminmessage_count','approved_count','inprocess_count','Ondelivery_count','received_count','order_history')); 
+        return view('admin.filtered_receivedorders',compact('pending_count','adminmessage_count','approved_count','inprocess_count','Ondelivery_count','received_count','order_history','uri')); 
        
     }
 
@@ -520,7 +539,10 @@ class AdminController extends Controller
 
     // F E T C H I N G  O R D E R S 
 
-    public function approvedorders(){
+    public function approvedorders(Request $request){
+
+         $uri = $request->path();
+      
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -569,11 +591,13 @@ class AdminController extends Controller
        $approved_orders = Order::where([
             'status' => 'Approved'
             ])->get();
-        return view('admin.approve_orders',compact('approved_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.approve_orders',compact('approved_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
-    public function pendingorders(){
-        //echo $orders = User::find(1)->orders;
+    public function pendingorders(Request $request){
+        //  $orders = User::find(1)->orders;
         //$user = Order::find(1)->users;
+          $uri = $request->path();
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -628,9 +652,12 @@ class AdminController extends Controller
             'status' => 'Pending'
             ])->get(); 
      
-        return view('admin.pending_orders',compact('pending_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.pending_orders',compact('pending_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
-    public function processedorders(){
+    public function processedorders(Request $request){
+
+          $uri = $request->path();
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -679,9 +706,11 @@ class AdminController extends Controller
        $processed_orders = Order::where([
             'status' => 'Processed'
             ])->get();
-        return view('admin.processed_orders',compact('processed_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.processed_orders',compact('processed_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
-    public function ondeliveryorders(){
+    public function ondeliveryorders(Request $request){
+          $uri = $request->path();
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -729,9 +758,11 @@ class AdminController extends Controller
        $ondelivery_orders = Order::where([
             'status' => 'On Delivery'
             ])->get();
-        return view('admin.ondelivery_orders',compact('ondelivery_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.ondelivery_orders',compact('ondelivery_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
-    public function receivedorders(){
+    public function receivedorders(Request $request){
+          $uri = $request->path();
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -777,9 +808,11 @@ class AdminController extends Controller
        $received_orders = Order::where([
             'status' => 'Received'
             ])->orderBy('email')->get();
-        return view('admin.received_orders',compact('received_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.received_orders',compact('received_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
-    public function cancelledorders(){
+    public function cancelledorders(Request $request){
+          $uri = request()->segment(2);
+
          $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -824,10 +857,11 @@ class AdminController extends Controller
             'status' => 'Cancelled'
             ])->orderBy('menu_name')->get();
         
-        return view('admin.cancelled_orders',compact('cancelled_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view('admin.cancelled_orders',compact('cancelled_orders','adminmessage_count','users','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
 
-    public function sales(){
+    public function sales(Request $request){
+          $uri = request()->segment(2);
 
         $approved_count = DB::table('notifications')
         ->where([
@@ -888,11 +922,13 @@ class AdminController extends Controller
                                         'totalsales_today',
                                         'totalsales_monthly',
                                         'menus',
-                                        'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+                                        'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
 
     }
 
-    public function filtered_menusales($id){
+    public function filtered_menusales(Request $request, $id){
+          $uri = request()->segment(2);
+
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -931,16 +967,18 @@ class AdminController extends Controller
        ])->count();
 
        $menusales_sum = Menu::find($id)->menu()->where('status','Received')->sum('menu_price');
-       //echo $menu_name = Menu::where('id',$id)->get('food_name');
+       //  $menu_name = Menu::where('id',$id)->get('food_name');
        $menu_details = Menu::find($id)->menu()->where('status','Received')->get();
         $menu = Order::find($id);
         $menu_name = $menu->menu_name;
-      return view('admin.filtered_menusales',compact('menusales_sum','adminmessage_count','menu_details','menu_name','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count')); 
+      return view('admin.filtered_menusales',compact('menusales_sum','adminmessage_count','menu_details','menu_name','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri')); 
     }
 
     // USER MANAGEMENT! 
 
-    public function users(){
+    public function users(Request $request){
+          $uri = request()->segment(2);
+
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -980,7 +1018,7 @@ class AdminController extends Controller
 
         $users = User::all();
 
-        return view ('admin.user',compact('users','adminmessage_count','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+        return view ('admin.user',compact('users','adminmessage_count','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
     }
 
     public function deactivate_account($id){
@@ -992,7 +1030,9 @@ class AdminController extends Controller
         return back();
     }
 
-    public function view_summary($id,$email){
+    public function view_summary(Request $request,$id,$email){
+        $uri = request()->segment(2);
+
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -1040,7 +1080,7 @@ class AdminController extends Controller
            'order_id' => $id,
            'status' => 'Received'
            ])->sum('menu_price');
-       return view('admin.view_summary',compact('orders','adminmessage_count','total','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count'));
+       return view('admin.view_summary',compact('orders','adminmessage_count','total','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','uri'));
    }
 
 
@@ -1077,7 +1117,7 @@ class AdminController extends Controller
 
     $result = itexmo($contact_number,$txtmessage,"TR-TESTI679121_G9XPQ", "igygk6y1)c");
             if ($result == ""){
-            echo "iTexMo: No response from server!!!
+              "iTexMo: No response from server!!!
             Please check the METHOD used (CURL or CURL-LESS). If you are using CURL then try CURL-LESS and vice versa.	
             Please CONTACT US for help. ";	
             }else if ($result == 0){
@@ -1111,14 +1151,16 @@ class AdminController extends Controller
                         return redirect('/admin/pendingorders');
             }
             else{	
-            echo "Error Num ". $result . " was encountered!";
+              "Error Num ". $result . " was encountered!";
             }
        
     
     
     /* Message::create($request->all()); */
    }
-   public function receipts(){
+   public function receipts(Request $request){
+      $uri = request()->segment(2);
+
     $users = DB::table('users')->where('is_admin','==',0)->get();
     $receipts = DB::table('receipts')->get();
 
@@ -1159,11 +1201,13 @@ class AdminController extends Controller
            'seen' => 0
        ])->count();
 
-    return view('admin.receipts',compact('users','receipts','adminmessage_count','approved_count','pending_count','inprocess_count','Ondelivery_count','received_count'));
+    return view('admin.receipts',compact('users','receipts','adminmessage_count','approved_count','pending_count','inprocess_count','Ondelivery_count','received_count','uri'));
    }
 
-   public function customer_receipts($user_id,$user_email)
+   public function customer_receipts(Request $request,$user_id,$user_email)
    {
+      $uri = request()->segment(2);
+
     $user = $user_email;
     $receipts = DB::table('receipts')->where('customer_id',$user_id)->orderby('created_at')->get();
     $admin_id = auth::user()->id;
@@ -1201,7 +1245,7 @@ class AdminController extends Controller
         'read_at' => null
         ])
     ->count();
-    return view('admin.customer_receipts',compact('user','receipts','adminmessage_count','approved_count','pending_count','inprocess_count','Ondelivery_count','received_count'));
+    return view('admin.customer_receipts',compact('user','receipts','adminmessage_count','approved_count','pending_count','inprocess_count','Ondelivery_count','received_count','uri'));
 
    }
 

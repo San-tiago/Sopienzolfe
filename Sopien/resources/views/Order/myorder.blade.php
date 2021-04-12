@@ -33,9 +33,9 @@
          </div>
         <div>
         @if(Auth::user()->Order_Status == 'Processed' || Auth::user()->Order_Status == 'On Delivery' )
-            <button type="button" class="btn btn-success">Processed</button>
+            <button type="button" class="btn btn-success">In-Process</button>
         @else
-            <button type="button" class="btn btn-secondary">Processed</button>
+            <button type="button" class="btn btn-secondary">In-Process</button>
         @endif
         </div>
         <div>
@@ -96,6 +96,10 @@
                     </div>
 
                     @foreach($user_form as $user_address)
+                    <div class="d-flex justify-content-between border-bottom mb-3">
+                        <p class="text-secondary ml-5">Order Number</p>
+                        <p class="text-secondary mr-5">{{$user_address->order_number}}</p>
+                    </div>
                     <div class="d-flex justify-content-between border-bottom mb-3">
                         <p class="text-secondary ml-5">Delivery Address</p>
                         <p class="text-secondary mr-5">{{$user_address->receiveraddress}}</p>

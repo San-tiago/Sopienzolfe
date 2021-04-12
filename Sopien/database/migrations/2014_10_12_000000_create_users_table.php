@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->boolean('is_admin')->default(false);
             $table->string('address')->nullable();
-            $table->integer('contactnumber');
+            $table->string('contactnumber');
             $table->string('Order_Status')->default('None');
             $table->integer('completed_orders_count')->default(0);
             $table->integer('cancelled_orders_count')->default(0);

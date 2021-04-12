@@ -296,6 +296,7 @@ a {
                                                         From: {{$user}}<br>
                                                     @foreach($details as $detail)
             
+                                                        Order Number: {{$detail->order_number}}<br>
                                                         Receiver Name: {{$detail->receivername}}<br>
                                                         Delivery Address: {{$detail->province}},{{$detail->receiveraddress}}
                                                         <br>

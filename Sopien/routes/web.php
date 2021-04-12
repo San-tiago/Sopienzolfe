@@ -36,7 +36,7 @@ Route::get('/terms&conditions', 'HomeController@termsnconditions');
 Route::get('login/google', 'Auth\LoginController@redirectToProvider');
 Route::get('login/google/callback', 'Auth\LoginController@handleProviderCallback');
 //admin controller
-Route::get('/admin', 'AdminController@index');
+Route::get('/dashboard', 'AdminController@index');
 Route::get('/admin/menu', 'AdminController@menu');
 Route::get('/admin/messages', 'AdminController@messages');
 Route::get('/admin/orders', 'AdminController@orders');

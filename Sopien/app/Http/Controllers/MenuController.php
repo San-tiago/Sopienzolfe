@@ -23,7 +23,8 @@ class MenuController extends Controller
             ]);
         } */
 
-    public function category(){
+    public function category(Request $request){
+         $uri = $request->path();
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -62,7 +63,7 @@ class MenuController extends Controller
         $categories = Category::orderBy('category')->get();
         return view('Menu.create_menu', compact(
             'categories',
-            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count'
+            'pending_count','approved_count','inprocess_count','Ondelivery_count','received_count','adminmessage_count','uri'
         )
             );
     }

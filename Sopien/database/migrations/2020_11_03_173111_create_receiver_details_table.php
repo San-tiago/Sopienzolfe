@@ -15,6 +15,7 @@ class CreateReceiverDetailsTable extends Migration
     {
         Schema::create('receiver_details', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('order_number');
             $table->string('fromemail');
             $table->string('receivername');
             $table->string('payment_type');

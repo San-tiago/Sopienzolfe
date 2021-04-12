@@ -30,14 +30,14 @@
 									<div class="col-md-12">
                   <label class="text-secondary">RECEIVER NAME</label>
 										<div class="form-group">
-											<input name = "receivername" type="text" id="input_time" class="time form-control picker__input" required data-error="Please enter time" placeholder="Receiver Name">
+											<input name = "receivername" type="text" id="input_time" value="{{old('receivername')}}" class="time form-control picker__input" required data-error="Please enter time" placeholder="Receiver Name">
 											<div class="help-block with-errors"> <span style="color: red">@error('receivername'){{$message}}@enderror </span></div>
 										</div>                                 
 									</div>
 					<div class="col-md-12">
                    	 	<label class="text-secondary">PAYMENT TYPE</label>
 						<div class="form-group">
-							<select class="custom-select d-block form-control" name="payment_type">
+							<select class="custom-select d-block form-control" name="payment_type" >
 								<option value="Partial">Partial</option>
 								<option value="Full">Full</option>
 							</select>
@@ -69,14 +69,14 @@
 									<div class="col-md-12">
                   <label class="text-secondary">DELIVERY ADDRESS</label>
 										<div class="form-group">
-											<input type="text" placeholder="Address" class="form-control" id="name" name="receiveraddress" placeholder="Address" required data-error="Please enter your address">
+											<input type="text" value="{{old('receiveraddress')}}" placeholder="Address" class="form-control" id="name" name="receiveraddress" placeholder="Address" required data-error="Please enter your address">
 											<div class="help-block with-errors"><span style="color: red">@error('receiveraddress'){{$message}}@enderror</span></div>
 										</div>                                 
 									</div>
 									<div class="col-md-12">
                   <label class="text-secondary">CONTACT NUMBER</label>
 										<div class="form-group">
-											<input type="text" placeholder="Contact Number" id="email" class="form-control" name="receivercontactnumber"  required data-error="Please enter your number">
+											<input type="text" placeholder="Contact Number" value="{{old('receivercontactnumber')}}" id="email" class="form-control" name="receivercontactnumber"  required data-error="Please enter your number">
 											<div class="help-block with-errors"><span style="color: red">@error('receivercontactnumber'){{$message}}@enderror</span></div>
 										</div> 
 									</div>

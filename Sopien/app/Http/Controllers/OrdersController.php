@@ -39,7 +39,7 @@ class OrdersController extends Controller
         ]);
         $status = 'Add Success';
         User::find($user_id)->notify(new UserNotification($status));
-      
+        
         $request->request->add(['menu_price'=>$total]);
         Order::create($request->all());
         return back();
@@ -120,10 +120,20 @@ class OrdersController extends Controller
             'municipality/city' => 'required',
             'receivercontactnumber' => 'required|min:11',
         ]);
+        $d = date("d");
+        $m = date("m");
+        date_default_timezone_set('Asia/Manila');
+        $h = date('H');
+        $i = date('i');
+        $s = date('s');
+
+        $order_number = '#'.$d.$m.$h.$i.$s;
+        $request->request->add(['order_number'=>$order_number]);
         ReceiverDetails::create($request->all());
         $user = Auth::user()->email;
         User::where('email',$user)->update(['Order_Status' => 'Ordering']);
-        
+        $request->session()->flash('receiverForm','Form submitted successfully! You can order now.');
+
 
         return redirect('/home');
     }

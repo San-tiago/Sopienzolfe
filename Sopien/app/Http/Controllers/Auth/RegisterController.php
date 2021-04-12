@@ -58,9 +58,9 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'lastname' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
-            'contactnumber' => ['required', 'string', 'max:11'],
+            'contactnumber' => ['required', 'string','min:11'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:10','max:12', 'confirmed'],
         ]);
     }
 
@@ -72,6 +72,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        
         return User::create([
             'name' => $data['name'],
             'middlename' => $data['middlename'],
@@ -86,11 +87,19 @@ class RegisterController extends Controller
     // ito din dagdag para redirect sa login
     public function register(Request $request)
 {
-    $this->validator($request->all())->validate();
+    
+    if($this->validator($request->all())->validate()){
+        event(new Registered($user = $this->create($request->all())));
+        $request->session()->flash('register','You may now log-in!');
+        return redirect($this->redirectPath('/login'));
+    }
+    else{
+        $request->session()->flash('registeration_failed','Registration failed. Please specify all needed information properly');
+        return back();
+    }
+    
 
-    event(new Registered($user = $this->create($request->all())));
-    $request->session()->flash('register','You may now log-in!');
-    return redirect($this->redirectPath('/login'));
+   
    
 
 }

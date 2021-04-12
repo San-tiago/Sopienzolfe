@@ -47,7 +47,7 @@ class HomeController extends Controller
         return view('terms&conditions',compact('message_count','decline_messages_count','decline_messages'));
     }
     public function index(){   
-        
+            
         $email = auth::user()->email;
         $users = User::all();
         $message_count = db::table('messages')->where([
