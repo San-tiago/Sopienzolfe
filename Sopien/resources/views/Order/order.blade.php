@@ -15,7 +15,6 @@
                         <div class="col-lg-12">
                             <div class="heading-title text-center">
                                 <h2>Your Food Cart</h2>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting</p>
                             </div>
                         </div>
                     </div>

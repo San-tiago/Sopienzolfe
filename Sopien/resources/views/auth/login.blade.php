@@ -75,13 +75,13 @@
                                 <button  class="btn btn-common" id="submit" type="submit">
                                     {{ __('Login') }}
                                 </button>
-                                <a href="login/google" class="btn btn-common">
+                                <a href="login/google" class="btn btn-common ml-3">
                                     <i class="fab fa-google-plus-g"></i>
                                     Login with Google
                                 </a>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-common" href="{{ route('password.request') }}">
+                                    <a class="btn btn-common mt-3" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

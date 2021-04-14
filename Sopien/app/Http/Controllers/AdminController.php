@@ -9,10 +9,12 @@ use App\Order;
 use App\Receipt;
 use App\Category;
 use App\Message;
+use App\Gcash;
 use App\ReceiverDetails;
 use DB;
 use PDF;
 use Auth;
+use Storage;
 use Carbon\Carbon;
 use App\Notifications\UserNotification;
 class AdminController extends Controller
@@ -1357,5 +1359,132 @@ class AdminController extends Controller
    
     return view('admin.messages',compact('messages','pending_count','approved_count','inprocess_count','Ondelivery_count','received_count',' '));
    }
+
+
+   public function gcash_config(Request $request){
+        $uri = request()->segment(2);
+      $approved_count = DB::table('notifications')
+      ->where([
+          'data->data' => 'Order Approved',
+          'read_at' => null
+          ])
+      ->count();
+       $pending_count = DB::table('notifications')
+      ->where([
+          'data->data' => 'Pending Order',
+          'read_at' => null
+          ])
+      ->count();
+       $inprocess_count = DB::table('notifications')
+      ->where([
+          'data->data' => 'Order In-process',
+          'read_at' => null
+          ])
+      ->count();
+       $Ondelivery_count = DB::table('notifications')
+      ->where([
+          'data->data' => 'Order On-delivery',
+          'read_at' => null
+          ])
+      ->count();
+       $received_count = DB::table('notifications')
+      ->where([
+          'data->data' => 'Order Received',
+          'read_at' => null
+          ])
+      ->count();
+       $receivedorder_count = DB::table('receiver_details')
+      ->where([
+          'transac_status' => 1
+          ])
+      ->count();
+       $cancelledorder_count = DB::table('receiver_details')
+      ->where([
+          'transac_status' => 'Cancelled'
+          ])
+      ->count();
+       $pendingorder_count = DB::table('receiver_details')
+      ->where([
+          'transac_status' => 'Pending'
+          ])
+      ->count();
+       $user_count = DB::table('users')
+      ->count();
+      
+      
+      $admin_id = auth::user()->id;
+      $adminmessage_count = DB::table('messages')->where([
+          'to_id' => $admin_id,
+          'seen' => 0
+      ])->count();
+
+
+      $gcash = Gcash::where('id',1)->get();
+
+
+        return view('admin.gcash',compact(
+            'user_count','pending_count',
+            'approved_count','inprocess_count',
+            'Ondelivery_count','received_count',
+            'receivedorder_count','cancelledorder_count',
+            'pendingorder_count','adminmessage_count','uri','gcash'));
+   }
+
+   public function gcash_store(Request $request){
+       $request->validate([
+        'gcash_contactnumber' => 'required',
+        'gcash_image' => 'required|mimes:jpg,jpeg'
+
+    ]);
+
+        $image = $request->file('gcash_image');
+        echo $new_name = rand() . '.' .$image->getClientOriginalExtension();
+        $image->move(public_path('images'),$new_name);
+
+         $form_data = array(
+            'gcash_contactnumber' => $request->gcash_contactnumber,
+            'gcash_image' => $new_name
+        );
+/*         Gcash::firstOrCreate($form_data);
+ */       
+        $gcash = new Gcash;
+        
+        $gcash->gcash_contactnumber = request('gcash_contactnumber');
+        $gcash->gcash_image = $new_name;
+        $gcash->save();
+/*         dd($gcash);
+ */
+        return redirect('/admin/gcash');
+   }
+
+
+   public function gcash_update(Request $request,$id){
+   
+    $request->validate([
+        'gcash_contactnumber' => 'required',
+        'gcash_image' => 'required|mimes:jpg,jpeg'
+    ]);
+
+    
+     $gcash = Gcash::find($id);
+    echo $gcash->gcash_contactnumber =$request->input('gcash_contactnumber');
+    echo $gcash->gcash_image=$request->input('gcash_image');
+   
+    
+    if($request->hasFile('gcash_image')){
+        $image = $request->file('gcash_image');
+        $filename = rand() . '.' .$image->getClientOriginalExtension();
+        $location = public_path('images/'.$filename);
+        $image->move(public_path('images'),$filename);
+        
+        $oldimage = $gcash->gcash_image;
+        $gcash->gcash_image = $filename;
+        Storage::delete($oldimage);
+    }
+
+    $gcash->save();
+    return redirect('/admin/gcash');
+
+}
 
 }

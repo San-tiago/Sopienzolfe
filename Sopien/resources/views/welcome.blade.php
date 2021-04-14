@@ -57,9 +57,17 @@
                         @auth
 						<li class="nav-item active"><a class="nav-link" href="{{ url('/home') }}">Home</a></li>
                         @else
+						@if($uri == null)
+						<li class="nav-item active"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+						@else
 						<li class="nav-item"><a class="nav-link" href="{{ url('/') }}">Home</a></li>
+						@endif
 						<li class="nav-item"><a class="nav-link" href="{{ url('/about') }}">About</a></li>
+						@if($uri == 'login')
+						<li class="nav-item active"><a class="nav-link" href="{{ route('login') }}">Log-In</a></li>
+						@else
 						<li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Log-In</a></li>
+						@endif
                             @if (Route::has('register'))
                             <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
                             @endif

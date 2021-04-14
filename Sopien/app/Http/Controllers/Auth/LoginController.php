@@ -31,6 +31,8 @@ class LoginController extends Controller
      * @var string
      */
     protected function authenticated(Request $request, $user ){
+        $uri = request()->segment(2);
+
         if($user->is_admin){
             return redirect ('/dashboard');
         }
@@ -91,7 +93,7 @@ class LoginController extends Controller
         else{ 
         Auth::Login($check_user,true);
             if($check_user->is_admin){
-                return redirect('/admin');
+                return redirect('/dashboard');
             }
             return redirect('/home');
             }

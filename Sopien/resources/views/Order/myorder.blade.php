@@ -188,12 +188,15 @@
                         </div>
                         <div class="modal-body d-flex justify-content-center w-100">
                             <div class="card" style="width: 18rem;">
-                                <img class="card-img-top" src="{{asset('images/sopienzolfe_gcash.jpg')}}" alt="Card image cap">
+                            @foreach($gcash as $gcash)
+
+                                <img class="card-img-top" src="{{asset('../images/'.$gcash->gcash_image)}}" alt="Card image cap">
                                 <p class="card-text align-self-center pt-2">or on this number below</p>
 <!--                            <h2 id="gcash_number" class="card-text align-self-center" value="+6399999999">+6399999999</h2>
- -->                            <input type="text" value="0966 591 3386" id="myInput" class="text-center rounded border border-info font-weight-bold" readonly>
-                                <button type="button" class="btn btn-info" onclick="myFunction()">Copy</button>
-                                <p class="card-text align-self-center p-md-3">After sending the payment, just wait for the approval of your order. Thank you!</p>
+ -->                            <input type="text" value="{{$gcash->gcash_contactnumber}}" id="myInput" class="text-center rounded border border-info font-weight-bold" readonly>
+                            @endforeach
+                                <button type="button" class="btn btn-info mb-3" onclick="myFunction()">Copy</button>
+                                <p class="card-text align-self-center p-md-3" mt-3>After sending the payment, just wait for the approval of your order. Thank you!</p>
 
                             </div>
                         </div>

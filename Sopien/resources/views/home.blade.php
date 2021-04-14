@@ -47,13 +47,22 @@
 									@endif
 									<div class="p-2">
 										<h3>
-										<a class="nav-link " href="{{url('/home')}}" role="tab">All</a>
+                                        @if($uri == 'home')
+										<a class="nav-link border-bottom border-dark" href="{{url('/home')}}" role="tab">All</a>
+                                        @else
+                                        <a class="nav-link " href="{{url('/home')}}" role="tab">All</a>
+                                        @endif
 										</h3>
 									</div>
 									@foreach($categories as $category)
 										<div class="p-2">
 											<h3>
-												<a class="nav-link"   href="/menu/{{$category->category}}">{{$category->category}}</a>
+                                            @if($uri == '$category')
+												<a class="nav-link border-bottom border-dark" href="/menu/{{$category->category}}">{{$category->category}}</a>
+                                            @else
+                                            <a class="nav-link" href="/menu/{{$category->category}}">{{$category->category}}</a>
+
+                                            @endif
 											</h3>
 										</div>
 									@endforeach

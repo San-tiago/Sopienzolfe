@@ -46,8 +46,9 @@ class HomeController extends Controller
             $decline_messages = Message::where('to_useremail',$email)->orderBy('created_at','desc')->get();
         return view('terms&conditions',compact('message_count','decline_messages_count','decline_messages'));
     }
-    public function index(){   
-            
+    public function index(Request $request){   
+        $uri = request()->segment(1);
+
         $email = auth::user()->email;
         $users = User::all();
         $message_count = db::table('messages')->where([
@@ -78,11 +79,12 @@ class HomeController extends Controller
             'seen'=> 0,
             'from_id' => 1
             ])->count();
-        return view('home',compact('menus','categories','users','new_transac','menus_count','decline_messages','decline_messages_count','message_count'));
+        return view('home',compact('menus','categories','users','new_transac','menus_count','decline_messages','decline_messages_count','message_count','uri'));
     
     }
 
-    public function menu_nav($category){
+    public function menu_nav(Request $request,$category){
+        $uri = request()->segment(2);
         $email = auth::user()->email;
         $message_count = db::table('messages')->where([
             'seen'=> 0,
@@ -107,10 +109,12 @@ class HomeController extends Controller
             ])
         ->latest()
         ->get(); 
-        return view('home',compact('menus','categories','users','check','menus_count','new_transac','message_count','decline_messages_count','decline_messages'));
+        return view('home',compact('menus','categories','users','check','menus_count','new_transac','message_count','decline_messages_count','decline_messages','uri'));
     }
 
-    public function orderHistory($email){
+    public function orderHistory(Request $request,$email){
+        $uri = request()->segment(1);
+
         $message_count = db::table('messages')->where([
             'seen'=> 0,
             'from_id' => 1
@@ -124,9 +128,11 @@ class HomeController extends Controller
                 'read_at'=> 0
                 ])->count();
         $decline_messages = Message::where('to_useremail',$email)->get();
-        return view('Order.orderhistory',compact('order_history','message_count','decline_messages_count','decline_messages'));
+        return view('Order.orderhistory',compact('order_history','message_count','decline_messages_count','decline_messages','uri'));
     }
-    public function view_orderHistory($id,$email){
+    public function view_orderHistory(Request $request,$id,$email){
+        $uri = request()->segment(2);
+
         $message_count = db::table('messages')->where([
             'seen'=> 0,
             'from_id' => 1
@@ -145,7 +151,7 @@ class HomeController extends Controller
                 'read_at'=> 0
                 ])->count();
         $decline_messages = Message::where('to_useremail',$email)->get();
-        return view('Order.view_historyorder',compact('orders','total','message_count','decline_messages_count','decline_messages'));
+        return view('Order.view_historyorder',compact('orders','total','message_count','decline_messages_count','decline_messages','uri'));
     }
 
     /* public function unread_message(){

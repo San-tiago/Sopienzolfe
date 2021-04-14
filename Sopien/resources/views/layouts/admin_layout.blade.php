@@ -319,6 +319,21 @@ The above copyright notice and this permission notice shall be included in all c
               </a>
             </li>
         @endif
+        @if($uri == 'gcash')
+          <li class="nav-item active">
+            <a class="nav-link"href="/admin/gcash">
+              <i class="material-icons">manage_accounts</i>
+              <p>G-Cash</p>
+            </a>
+          </li>
+        @else
+          <li class="nav-item ">
+              <a class="nav-link"href="/admin/gcash">
+                <i class="material-icons">manage_accounts</i>
+                <p>G-Cash</p>
+              </a>
+            </li>
+        @endif
         </ul>
       </div>
     </div>

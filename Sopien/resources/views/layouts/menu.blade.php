@@ -61,9 +61,18 @@
 
                     <div class="collapse navbar-collapse" id="navbars-rs-food">
                         <ul class="navbar-nav ml-auto">
-                            <li class="nav-item active"><a class="nav-link" href="/home">Menu</a></li>                        
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
+                        @if($uri == 'home')
+                            <li class="nav-item active"><a class="nav-link" href="/home">Menu</a></li>  
+                        @else
+                            <li class="nav-item "><a class="nav-link" href="/home">Menu</a></li>  
+                        @endif         
+                                  
+                            @if($uri == 'myorder' || $uri == 'my-cancelled-orders' || $uri =='order-history' || $uri == 'cancelled-orders' || $uri =='history-orders')  
+                                <li class="nav-item active dropdown">
+                            @else
+                                <li class="nav-item dropdown">
+                            @endif
+                                <a class="nav-link active dropdown-toggle" href="#" id="dropdown-a" data-toggle="dropdown">Order</a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown-a">
                             @if(auth::user()->Order_Status == 'Pending' || auth::user()->Order_Status == 'Approve' || auth::user()->Order_Status == 'Processed' || auth::user()->Order_Status == 'On Delivery')
                                 <a class="dropdown-item" href="{{url('/myorder')}}">Track My Orders</a>
@@ -88,7 +97,7 @@
 
                             <li class="nav-item" data-toggle="modal" data-target="#notif"> <a class="nav-link">
                                 <span class="badge badge-danger ">
-                                {{$decline_messages_count}}
+                                {{$decline_messages_count ?? ''}}
                                 </span>
                                 <i class="fas fa-bell" aria-hidden="true"></i>
                                 

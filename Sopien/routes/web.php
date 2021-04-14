@@ -14,11 +14,13 @@ use App\Menu;
 use App\Category;
 use App\CustomerReview;
 use App\Events\Notif;
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+   echo $uri = request()->segment(2);
+
     $categories = Category::orderBy('category')->get();
     $menus = Menu::orderBy('food_name')->get();
     $reviews = CustomerReview::orderBy('customer_name')->get();
-    return view('welcome',compact('menus','categories','reviews'));
+    return view('welcome',compact('menus','categories','reviews','uri'));
 });
 
 Auth::routes(['verify' => true]);
@@ -52,6 +54,11 @@ Route::get('/view/summary-orders/{id}/{email}', 'AdminController@view_summary');
 Route::post('/receipt/pdf/{email}/{id}', 'AdminController@generateReceipt');
 Route::get('/print', 'AdminController@print');
 Route::post('/decline-order/{order_id}/{email}', 'AdminController@decline_order');
+Route::get('/admin/gcash', 'AdminController@gcash_config');
+Route::post('/gcash-upload', 'AdminController@gcash_store');
+Route::post('/gcash-update/{id}', 'AdminController@gcash_update');
+
+
 
 Route::get('/admin/approving-order/{order_id}/{email}', 'AdminController@approvingorder');
 Route::get('/admin/processing-order/{order_id}/{email}', 'AdminController@processingorder');
@@ -116,4 +123,7 @@ Route::post('/insert-reviewform', 'HomeController@insert_review');
 //Account Settings Controller
 Route::get('/account-settings', 'AccountController@account_settings');
 Route::post('/edit-accountdetails', 'AccountController@edit_accountdetails');
+
+//GCASH
+
 

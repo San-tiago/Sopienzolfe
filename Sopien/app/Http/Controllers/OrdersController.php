@@ -7,6 +7,7 @@ use App\Order;
 use App\User;
 use App\PlacedOrder;
 use App\Message;
+use App\Gcash;
 use Carbon\Carbon;
 use App\ReceiverDetails;
 use Illuminate\Support\Facades\Auth;
@@ -45,7 +46,8 @@ class OrdersController extends Controller
         return back();
     }
 
-    public function view(){
+    public function view(Request $request){
+        $uri = request()->segment(1);
         date_default_timezone_set('Asia/Manila');
         auth()->user()->unreadNotifications->markAsRead();
         $user = Auth::user()->email;
@@ -73,7 +75,7 @@ class OrdersController extends Controller
                ])->orderBy('created_at', 'desc')
                ->limit(1)->get();
         
-        return view('Order.order',compact('orders','total','message_count','decline_messages_count','decline_messages','user_form')); 
+        return view('Order.order',compact('orders','total','message_count','decline_messages_count','decline_messages','user_form','uri')); 
        
     }
     public function delete($id){
@@ -97,7 +99,9 @@ class OrdersController extends Controller
          User::find(1)->notify(new UserNotification($status));
         return redirect('/myorder');
     }
-    public function receiver_page(){
+    public function receiver_page(Request $request){
+        $uri = request()->segment(1);
+
         $user = Auth::user()->email;
         $message_count = db::table('messages')->where([
             'seen'=> 0,
@@ -108,7 +112,7 @@ class OrdersController extends Controller
                 'read_at'=> 0
                 ])->count();
         $decline_messages = Message::where('to_useremail',$user)->get();
-        return view('Receiver.receiver',compact('message_count','decline_messages_count','decline_messages'));
+        return view('Receiver.receiver',compact('message_count','decline_messages_count','decline_messages','uri'));
     }
     public function receiver(Request $request){
           $data = request()->validate([
@@ -137,7 +141,9 @@ class OrdersController extends Controller
 
         return redirect('/home');
     }
-    public function myorder(){
+    public function myorder(Request $request){
+        $uri = request()->segment(1);
+        $gcash = Gcash::where('id',1)->get();
         $user = Auth::user()->email;
        /* echo $orders = DB::table('orders')->where([
             'email' => $user,
@@ -180,7 +186,7 @@ class OrdersController extends Controller
                 ['fromemail','=', $user]
                ])->orderBy('created_at', 'desc')
                ->limit(1)->get();
-                             return view('Order.myorder',compact('orders','paymenttype','orders_sum','message_count','decline_messages_count','decline_messages','user_form')); 
+                             return view('Order.myorder',compact('orders','paymenttype','orders_sum','message_count','decline_messages_count','decline_messages','user_form','uri','gcash')); 
         }
         
      public function cancelOrder($email,$id){
@@ -202,7 +208,9 @@ class OrdersController extends Controller
          return redirect('/home');
     }
 
-    public function mycancelledOrders($email){
+    public function mycancelledOrders(Request $reques,$email){
+        $uri = request()->segment(1);
+
         $email = auth::user()->email;
         $message_count = db::table('messages')->where([
             'seen'=> 0,
@@ -223,9 +231,11 @@ class OrdersController extends Controller
                 'read_at'=> 0
                 ])->count();
         $decline_messages = Message::where('to_useremail',$email)->get();
-        return view('Order.mycancelledorders',compact('cancelled_order_history','message_count','decline_messages_count','decline_messages')); 
+        return view('Order.mycancelledorders',compact('cancelled_order_history','message_count','decline_messages_count','decline_messages','uri')); 
     }
-    public function cancelled_orderHistory($id,$email){
+    public function cancelled_orderHistory(Request $request,$id,$email){
+        $uri = request()->segment(2);
+
         $message_count = db::table('messages')->where([
             'seen'=> 0,
             'from_id' => 1
@@ -245,7 +255,7 @@ class OrdersController extends Controller
                 'read_at'=> 0
                 ])->count();
         $decline_messages = Message::where('to_useremail',$email)->get();
-       return view('Order.view_cancelledorders',compact('orders','total','message_count','decline_messages_count','decline_messages'));
+       return view('Order.view_cancelledorders',compact('orders','total','message_count','decline_messages_count','decline_messages','uri'));
     }
 
     /* public function customerMessage(Request $request){

@@ -2,7 +2,15 @@
 @extends('layouts.admin_layout')
 @section('dashboard')
 <div>
-<h1>Menu</h1>
+<div class="all-page-title page-breadcrumb mb-3">
+		<div class="container text-center">
+			<div class="row">
+				<div class="col-lg-12">
+					<h1>Menu</h1>
+				</div>
+			</div>
+		</div>
+</div>
 @if(session('menu'))
     <div class="d-flex h-25 justify-content-center alert alert-success" role="alert">
         <h5>{{Session::get('menu')}}</h5>
