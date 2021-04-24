@@ -19,7 +19,9 @@
 	<div class="d-flex p-2 justify-content-center w-100 m-auto">
 	<form action="{{url('/gcash-upload')}}" method="post" enctype="multipart/form-data">
 		@csrf
-		<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="gcash_contactnumber">
+		<label for="exampleInputEmail1">Gcash Number</label>
+		<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="gcash_contactnumber" placeholder="G-Cash Number"><br>
+		<label for="exampleInputEmail1">G-Cash QR Code Image</label>
 		<input name="gcash_image" type="file" class="form-control w-25" id="exampleInputEmail1" aria-describedby="emailHelp">
 		<button type="submit" class="btn btn-primary">UPLOAD</button>	
 	</form>

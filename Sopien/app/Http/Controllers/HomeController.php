@@ -33,7 +33,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function termsnconditions(){
+    public function termsnconditions(Request $request){
+        $uri = request()->segment(1);
+
         $email = auth::user()->email;
         $message_count = db::table('messages')->where([
             'seen'=> 0,
@@ -44,7 +46,7 @@ class HomeController extends Controller
                 'read_at'=> 0
                 ])->count();
             $decline_messages = Message::where('to_useremail',$email)->orderBy('created_at','desc')->get();
-        return view('terms&conditions',compact('message_count','decline_messages_count','decline_messages'));
+        return view('terms&conditions',compact('message_count','decline_messages_count','decline_messages','uri'));
     }
     public function index(Request $request){   
         $uri = request()->segment(1);

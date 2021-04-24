@@ -10,7 +10,9 @@ use DB;
 class AccountController extends Controller
 {
     //
-    public function account_settings(){
+    public function account_settings(Request $request){
+        $uri = request()->segment(1);
+
         $user_id = Auth::user()->id;
         $user_email = Auth::user()->email;
         $user_details = User::where('id',$user_id)->get();
@@ -23,7 +25,7 @@ class AccountController extends Controller
                 'from_id' => 1
                 ])->count();
         $decline_messages = Message::where('to_useremail',$user_email)->get();
-        return view('AccountSettings.accountsettings',compact('user_details','decline_messages_count','decline_messages','message_count'));
+        return view('AccountSettings.accountsettings',compact('user_details','decline_messages_count','decline_messages','message_count','uri'));
     }
     public function edit_accountdetails(Request $request){
         $user_id = Auth::user()->id;

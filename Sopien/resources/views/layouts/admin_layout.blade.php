@@ -329,7 +329,7 @@ The above copyright notice and this permission notice shall be included in all c
         @else
           <li class="nav-item ">
               <a class="nav-link"href="/admin/gcash">
-                <i class="material-icons">manage_accounts</i>
+                <i class="material-icons">settings</i>
                 <p>G-Cash</p>
               </a>
             </li>

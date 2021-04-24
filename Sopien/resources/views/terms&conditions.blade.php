@@ -78,7 +78,7 @@
             <li>You hereby grant Sopienzolfe a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce and edit any of your Comments in any and all forms, formats or media.</li>
     </ul>
 
-    <h3 class="mb-3">Hyperlinking to our Content</h3>
+    <h3 class="mb-3 mt-3">Hyperlinking to our Content</h3>
     <p>The following organizations may link to our Website without prior written approval:</p>
     <ul class="text-secondary">
         <li>Government agencies</li>
@@ -92,7 +92,7 @@
             
     </ul>
 
-    <h3 class="mb-3">We may consider and approve other link requests from the following types of organizations:</h3>
+    <h3 class="mb-3 mt-3">We may consider and approve other link requests from the following types of organizations:</h3>
         <ul class="text-secondary">
             <li>commonly-known consumer and/or business information sources</li>
             <li>dot.com community sites</li>
@@ -109,7 +109,7 @@
             <li>If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website, you must inform us by sending an e-mail to Sopienzolfe. Please include your name, your organization name, contact information as well as the URL of your site, a list of any URLs from which you intend to link to our Website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.</li>
 
         </ul>
-    <h3 class="mb-3">Approved organizations may hyperlink to our Website as follows:</h3>
+    <h3 class="mb-3 mt-3">Approved organizations may hyperlink to our Website as follows:</h3>
         <ul class="text-secondary">
             <li>By use of our corporate name</li>
             <li>or
@@ -121,11 +121,11 @@
             <li>No use of Sopienzolfe's logo or other artwork will be allowed for linking absent a trademark license agreement.</li>
         </ul>
     
-    <h3 class="mb-3">iFrames</h3>
+    <h3 class="mb-3 mt-3">iFrames</h3>
         <p class="text-secondary">
             <span>Without prior approval and written permission, you may not create frames around our Webpages that alter in any way the visual presentation or appearance of our Website.</span>
         </p>
-    <h3 class="mb-3">Content Liability</h3>
+    <h3 class="mb-3 mt-3">Content Liability</h3>
         <p  class="text-secondary">
         We shall not be hold responsible for any content that appears on your Website. You agree to protect and defend us against all claims that is rising on your Website. No link(s) should appear on any Website that may be interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the infringement or other violation of, any third party rights.
         </p>
@@ -154,13 +154,13 @@
             </li>
             <li>As long as the website and the information and services on the website are provided free of charge, we will not be liable for any loss or damage of any nature.</li>
         </ul>
-    <h3 class="mb-3">Payment</h3>
+    <h3 class="mb-3 mt-3">Payment</h3>
         <ul class="text-secondary">
             <li><h6>General:</h6> You may pay for the Product using any of the payment methods prescribed from time to time. When you place an Order, actual payment will be only charged upon Seller’s acceptance of your Order and formation of a Customer Contract. All payments shall be made to Sopienzolfe You acknowledge that Sopienzolfe is entitled to collect payments from you.</li>
             <li><h6>Additional terms:</h6>  The payment methods may be subject to additional terms as prescribed by Sopienzolfe from time to time.</li>
             <li><h6>Payment methods:</h6>  Payment methods: You agree that you are subject to the applicable user agreement of your payment method. You may not claim against Sopienzolfe for any failure, disruption or error in connection with your chosen payment method. Sopienzolfe reserves the right at any time to modify or discontinue, temporarily or permanently, any payment method without notice to you or giving any reason.</li>
         </ul>
-    <h3 class="mb-3">Delivery of Products</h3>
+    <h3 class="mb-3 mt-3">Delivery of Products</h3>
         <ul class="text-secondary">
             <li>Address: Delivery of the Products shall be made to the address you specify in your Order either by Sopienzolfe </li>
             <li>Shipping & packing charges: Shipping and packing charges shall be as set out in the Order.</li>

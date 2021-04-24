@@ -108,7 +108,9 @@ class MenuController extends Controller
         Menu::create($form_data);
         return redirect('/admin/menu');
     }
-    public function edit($id){
+    public function edit(Request $request, $id){
+        $uri = $request->path();
+
         $approved_count = DB::table('notifications')
         ->where([
             'data->data' => 'Order Approved',
@@ -148,7 +150,7 @@ class MenuController extends Controller
 
         $menu = Menu::find($id);
         $categories = Category::orderBy('category')->get();
-        return view('Menu.edit_menu', compact('menu','categories'));
+        return view('Menu.edit_menu', compact('menu','categories','uri','adminmessage_count','approved_count','pending_count','inprocess_count','Ondelivery_count','received_count'));
     }
 
     public function update(Request $request, $id){

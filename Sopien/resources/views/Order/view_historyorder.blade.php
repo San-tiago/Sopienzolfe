@@ -40,7 +40,7 @@
 
         </table>
 
-        <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total}}</h1>
+        <div class="d-flex p-2 d-flex justify-content-center table-bordered"><h1 name="total">Total:{{$total + 150}}</h1>
         </div>
     </div>
 </div>

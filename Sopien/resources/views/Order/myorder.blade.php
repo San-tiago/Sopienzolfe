@@ -125,16 +125,6 @@
     @endif
 
 
-
-    
- 
-
-     
-
-                    
-                
-    
-            
     
     <div class="d-flex p-2 d-flex justify-content-center" >
                     @if(Auth::user()->Order_Status == 'Pending')   
